@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="mystyle.css" rel="stylesheet">
+    <title>Queenside</title>
+</head>
+
+<body>
+    <!-- logo and search -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <a href="index.html"><img src="img/QueensideLogo.png" class="img-responsive my-logo"
+                        alt="Queenside logo"></a>
+            </div>
+            <div class="col-md-3 my-search">
+                <form class="form-inline justify-content-center md-form form-sm">
+                    <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search players"
+                        aria-label="Search">
+                    <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark my-navbar">
+        <div class="container">
+            <button class="navbar-toggler my-nav-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto ms-1 mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fa fa-home" aria-hidden="true"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="players.html">Players</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="outpost.html">Outpost</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- player edit form -->
+    <div class="container" id="player-edit-container">
+        <form>
+            <!-- Player image/icon -->
+            <div class="row mb-3">
+                <label for="formFile" class="col-sm-2 col-form-label">Profile Image</label>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control" id="formFile">
+                </div>
+            </div>
+
+            <!-- FIDE ID -->
+            <div class="row mb-3">
+                <label for="inputFIDE" class="col-sm-2 col-form-label">FIDE ID</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="e.g., 5000123" id="inputFIDE">
+                </div>
+            </div>
+
+            <!-- Player name -->
+            <div class="row mb-3">
+                <label for="inputPlayerName" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="Last, First" id="inputPlayerName">
+                </div>
+            </div>
+
+            <!-- Federation -->
+            <div class="row mb-3">
+                <label for="inputFederation" class="col-sm-2 col-form-label">Federation</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="Player's home country" id="inputFederation">
+                </div>
+            </div>
+
+            <!-- Birth Year -->
+            <div class="row mb-3">
+                <label for="inputBirthYear" class="col-sm-2 col-form-label">Birth Year</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="e.g., 1987" id="inputBirthYear">
+                </div>
+            </div>
+
+            <!-- Player title -->
+            <div class="row mb-3">
+                <label for="inputPlayerTitle" class="col-sm-2 col-form-label">Title</label>
+                <div class="col-sm-10">
+                    <select class="form-select" aria-label="Dropdown selection for player title">
+                        <option selected>Select</option>
+                        <option value="1">Grandmaster</option>
+                        <option value="2">Woman Grandmaster</option>
+                        <option value="3">International Master</option>
+                        <option value="4">International Arbiter</option>
+                        <option value="5">FIDE Arbiter</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Player ratings -->
+            <div class="row mb-3">
+                <label for="playerRatings" class="col-sm-2 col-form-label">Ratings</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" placeholder="Std Rating" aria-label="Standard rating">
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" placeholder="Rapid Rating" aria-label="Rapid rating">
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" placeholder="Blitz Rating" aria-label="Blitz rating">
+                </div>
+            </div>
+
+            <!-- Player status -->
+            <fieldset class="row mb-3">
+                <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="radioActive" value="active"
+                            checked>
+                        <label class="form-check-label" for="radioActive">
+                            Active
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="radioWithdrawn"
+                            value="withdrawn">
+                        <label class="form-check-label" for="radioWithdrawn">
+                            Withdrawn
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Form submission -->
+            <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>
+    </div>
+
+    <!-- link to return to player listing -->
+    <div class="container my-card-return">
+        <a href="players.html" class="my-light-link">&laquo; Return to player list</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer my-footer-background">
+        <div class="container">
+            <div class="pt-5">
+                <p><a class="my-dark-link" href="mailto: 40275431@ads.qub.ac.uk">Contact Us</a></p>
+
+                <!-- login for Admin access -->
+                <button onclick="document.getElementById('my-login-form').style.display='block'"
+                    class="my-login-button">Admin</button>
+
+                <div id="my-login-form" class="modal">
+
+                    <form class="modal-content animate" action="/action_page.php" method="post">
+
+                        <div class="container my-login">
+                            <h2>Administrative Access</h2>
+                        </div>
+
+                        <div class="container my-login">
+                            <label for="uname"><b>Username</b></label>
+                            <input type="text" placeholder="Enter Username" name="uname" required>
+
+                            <label for="psw"><b>Password</b></label>
+                            <input type="password" placeholder="Enter Password" name="psw" required>
+
+                            <button type="submit" class="btn btn-secondary">Login</button>
+                        </div>
+
+                        <div class="container my-login">
+                            <button type="button"
+                                onclick="document.getElementById('my-login-form').style.display='none'"
+                                class="cancelbtn">Cancel</button>
+                            <span class="psw">Forgot <a href="#">password?</a></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <script>
+                // Get the modal
+                var modal = document.getElementById('my-login-form');
+
+                // Close modal when user clicks anywhere outside
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            </script>
+
+            <!-- Copyright -->
+            <p class="my-copyright">Copyright © Frances Veit 2021</p>
+        </div>
+    </footer>
+
+    <!-- JS Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

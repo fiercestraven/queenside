@@ -1,0 +1,321 @@
+/* pre-navbar */
+.my-logo {
+  display: block;
+  width: 330px;
+  padding: 20px 0;
+}
+
+.my-search {
+  min-width: 220px;
+}
+
+/* navbar */
+.my-navbar {
+  font-size: 18px;
+  height: 45px;
+  background-color: #5C2B56!important;
+}
+
+.nav-link {
+  color: white!important;
+  }
+
+.nav-link:hover {
+  color: rgb(190, 190, 190)!important;
+}
+
+.navbar-collapse.show {
+  background-color: rgba(0, 0, 0, 0.79);
+}
+
+/* container styling */
+.my-container {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+/* index jumbo */
+#my-jumbo {
+  background-image: url(img/headerqueen.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 550px;
+}
+
+#my-jumbo-text {
+  color: white;
+  background-color: rgb(59, 57, 59, 0.50);
+  padding: 40px 20px;
+}
+
+#my-jumbo-text a {
+  color: #D98FCE;
+  text-decoration: none;
+}
+
+#my-jumbo-text a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+/* card styling */
+.my-profile-icon {
+    width: 12em;
+    margin: 2.5em;
+}
+
+.my-card {
+    border: none;
+    margin: 0 auto; 
+    margin-top: 1.5em;
+    float: none;
+}
+
+.my-card-header {
+    font-size: 28px;
+    background-color: white;
+}
+
+.my-player-status {
+    color: #63BA6B;
+    text-transform: uppercase;
+}
+
+.my-ratings {
+    margin: 7px;
+    padding: 8px;
+    background-color: #e6e6e6;
+}
+
+.my-card-return {
+  /* width: 800px;  */
+  margin-top: -10px;
+  margin-bottom: 30px;
+  font-size: 15px;
+}
+
+/* not currently using collage photo */
+/* .my-player-collage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  border: 2px solid black;
+  border-radius: 5px;
+} */
+
+/* contact us styling - not currently in use */
+/* #inputMessage {
+  height: 170px;
+}
+
+#bishop-img {
+  height: 300px;
+  margin-top: 80px;
+} */
+
+/* players page table styling*/
+.pagination > li > a
+{
+    background-color: white;
+    color: #5C2B56;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #5C2B56 !Important;
+    border: solid 1px #5C2B56 !Important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #5C2B56 !Important;
+    border: solid 1px #5C2B56;
+}
+
+.my-filter-button {
+  width: 150px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.my-filter-menu {
+  min-width: 550px;
+}
+
+.my-sort-button {
+  float: right;
+  width: 105px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  text-align: left;
+}
+
+/* player edit admin page */
+#player-edit-container {
+  width: 80%;
+  padding: 30px;
+}
+
+/* outpost styling */
+#outpost-logo {
+  width: 150px;
+  margin-bottom: 15px;
+}
+
+#triviaAccordion {
+  background-color: #D98FCE;
+}
+
+#countryAccordion{
+  background-color: #96598C;
+  color: white;
+}
+
+#queenAccordion {
+  background-color: #5C2B56;
+  color: white;
+}
+
+.accordion-button.collapsed {
+  color: white;
+  font-size: 26px;
+  height: 170px;
+}
+
+#triviaAccordion .accordion-button:not(.collapsed) {
+  color:black;
+  background-color: #D98FCE;
+}
+
+#countryAccordion .accordion-button:not(.collapsed) {
+  color:white;
+  background-color: #96598C;
+}
+
+#queenAccordion .accordion-button:not(.collapsed) {
+  color:white;
+  background-color: #5C2B56;
+}
+
+.question {
+  margin-top: 15px;
+  margin-bottom: -3px;
+}
+
+/* Admin button & login form styling */
+.my-login-form {
+    border: 3px solid #f1f1f1;
+  }
+  
+  input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+  .my-login-button {
+    width: auto;
+    background-color: black;
+    color: white;
+    padding: 0;
+  }
+  
+  button {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  .cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+  }
+  
+  /* Add padding to containers in login */
+.my-login {
+    padding: 16px;
+    color: #525252;
+  }
+  
+span.psw {  
+    float: right;
+    padding-top: 16px;
+  }
+
+  /* footer styling */
+.my-footer-background {
+  background-color: black;
+  color: #e6e6e6;
+}
+
+.my-copyright {
+  text-align: right;
+  padding-bottom: 35px;
+  font-size: 13px;
+  font-style: italic;
+  color: #ABABAB;
+}
+
+  /* link styling */
+  .my-light-link {
+    color: #96598C;
+    text-decoration: none;
+}
+
+.my-light-link:hover {
+    color: black;
+}
+
+.my-dark-link {
+    text-decoration: none;
+    font-size: 15px;
+    color: white;
+}
+
+.my-dark-link:hover {
+    color: gray;
+}
+  
+/* Change some styling for other screen sizes */
+@media screen and (min-width: 990px) {
+  .my-search {
+    margin-top: 4em;
+  }
+  }
+
+  @media screen and (max-width: 300px) {
+    span.psw {
+      display: block;
+      float: none;
+    }
+    .cancelbtn {
+      width: 100%;
+    }
+  }
