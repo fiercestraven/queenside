@@ -10,6 +10,13 @@
 }
 
 /* navbar */
+
+/* .admin-navbar {
+  font-size: 18px;
+  height: 45px;
+  background-color: blue!important;
+} */
+
 .my-navbar {
   font-size: 18px;
   height: 45px;
@@ -172,6 +179,11 @@
 #player-edit-container {
   width: 80%;
   padding: 30px;
+}
+
+#admin-intro {
+  color:#AD0000;
+  margin-bottom: 5px;
 }
 
 /* outpost styling */
