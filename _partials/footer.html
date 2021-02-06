@@ -1,0 +1,54 @@
+<footer class="page-footer my-footer-background">
+    <div class="container">
+        <div class="pt-5">
+            <p><a class="my-dark-link" href="contact.php">Contact Us</a></p>
+
+            <!-- login for Admin access -->
+            <button onclick="document.getElementById('my-login-form').style.display='block'"
+                class="my-login-button">Admin</button>
+
+            <div id="my-login-form" class="modal">
+
+                <form class="modal-content animate" action="/action_page.php" method="post">
+
+                    <div class="container my-login">
+                        <h2>Administrative Access</h2>
+                    </div>
+
+                    <div class="container my-login">
+                        <label for="uname"><b>Username</b></label>
+                        <input type="text" placeholder="Enter Username" name="uname" required>
+
+                        <label for="psw"><b>Password</b></label>
+                        <input type="password" placeholder="Enter Password" name="psw" required>
+
+                        <button type="submit" class="btn btn-secondary">Login</button>
+                    </div>
+
+                    <div class="container my-login">
+                        <button type="button"
+                            onclick="document.getElementById('my-login-form').style.display='none'"
+                            class="cancelbtn">Cancel</button>
+                        <span class="psw">Forgot <a href="#">password?</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            // Get the modal
+            var modal = document.getElementById('my-login-form');
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+
+
+        <!-- Copyright -->
+        <p class="my-copyright">Copyright © Frances Veit 2021</p>
+    </div>
+</footer>

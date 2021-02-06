@@ -2,57 +2,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="mystyle.css" rel="stylesheet">
-    <title>Queenside</title>
+    <?php   
+       include("../_partials/head.html");
+    ?>
 </head>
 
 <body>
-    <!-- logo and search -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-9">
-                <a href="index.html"><img src="img/QueensideLogo.png" class="img-responsive my-logo"
-                        alt="Queenside logo"></a>
-            </div>
-            <div class="col-md-3 my-search">
-                <form class="form-inline justify-content-center md-form form-sm">
-                    <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search players"
-                        aria-label="Search">
-                    <i class="fa fa-search fa-lg" aria-hidden="true"></i>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark my-navbar">
-        <div class="container">
-            <button class="navbar-toggler my-nav-button" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto ms-1 mb-2 mb-lg-0">
-                    <li class="nav-item my-nav-item">
-                        <a class="nav-link" href="index.html"><i class="fa fa-home" aria-hidden="true"></i></a>
-                    </li>
-                    <li class="nav-item my-nav-item">
-                        <a class="nav-link" href="#">Players</a>
-                    </li>
-                    <li class="nav-item my-nav-item">
-                        <a class="nav-link" href="outpost.html">Outpost</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <!-- logo and nav -->
+   <?php
+        include("../_partials/nav.html");
+   ?>
 
     <!-- Filtering options for player listings -->
     <div class="container my-container">
@@ -166,7 +125,7 @@
             <tbody>
                 <tr>
                     <td>5008123</td>
-                    <td><a class="my-light-link" href="playerdetail.html">Koneru, Humpy</a></td>
+                    <td><a class="my-light-link" href="playerdetail.php">Koneru, Humpy</a></td>
                     <td>India</td>
                     <td>1987</td>
                     <td>Grandmaster</td>
@@ -397,61 +356,9 @@
     </div>
 
     <!-- Footer -->
-    <footer class="page-footer my-footer-background">
-        <div class="container">
-            <div class="pt-5">
-                <p><a class="my-dark-link" href="mailto: 40275431@ads.qub.ac.uk">Contact Us</a></p>
-
-                <!-- login for Admin access -->
-                <button onclick="document.getElementById('my-login-form').style.display='block'"
-                    class="my-login-button">Admin</button>
-
-                <div id="my-login-form" class="modal">
-
-                    <form class="modal-content animate" action="/action_page.php" method="post">
-
-                        <div class="container my-login">
-                            <h2>Administrative Access</h2>
-                        </div>
-
-                        <div class="container my-login">
-                            <label for="uname"><b>Username</b></label>
-                            <input type="text" placeholder="Enter Username" name="uname" required>
-
-                            <label for="psw"><b>Password</b></label>
-                            <input type="password" placeholder="Enter Password" name="psw" required>
-
-                            <button type="submit" class="btn btn-secondary">Login</button>
-                        </div>
-
-                        <div class="container my-login">
-                            <button type="button"
-                                onclick="document.getElementById('my-login-form').style.display='none'"
-                                class="cancelbtn">Cancel</button>
-                            <span class="psw">Forgot <a href="#">password?</a></span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-
-            <script>
-                // Get the modal
-                var modal = document.getElementById('my-login-form');
-
-                // When the user clicks anywhere outside of the modal, close it
-                window.onclick = function (event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
-                    }
-                }
-            </script>
-
-
-            <!-- Copyright -->
-            <p class="my-copyright">Copyright © Frances Veit 2021</p>
-        </div>
-    </footer>
+    <?php
+        include("../_partials/footer.html");
+    ?>  
 
     <!-- JS Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
