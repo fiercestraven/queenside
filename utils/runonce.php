@@ -11,7 +11,6 @@
     while(($line = fgetcsv($filepath)) !== FALSE) {
         // echo "<p>{$line[0]}</p>";
 
-        // $productname = $conn->real_escape_string($_POST['guitar_name']);
         $fideid = $conn->real_escape_string($line[0]);
         $playername = $conn->real_escape_string($line[1]);
         $federation = $conn->real_escape_string($line[2]);

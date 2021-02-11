@@ -63,26 +63,34 @@
                 <div class="col-sm-10">
                     <select class="form-select" aria-label="Dropdown selection for player title">
                         <option selected>Select</option>
-                        <option value="1">Grandmaster</option>
-                        <option value="2">Woman Grandmaster</option>
-                        <option value="3">International Master</option>
-                        <option value="4">International Arbiter</option>
-                        <option value="5">FIDE Arbiter</option>
+                        <option value="GM">Grandmaster</option>
+                        <option value="WGM">Woman Grandmaster</option>
+                        <option value="IM">International Master</option>
+                        <option value="CM">Candidate Master</option>
+                        <option value="FM">FIDE Master</option>
+                        <option value="H">Honorary Grandmaster</option>
+                        <option value="WIM">Woman International Master</option>
+                        <option value="WCM">Woman Candidate Master</option>
+                        <option value="WFM">Woman FIDE Master</option>
+                        <option value="WH">Woman Honorary Grandmaster</option>
                     </select>
                 </div>
             </div>
 
             <!-- Player ratings -->
             <div class="row mb-3">
-                <label for="playerRatings" class="col-sm-2 col-form-label">Ratings</label>
+                <span class="col-sm-2 col-form-label">Ratings</span>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" placeholder="Std Rating" aria-label="Standard rating">
+                    <input type="text" class="form-control" placeholder="Std Rating" aria-label="Standard rating"
+                    name="ratingstandard">
                 </div>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" placeholder="Rapid Rating" aria-label="Rapid rating">
+                    <input type="text" class="form-control" placeholder="Rapid Rating" aria-label="Rapid rating"
+                    name="ratingrapid">
                 </div>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" placeholder="Blitz Rating" aria-label="Blitz rating">
+                    <input type="text" class="form-control" placeholder="Blitz Rating" aria-label="Blitz rating"
+                    name="ratingblitz">
                 </div>
             </div>
 
