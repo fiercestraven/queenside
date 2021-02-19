@@ -1,43 +1,46 @@
 <footer class="page-footer my-footer-background">
     <div class="container">
         <div class="pt-5">
-            <p><a class="my-dark-link" href="contact.php">Contact Us</a></p>
+            <!-- Contact Us form -->
+            <button onclick="document.getElementById('my-contact-form').style.display='block'"
+                class="my-contact-button">Contact Us</button>
 
-            <!-- login for Admin access -->
-            <button onclick="document.getElementById('my-login-form').style.display='block'"
-                class="my-login-button">Admin</button>
+            <div id="my-contact-form" class="modal">
 
-            <div id="my-login-form" class="modal">
+                <form class="modal-content animate" action="../admin/sign.php" method="post">
 
-                <form class="modal-content animate" action="/action_page.php" method="post">
-
-                    <div class="container my-login">
-                        <h2>Administrative Access</h2>
+                    <div class="container my-contact">
+                        <h1>Contact Us</h1>
                     </div>
 
-                    <div class="container my-login">
-                        <label for="uname"><b>Username</b></label>
-                        <input type="text" placeholder="Enter Username" name="uname" required>
+                    <div class="container my-contact">           
+                        <label for="inputname"><b>Your Name</b></label>
+                        <input type="text" placeholder="First and last name" name="inputname" required>
 
-                        <label for="psw"><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" name="psw" required>
+                        <label for="inputemail"><b>Your Email</b></label>
+                        <input type="text" placeholder="you@example.com" name="inputemail" required>
 
-                        <button type="submit" class="btn btn-secondary">Login</button>
+                        <label for="inputmessage"><b>Message</b></label>
+                        <div>
+                            <textarea class="my-contact-message" placeholder="What's on your mind?" name="inputmessage" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Submit</button>
                     </div>
 
-                    <div class="container my-login">
+                    <div class="container my-contact">
                         <button type="button"
-                            onclick="document.getElementById('my-login-form').style.display='none'"
+                            onclick="document.getElementById('my-contact-form').style.display='none'"
                             class="cancelbtn">Cancel</button>
-                        <span class="psw">Forgot <a href="#">password?</a></span>
                     </div>
                 </form>
             </div>
+            <!-- login for Admin access -->
+            <p><a class="my-dark-link" href="/project/admin/login.php">Admin</a></p>
         </div>
 
         <script>
             // Get the modal
-            var modal = document.getElementById('my-login-form');
+            var modal = document.getElementById('my-contact-form');
 
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function (event) {

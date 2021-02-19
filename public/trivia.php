@@ -26,7 +26,7 @@
             </div>
         </div>       
         
-        <form>
+        <form action="triviaans.php" method="post">
             <p class="question"><strong>Q1</strong>: Which Federation (country) is the top-ranking
                 female Grandmaster (GM) from?</p>
             <!-- ans a -->
@@ -48,7 +48,7 @@
 
             <p class="question"><strong>Q2</strong>: What is the average blitz rating score of all Woman
                 Grandmasters (WGM)?</p>
-            <!-- ans unknown, dummy data -->
+            <!-- ans c, 1925 -->
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="two" id="q2r1"
                     value="option1">
@@ -57,12 +57,12 @@
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="two" id="q2r2"
                     value="option2">
-                <label class="form-check-label" for="q2r2">2092</label>
+                <label class="form-check-label" for="q2r2">2015</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="two" id="q2r3"
                     value="option3">
-                <label class="form-check-label" for="q2r3">2431</label>
+                <label class="form-check-label" for="q2r3">1925</label>
             </div>
 
             <p class="question"><strong>Q3</strong>: When was the oldest active Woman Grandmaster (WGM)
@@ -123,7 +123,7 @@
 
             <div>
                 <p></p>
-                <button type="submit">Submit</button>
+                <button class="btn btn-secondary" type="submit">Submit</button>
             </div>
 
         </form>

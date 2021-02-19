@@ -11,16 +11,16 @@
 
 /* navbar */
 
-/* .admin-navbar {
+.my-admin-navbar {
+  background-color: #C29427!important;
   font-size: 18px;
   height: 45px;
-  background-color: blue!important;
-} */
+}
 
 .my-navbar {
+  background-color: #5C2B56!important;
   font-size: 18px;
   height: 45px;
-  background-color: #5C2B56!important;
 }
 
 .nav-link {
@@ -112,15 +112,14 @@
   border-radius: 5px;
 } */
 
-/* contact us styling - not currently in use */
-/* #inputMessage {
+#inputMessage {
   height: 170px;
 }
 
 #bishop-img {
-  height: 300px;
-  margin-top: 80px;
-} */
+  height: 250px;
+  margin-top: 30px;
+}
 
 /* players page table styling*/
 .pagination > li > a
@@ -181,9 +180,15 @@
   padding: 30px;
 }
 
-#admin-intro {
+.admin-intro {
   color:#AD0000;
-  margin-bottom: 5px;
+  margin-bottom: 25px;
+}
+
+.my-logout-button {
+  float: right;
+  margin-top: 15px;
+  padding-bottom: 10px;
 }
 
 /* outpost styling */
@@ -232,9 +237,9 @@
   margin-bottom: -3px;
 }
 
-/* Admin button & login form styling */
-.my-login-form {
-    border: 3px solid #f1f1f1;
+/* Contact Us button & form styling */
+.my-contact-form {
+
   }
   
   input[type=text], input[type=password] {
@@ -246,11 +251,12 @@
     box-sizing: border-box;
   }
 
-  .my-login-button {
+  .my-contact-button {
     width: auto;
     background-color: black;
     color: white;
     padding: 0;
+    font-size: 15px;
   }
   
   button {
@@ -270,11 +276,16 @@
     background-color: #f44336;
   }
   
-  /* Add padding to containers in login */
-.my-login {
-    padding: 16px;
-    color: #525252;
+  /* Add padding to containers in contact form */
+.my-contact {
+    padding: 25px;
+    color: #292929;
   }
+
+.my-contact-message {
+  width: 100%;
+  height: 80px;
+}
   
 span.psw {  
     float: right;

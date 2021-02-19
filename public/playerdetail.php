@@ -53,7 +53,8 @@
     
     <!-- link to go back to player list -->
     <div class="container my-card-return">
-        <a href="players.html" class="my-light-link">&laquo; Return to player list</a>
+        <!-- may need to change link below if players moves/changes -->
+        <a href="../public/players.php" class="my-light-link">&laquo; Return to player list</a>
     </div>
 
     <!-- Footer -->

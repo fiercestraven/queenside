@@ -4,19 +4,26 @@
 <head>
     <?php
        include("../_partials/head.html");
+       session_start();
+
+    if (!isset($_SESSION['admin_40275431'])) {
+        echo "Invalid login";
+        header("Location: login.php");
+    }
+    include('../db.php');
     ?>
 </head>
 
 <body>
     <!-- logo and nav -->
     <?php
-        include("../_partials/nav.html");
+        include("../_partials/adminnav.html");
     ?>
 
     <!-- player edit form -->
     <div class="container" id="player-edit-container">
         <form>
-            <h2 id="admin-intro">Admin: Player Edit</h2>
+            <h2 class="admin-intro">Admin: Player Edit</h2>
             <!-- Player image/icon -->
             <div class="row mb-3">
                 <label for="formFile" class="col-sm-2 col-form-label">Profile Image</label>
@@ -29,7 +36,7 @@
             <div class="row mb-3">
                 <label for="inputFIDE" class="col-sm-2 col-form-label">FIDE ID</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="e.g., 5000123" id="inputFIDE">
+                    <input type="text" class="form-control" placeholder="5008123" id="inputFIDE">
                 </div>
             </div>
 
@@ -37,7 +44,7 @@
             <div class="row mb-3">
                 <label for="inputPlayerName" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="Last, First" id="inputPlayerName">
+                    <input type="text" class="form-control" placeholder="Koneru, Humpy" id="inputPlayerName">
                 </div>
             </div>
 
@@ -45,7 +52,7 @@
             <div class="row mb-3">
                 <label for="inputFederation" class="col-sm-2 col-form-label">Federation</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="Player's home country" id="inputFederation">
+                    <input type="text" class="form-control" placeholder="India" id="inputFederation">
                 </div>
             </div>
 
@@ -53,7 +60,7 @@
             <div class="row mb-3">
                 <label for="inputBirthYear" class="col-sm-2 col-form-label">Birth Year</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="e.g., 1987" id="inputBirthYear">
+                    <input type="text" class="form-control" placeholder="1987" id="inputBirthYear">
                 </div>
             </div>
 
@@ -79,17 +86,20 @@
 
             <!-- Player ratings -->
             <div class="row mb-3">
-                <span class="col-sm-2 col-form-label">Ratings</span>
+                <div class="col-sm-2"></div>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" placeholder="Std Rating" aria-label="Standard rating"
+                    <label for="ratingstandard">Standard Rating</label>
+                    <input type="text" class="form-control" placeholder="2586" aria-label="Standard rating"
                     name="ratingstandard">
                 </div>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" placeholder="Rapid Rating" aria-label="Rapid rating"
+                    <label for="ratingrapid">Rapid Rating</label>
+                    <input type="text" class="form-control" placeholder="2483" aria-label="Rapid rating"
                     name="ratingrapid">
                 </div>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" placeholder="Blitz Rating" aria-label="Blitz rating"
+                    <label for="ratingblitz">Blitz Rating</label>
+                    <input type="text" class="form-control" placeholder="2483" aria-label="Blitz rating"
                     name="ratingblitz">
                 </div>
             </div>
@@ -122,7 +132,8 @@
 
     <!-- link to return to player listing -->
     <div class="container my-card-return">
-        <a href="players.html" class="my-light-link">&laquo; Return to player list</a>
+        <!-- may need to change link below if players moves to admin side -->
+        <a href="admin.php" class="my-light-link">&laquo; Return to player list</a>
     </div>
 
     <!-- Footer -->
