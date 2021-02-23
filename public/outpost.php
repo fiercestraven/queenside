@@ -20,32 +20,38 @@
                 <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
             </div>
             <div class="col-md-9">
-                <h4>Welcome to the Outpost</h4>
+                <h2>Welcome to the Outpost</h2>
                 <p></p>
                 <p>Did you know? An outpost is a chess term for a position where you get a piece nice and close to your opponent in such a way that it's difficult for them to remove. We hope you'll stick around and explore a bit more about the women powerhouses of chess. Here you'll find trivia to test your wits, and the opportunity to see yourself in the chess world.</p>
             </div>
         </div>
 
+        <!-- outpost options -->
+        <a class="my-dark-link my-outpost-link" id="my-trivia-link" href="trivia.php">Trivia</a>
+        <a class="my-dark-link my-outpost-link" id="my-country-link" href="countryshowdown.php">Country vs Country</a>
+        <a class="my-dark-link my-outpost-link" id="my-queen-link" href="queenme.php">Queen Me!</a>
+</div>
+
         <!-- accordion -->
-        <div class="accordion">
+        <!-- <div class="accordion">
             <div class="accordion-item" id="triviaAccordion">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         Trivia
                     </button>
-                </h2>
+                </h2> -->
                 <!-- trivia -->
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="trivia"
+                <!-- <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="trivia"
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <h4>So you think you know a thing or two?</h4>
                         <h5>Take the grandmaster trivia quiz!</h5>
                         <form>
                             <p class="question"><strong>Q1</strong>: Which Federation (country) is the top-ranking
-                                female Grandmaster (GM) from?</p>
+                                female Grandmaster (GM) from?</p> -->
                             <!-- ans a -->
-                            <div class="form-check form-check-inline">
+                            <!-- <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="one" id="q1r1"
                                     value="option1">
                                 <label class="form-check-label" for="q1r1">Scotland</label>
@@ -59,12 +65,12 @@
                                 <input class="form-check-input" type="radio" name="one" id="q1r3"
                                     value="option3">
                                 <label class="form-check-label" for="q1r3">Georgia</label>
-                            </div>
+                            </div> -->
 
-                            <p class="question"><strong>Q2</strong>: What is the average blitz rating score of all Woman
-                                Grandmasters (WGM)?</p>
+                            <!-- <p class="question"><strong>Q2</strong>: What is the average blitz rating score of all Woman
+                                Grandmasters (WGM)?</p> -->
                             <!-- ans unknown, dummy data -->
-                            <div class="form-check form-check-inline">
+                            <!-- <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="two" id="q2r1"
                                     value="option1">
                                 <label class="form-check-label" for="q2r1">2205</label>
@@ -81,9 +87,9 @@
                             </div>
 
                             <p class="question"><strong>Q3</strong>: When was the oldest active Woman Grandmaster (WGM)
-                                born?</p>
+                                born?</p> -->
                             <!-- ans b FIDE ID 14561 -->
-                            <div class="form-check form-check-inline">
+                            <!-- <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="three" id="q3r1"
                                     value="option1">
                                 <label class="form-check-label" for="q3r1">1946</label>
@@ -97,11 +103,11 @@
                                 <input class="form-check-input" type="radio" name="three" id="q3r3"
                                     value="option3">
                                 <label class="form-check-label" for="q3r3">1961</label>
-                            </div>
+                            </div> -->
 
-                            <p class="question"><strong>Q4</strong>: How many Woman Grandmasters are there in India?</p>
+                            <!-- <p class="question"><strong>Q4</strong>: How many Woman Grandmasters are there in India?</p> -->
                             <!-- c -->
-                            <div class="form-check form-check-inline">
+                            <!-- <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="four" id="q4r1"
                                     value="option1">
                                 <label class="form-check-label" for="q4r1">20</label>
@@ -115,12 +121,12 @@
                                 <input class="form-check-input" type="radio" name="four" id="q4r3"
                                     value="option3">
                                 <label class="form-check-label" for="q4r3">11</label>
-                            </div>
+                            </div> -->
 
-                            <p class="question"><strong>Q5</strong>: What year was the youngest Woman Grandmaster born?
-                            </p>
+                            <!-- <p class="question"><strong>Q5</strong>: What year was the youngest Woman Grandmaster born?
+                            </p> -->
                             <!-- c FIDE ID 34127035-->
-                            <div class="form-check form-check-inline">
+                            <!-- <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="five" id="q5r1"
                                     value="option1">
                                 <label class="form-check-label" for="q5r1">2002</label>
@@ -144,10 +150,10 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- country vs country -->
-            <div class="accordion-item" id="countryAccordion">
+            <!-- <div class="accordion-item" id="countryAccordion">
                 <h2 class="accordion-header my-accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -161,10 +167,10 @@
                         <h5>Pick two, any two.</h5>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- queen me -->
-            <div class="accordion-item" id="queenAccordion">
+            <!-- <div class="accordion-item" id="queenAccordion">
                 <h2 class="accordion-header" id="headingThree">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -176,33 +182,33 @@
                     <div class="accordion-body">
                         <h4>Find yourself!</h4>
                         <p>If you were a chess queen, who would you be?</p>
-                        <form>
+                        <form> -->
                             <!-- Federation -->
-                            <div class="row mb-3">
+                            <!-- <div class="row mb-3">
                                 <label for="inputHomeCountry" class="col-sm-2 col-form-label">Enter your home country:</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" placeholder="e.g., Chile"
                                         id="inputHomeCountry">
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- Birth Year -->
-                            <div class="row mb-3">
+                            <!-- <div class="row mb-3">
                                 <label for="inputBirthYear" class="col-sm-2 col-form-label">Enter your birth year:</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" placeholder="e.g., 1987"
                                         id="inputBirthYear">
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- submission button -->
-                            <button type="submit">Submit</button>
+                            <!-- <button type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Footer -->
     <?php

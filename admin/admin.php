@@ -1,12 +1,8 @@
 <?php
-session_start();
+include('../utils/functions.php');
+checksessionuser();
 
-if (!isset($_SESSION['admin_40275431'])) {
-    echo "Invalid login";
-    header("Location: login.php");
-}
 include('../db.php');
-
 ?>
 
 <!DOCTYPE html>

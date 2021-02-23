@@ -20,7 +20,7 @@
                 <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
             </div>
             <div class="col-md-9">
-                <h2>Head to Head</h2>
+                <h2>Country vs Country</h2>
                 <p>Pick two, any two!</p>
                 <p>How does one country stack up against another? Find out in the country vs country showdown. Select any two countries to put their best women chess players head to head, and see whose average score comes out on top.
             </div>

@@ -1,13 +1,12 @@
 <?php
     session_start();
     include('../db.php');
+    include('../utils/functions.php');
 
     $user = $_POST["username"];
     $pw = $_POST["pass"];
 
-    $usercheck = "SELECT * FROM twcp_users WHERE username='$user' AND password=MD5('$pw')";
-
-    $result = $conn->query($usercheck);
+    $result = checkauth($user, $pw, $conn);
 
     if(!$result) {
         echo $conn->error;
@@ -18,6 +17,7 @@
         $_SESSION['admin_40275431'] = $user;
         header("Location: admin.php");
     } else {
-        header("Location: login.php");
+        header("Location: login.php"); 
+        // echo "Unsuccessful login attempt.";     
     }
 ?>

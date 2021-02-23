@@ -4,13 +4,11 @@
 <head>
     <?php
        include("../_partials/head.html");
-       session_start();
 
-    if (!isset($_SESSION['admin_40275431'])) {
-        echo "Invalid login";
-        header("Location: login.php");
-    }
-    include('../db.php');
+       include("../utils/functions.php");
+       checksessionuser();
+
+       include('../db.php');
     ?>
 </head>
 

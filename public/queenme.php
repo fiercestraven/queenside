@@ -20,7 +20,7 @@
                 <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
             </div>
             <div class="col-md-9">
-                <h2>Find yourself!</h2>
+                <h2>Queen Me!</h2>
                 <p>If you were a chess queen, who would you be?</p>
             </div>
         </div>       

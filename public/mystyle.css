@@ -39,6 +39,11 @@
 .my-container {
   margin-top: 25px;
   margin-bottom: 25px;
+  color: black;
+}
+
+.my-thanks{
+  min-height: 200px;
 }
 
 /* index jumbo */
@@ -191,13 +196,7 @@
   padding-bottom: 10px;
 }
 
-/* outpost styling */
-#outpost-logo {
-  width: 150px;
-  margin-bottom: 15px;
-}
-
-#triviaAccordion {
+/* #triviaAccordion {
   background-color: #D98FCE;
 }
 
@@ -230,18 +229,28 @@
 #queenAccordion .accordion-button:not(.collapsed) {
   color:white;
   background-color: #5C2B56;
-}
+} */
 
 .question {
   margin-top: 15px;
   margin-bottom: -3px;
 }
 
-/* Contact Us button & form styling */
-.my-contact-form {
-
+  /* footer styling */
+  .my-footer-background {
+    background-color: black;
+    color: #e6e6e6;
   }
   
+  .my-copyright {
+    text-align: right;
+    padding-bottom: 35px;
+    font-size: 13px;
+    font-style: italic;
+    color: #ABABAB;
+  }
+
+/* Contact Us button & form styling */
   input[type=text], input[type=password] {
     width: 100%;
     padding: 12px 20px;
@@ -275,16 +284,17 @@
     padding: 10px 18px;
     background-color: #f44336;
   }
-  
-  /* Add padding to containers in contact form */
-.my-contact {
-    padding: 25px;
-    color: #292929;
-  }
 
 .my-contact-message {
   width: 100%;
   height: 80px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+}
+
+.my-contact-img {
+  max-height: 130px;
 }
   
 span.psw {  
@@ -292,24 +302,11 @@ span.psw {
     padding-top: 16px;
   }
 
-  /* footer styling */
-.my-footer-background {
-  background-color: black;
-  color: #e6e6e6;
-}
-
-.my-copyright {
-  text-align: right;
-  padding-bottom: 35px;
-  font-size: 13px;
-  font-style: italic;
-  color: #ABABAB;
-}
-
   /* link styling */
   .my-light-link {
-    color: #96598C;
     text-decoration: none;
+    font-size: 16px;
+    color: #96598C;
 }
 
 .my-light-link:hover {
@@ -318,12 +315,53 @@ span.psw {
 
 .my-dark-link {
     text-decoration: none;
-    font-size: 15px;
+    font-size: 16px;
     color: white;
 }
 
 .my-dark-link:hover {
     color: gray;
+}
+
+/* outpost styling */
+.my-outpost-container {
+  max-width: 700px;
+}
+
+#outpost-logo {
+  width: 140px;
+  margin-bottom: 15px;
+}
+
+.my-outpost-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 2em;
+  height: 90px;
+  font-size: 20px;
+}
+
+.my-outpost-background {
+  background-color: rgba(140, 72, 140, 0.36);
+  padding: 25px;
+}
+
+#my-trivia-link {
+  background-color: #D98FCE;
+}
+
+.my-trivia-result {
+  margin-top: 50px;
+  font-size: 18px;
+}
+
+#my-country-link {
+  background-color: #96598C;
+}
+
+#my-queen-link {
+  background-color: #5C2B56;
 }
   
 /* Change some styling for other screen sizes */

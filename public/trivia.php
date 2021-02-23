@@ -14,20 +14,20 @@
    ?>
 
     <!-- content -->
-    <div class="container my-container">
+    <div class="container my-container my-outpost-container">
         <div class="row">
             <div class="col-md-3">
                 <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
             </div>
-            <div class="col-md-9">
-                <h2>Test Yourself</h2>
-                <p>So you think you know a thing or two?</p>
+            <div class="col-md-9 mt-3">
+                <h1 class="display-4">TRIVIA</h1>
+                <h4>So you think you know a thing or two?</h4>
                 <p>Take the grandmaster trivia quiz!</p>
             </div>
         </div>       
         
-        <form action="triviaans.php" method="post">
-            <p class="question"><strong>Q1</strong>: Which Federation (country) is the top-ranking
+        <form class= "my-outpost-background" action="triviaans.php" method="post">
+            <p class="question">Which Federation (country) is the top-ranking
                 female Grandmaster (GM) from?</p>
             <!-- ans a -->
             <div class="form-check form-check-inline">
@@ -46,7 +46,7 @@
                 <label class="form-check-label" for="q1r3">Georgia</label>
             </div>
 
-            <p class="question"><strong>Q2</strong>: What is the average blitz rating score of all Woman
+            <p class="question">What is the average blitz rating score of all Woman
                 Grandmasters (WGM)?</p>
             <!-- ans c, 1925 -->
             <div class="form-check form-check-inline">
@@ -65,7 +65,7 @@
                 <label class="form-check-label" for="q2r3">1925</label>
             </div>
 
-            <p class="question"><strong>Q3</strong>: When was the oldest active Woman Grandmaster (WGM)
+            <p class="question">When was the oldest active Woman Grandmaster (WGM)
                 born?</p>
             <!-- ans b FIDE ID 14561 -->
             <div class="form-check form-check-inline">
@@ -84,7 +84,7 @@
                 <label class="form-check-label" for="q3r3">1961</label>
             </div>
 
-            <p class="question"><strong>Q4</strong>: How many Woman Grandmasters are there in India?</p>
+            <p class="question">How many Woman Grandmasters are there in India?</p>
             <!-- c -->
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="four" id="q4r1"
@@ -102,8 +102,7 @@
                 <label class="form-check-label" for="q4r3">11</label>
             </div>
 
-            <p class="question"><strong>Q5</strong>: What year was the youngest Woman Grandmaster born?
-            </p>
+            <p class="question">What year was the youngest Woman Grandmaster born?</p>
             <!-- c FIDE ID 34127035-->
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="five" id="q5r1"
@@ -116,14 +115,14 @@
                 <label class="form-check-label" for="q5r2">2007</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="five" id="inlineRadio3"
-                    value="q5r3">
+                <input class="form-check-input" type="radio" name="five" id="q5r3"
+                    value="option3">
                 <label class="form-check-label" for="q5r3">2004</label>
             </div>
 
             <div>
                 <p></p>
-                <button class="btn btn-secondary" type="submit">Submit</button>
+                <button class="btn btn-light" type="submit">Submit</button>
             </div>
 
         </form>

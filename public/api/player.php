@@ -49,7 +49,7 @@ switch ($method) {
         // From https://lornajane.net/posts/2008/accessing-incoming-put-data-from-php
         parse_str(file_get_contents("php://input"), $_PUT);
 
-        //create local variables-- no real_escape_string needed due to prepare/bind steps below
+        //create local variables
         $fideid = $playerid;
 
         $playername = $_PUT['inputPlayerName'];
@@ -62,7 +62,7 @@ switch ($method) {
         //if anything is in the status field, inactive = true
         $inactive = isset($_PUT['status']);
 
-        //to handle null data and escape the variables, per PHP docs
+        //prepared statement
         $stmt = $conn->prepare("
             UPDATE top_women_chess_players SET name = ?, federation = ?, birth_year = ?, title = ?, rating_standard = ?, rating_rapid = ?, rating_blitz = ?, inactive = ? WHERE fide_id = ? 
             ");  

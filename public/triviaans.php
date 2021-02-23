@@ -12,11 +12,11 @@ include("../_partials/head.html");
     <!-- calculate quiz results -->
     <?php
 
-    $answer1 = $_POST['one'];
-    $answer2 = $_POST['two'];
-    $answer3 = $_POST['three'];
-    $answer4 = $_POST['four'];
-    $answer5 = $_POST['five'];
+    $answer1 = $_POST['one'] ?? NULL;
+    $answer2 = $_POST['two'] ?? NULL;
+    $answer3 = $_POST['three'] ?? NULL;
+    $answer4 = $_POST['four'] ?? NULL;
+    $answer5 = $_POST['five'] ?? NULL;
 
     $totalCorrect = 0;
 
@@ -39,16 +39,37 @@ include("../_partials/head.html");
     ?>
 
     <!-- content -->
-    <div class="container my-container">
+    <div class="container my-container my-outpost-container">
         <div class="row">
             <div class="col-md-3">
                 <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
             </div>
             <div class="col-md-9">
-                <h2>Well, well, well....</h2>
-                <p>How well do you know your chess trivia?</p>
+                <h2>Well, well, well.... how did you do?</h2>
                 <?php
-                echo "<div id='results'>$totalCorrect / 5 correct</div>";
+                switch ($totalCorrect) {
+                    case 0:
+                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. OUCH. Study up.</p>";
+                        break;
+                    case 1:
+                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. Sleeping much?</p>";
+                        break;
+                    case 2:
+                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. Needs improvement, to say the least.</p>";
+                        break;
+                    case 3:
+                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. Them's the breaks!</p>";
+                        break;
+                    case 4:
+                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. Hey, not bad!</p>";
+                        break;
+                    case 5:
+                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. On fire!</p>";
+                        break;
+                    default:
+                        echo "<p class='my-trivia-result'>Score not understood.</p>";
+                        break;
+                }
                 ?>
             </div>
         </div>

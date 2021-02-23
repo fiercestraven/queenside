@@ -7,4 +7,13 @@
 
         return $userresult;
     }
+
+    function checksessionuser() {
+        session_start();
+
+        if (!isset($_SESSION['admin_40275431'])) {
+            echo "Invalid login";
+            header("Location: login.php");
+        }
+    }
 ?>

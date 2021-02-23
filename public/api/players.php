@@ -1,4 +1,5 @@
 <?php
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 include("../../db.php");
@@ -37,7 +38,7 @@ switch ($method) {
             break;
         }
 
-        //create local variables-- no real_escape_string needed due to prepare/bind steps below
+        //create local variables
         $fideid = $_POST['inputFIDE'];
         $playername = $_POST['inputPlayerName'];
         $federation = $_POST['inputFederation'];
@@ -49,7 +50,7 @@ switch ($method) {
         //if anything is in the status field, inactive = true
         $inactive = isset($_POST['status']);
 
-        //to handle null data and escape the variables, per PHP docs
+        //prepared statement
         $stmt = $conn->prepare("
             INSERT INTO top_women_chess_players (
                 fide_id, name, federation, birth_year, title, rating_standard, rating_rapid, rating_blitz, inactive
