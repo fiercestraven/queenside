@@ -25,7 +25,7 @@
                         find information on top players from around the world. Search for players, filter and sort
                         the results,
                         and view players in detail. Fancy yourself a future chess star? Head to the <a
-                            href="outpost.html">Outpost</a> to find out which players are most
+                            href="outpost.php">Outpost</a> to find out which players are most
                         like you and have a go with some chess trivia.</p>
                 </div>
             </div>

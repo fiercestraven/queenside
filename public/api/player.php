@@ -4,7 +4,13 @@ $method = $_SERVER['REQUEST_METHOD'];
 include("../../db.php");
 include("../../utils/functions.php");
 
-$playerid = $_GET["id"];
+if(!isset($_GET["id"])) {
+    http_response_code(400);
+    echo "No ID supplied";
+    die();
+}
+
+$playerid = $conn->real_escape_string($_GET["id"]);
 
 switch ($method) {
     //read player
