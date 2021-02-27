@@ -97,7 +97,7 @@
 .my-detail-card {
     border: none;
     margin: 0 auto; 
-    margin-top: 1.5em;
+    margin-top: 4em;
     float: none;
 }
 
@@ -390,6 +390,12 @@ span.psw {
 
 #my-queen-link {
   background-color: #5C2B56;
+}
+
+h1, h2, h3, h4 {
+  font-family: proxima-nova, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
 }
   
 /* Change some styling for other screen sizes */

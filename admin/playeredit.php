@@ -1,14 +1,38 @@
+<?php
+    include('../db.php');
+
+    include("../utils/functions.php");
+    checksessionuser();
+
+    if(!isset($_GET["id"])) {
+        //if no id set, re-route to admin page
+        header("Location: admin.php");
+        die();
+    }
+
+    $id = $conn->real_escape_string($_GET['id']);
+
+    //not escaping federations or titles tables as they not edited by other users
+    $sql = "SELECT * 
+            FROM top_women_chess_players 
+            LEFT JOIN twcp_federations USING (federation)
+            LEFT JOIN twcp_titles USING (title)
+            WHERE fide_id=$id";
+    $result = $conn->query($sql);
+
+    if(!$result) {
+        http_response_code(404);
+    } else {
+        $player = $result->fetch_assoc();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <?php
        include("../_partials/head.html");
-
-       include("../utils/functions.php");
-       checksessionuser();
-
-       include('../db.php');
     ?>
 </head>
 
@@ -19,6 +43,21 @@
     ?>
 
     <!-- player edit form -->
+    <?php
+        if(isset($player)) {
+            
+            $name = htmlspecialchars($player['name']);
+            $inactive = $player['inactive'];
+            $fed = htmlspecialchars($player['country_name']);
+            $birth = $player['birth_year'] ?? 'Unknown';
+            $title = htmlspecialchars($player['full_title']) ?? '';
+            $ratingstd = $player['rating_standard'] ?? '--';
+            $ratingrap = $player['rating_rapid'] ?? '--';
+            $ratingblitz = $player['rating_blitz'] ?? '--';
+            $fide = $player['fide_id'];
+        }
+    ?>
+    
     <div class="container" id="player-edit-container">
         <form>
             <h2 class="admin-intro">Admin: Player Edit</h2>
@@ -34,7 +73,7 @@
             <div class="row mb-3">
                 <label for="inputFIDE" class="col-sm-2 col-form-label">FIDE ID</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="5008123" id="inputFIDE">
+                    <input type="text" class="form-control" value="<?=$fide?>" id="inputFIDE">
                 </div>
             </div>
 
@@ -42,7 +81,7 @@
             <div class="row mb-3">
                 <label for="inputPlayerName" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="Koneru, Humpy" id="inputPlayerName">
+                    <input type="text" class="form-control" value="<?=$name?>" id="inputPlayerName">
                 </div>
             </div>
 
@@ -50,7 +89,21 @@
             <div class="row mb-3">
                 <label for="inputFederation" class="col-sm-2 col-form-label">Federation</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="India" id="inputFederation">
+                    <select class="form-select" aria-label="Dropdown selection for player federation">
+                        <option selected>Select</option>
+                        <?php
+                            //not escaping as this table is not edited by other users
+                            $sqlfed = "SELECT * FROM twcp_federations";
+
+                            $result = $conn->query($sqlfed);
+                            if($result) {
+                                while ($fed = $result->fetch_assoc()) {
+                                    $selected = $fed['federation'] == $player['federation'] ? 'selected' : '';
+                                    echo "<option $selected value='{$fed['federation']}'>{$fed['country_name']}</option>";
+                                }
+                            }
+                        ?>
+                    </select>
                 </div>
             </div>
 
@@ -58,7 +111,7 @@
             <div class="row mb-3">
                 <label for="inputBirthYear" class="col-sm-2 col-form-label">Birth Year</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="1987" id="inputBirthYear">
+                    <input type="text" class="form-control" value="<?=$birth?>" id="inputBirthYear">
                 </div>
             </div>
 
@@ -68,16 +121,18 @@
                 <div class="col-sm-10">
                     <select class="form-select" aria-label="Dropdown selection for player title">
                         <option selected>Select</option>
-                        <option value="GM">Grandmaster</option>
-                        <option value="WGM">Woman Grandmaster</option>
-                        <option value="IM">International Master</option>
-                        <option value="CM">Candidate Master</option>
-                        <option value="FM">FIDE Master</option>
-                        <option value="H">Honorary Grandmaster</option>
-                        <option value="WIM">Woman International Master</option>
-                        <option value="WCM">Woman Candidate Master</option>
-                        <option value="WFM">Woman FIDE Master</option>
-                        <option value="WH">Woman Honorary Grandmaster</option>
+                        <?php
+                            //not escaping as this table is not edited by other users
+                            $sqltitle = "SELECT * FROM twcp_titles";
+
+                            $result = $conn->query($sqltitle);
+                            if($result) {
+                                while ($title = $result->fetch_assoc()) {
+                                    $selected = $title['title'] == $player['title'] ? 'selected' : '';
+                                    echo "<option $selected value='{$title['title']}'>{$title['full_title']}</option>";
+                                }
+                            }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -87,35 +142,44 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-3">
                     <label for="ratingstandard">Standard Rating</label>
-                    <input type="text" class="form-control" placeholder="2586" aria-label="Standard rating"
+                    <input type="text" class="form-control" value="<?=$ratingstd?>" aria-label="Standard rating"
                     name="ratingstandard">
                 </div>
                 <div class="col-sm-3">
                     <label for="ratingrapid">Rapid Rating</label>
-                    <input type="text" class="form-control" placeholder="2483" aria-label="Rapid rating"
+                    <input type="text" class="form-control" value="<?=$ratingrap?>" aria-label="Rapid rating"
                     name="ratingrapid">
                 </div>
                 <div class="col-sm-3">
                     <label for="ratingblitz">Blitz Rating</label>
-                    <input type="text" class="form-control" placeholder="2483" aria-label="Blitz rating"
+                    <input type="text" class="form-control" value="<?=$ratingblitz?>" aria-label="Blitz rating"
                     name="ratingblitz">
                 </div>
             </div>
 
             <!-- Player status -->
-            <fieldset class="row mb-3">
+            <fieldset class="row mb-3">                
                 <legend class="col-form-label col-sm-2 pt-0">Status</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="status" id="radioActive" value="active"
-                            checked>
+                        <?php
+                            if(!$inactive) {
+                                echo "checked";
+                            }
+                        ?>>
                         <label class="form-check-label" for="radioActive">
                             Active
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="status" id="radioWithdrawn"
-                            value="withdrawn">
+                            value="withdrawn"
+                            <?php
+                            if($inactive) {
+                                echo "checked";
+                            }
+                        ?>>
                         <label class="form-check-label" for="radioWithdrawn">
                             Withdrawn
                         </label>

@@ -1,6 +1,4 @@
 <?php
-    if(isset($_GET[''])) {
-        echo "build json response";
-    }
-
+    //no api index; send 404 to user
+    http_response_code(404);
 ?>

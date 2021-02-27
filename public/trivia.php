@@ -20,8 +20,8 @@
                 <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
             </div>
             <div class="col-md-9 mt-3">
-                <h1 class="display-4">TRIVIA</h1>
-                <h4>So you think you know a thing or two?</h4>
+                <h1>Trivia</h1>
+                <h5>So you think you know a thing or two?</h5>
                 <p>Take the grandmaster trivia quiz!</p>
             </div>
         </div>       

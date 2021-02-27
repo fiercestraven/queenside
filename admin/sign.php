@@ -17,7 +17,6 @@
         $_SESSION['admin_40275431'] = $user;
         header("Location: admin.php");
     } else {
-        header("Location: login.php"); 
-        // echo "Unsuccessful login attempt.";     
+        header("Location: login.php?error"); 
     }
 ?>

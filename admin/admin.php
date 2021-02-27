@@ -3,6 +3,18 @@ include('../utils/functions.php');
 checksessionuser();
 
 include('../db.php');
+
+    $sql = "SELECT * 
+            FROM top_women_chess_players 
+            LEFT JOIN twcp_federations USING (federation)
+            LEFT JOIN twcp_titles USING (title)
+            LIMIT 10";
+    $result = $conn->query($sql);
+
+    if(!$result) {
+        http_response_code(404);
+        die();
+    } 
 ?>
 
 <!DOCTYPE html>
@@ -131,215 +143,36 @@ include('../db.php');
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>5008123</td>
-                    <td><a class="my-light-link" href="playeredit.php">Koneru, Humpy</a></td>
-                    <td>India</td>
-                    <td>1987</td>
-                    <td>Grandmaster</td>
-                    <td>2586</td>
-                    <td>2483</td>
-                    <td>2483</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16340801 5729</td>
-                    <td>Valencia, Jolina X.</td>
-                    <td>Cape Verde</td>
-                    <td>1964</td>
-                    <td>lacus</td>
-                    <td>2630</td>
-                    <td>1706</td>
-                    <td>2027</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16171219 6797</td>
-                    <td>Conway, Emery N.</td>
-                    <td>Burundi</td>
-                    <td>1981</td>
-                    <td>Phasellus</td>
-                    <td>2452</td>
-                    <td>1604</td>
-                    <td>2495</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16000817 0029</td>
-                    <td>Gay, Rachael K.</td>
-                    <td>Turkey</td>
-                    <td>1954</td>
-                    <td>luctus</td>
-                    <td>2126</td>
-                    <td>1813</td>
-                    <td>1620</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16270224 3425</td>
-                    <td>Barker, Maris X.</td>
-                    <td>Venezuela</td>
-                    <td>1950</td>
-                    <td>quam</td>
-                    <td>2311</td>
-                    <td>2628</td>
-                    <td>1344</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16130918 6557</td>
-                    <td>Nixon, Hayley Y.</td>
-                    <td>Syria</td>
-                    <td>1991</td>
-                    <td>lectus</td>
-                    <td>2145</td>
-                    <td>2541</td>
-                    <td>2238</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16940823 5829</td>
-                    <td>Daniels, Zia V.</td>
-                    <td>Botswana</td>
-                    <td>1978</td>
-                    <td>pretium</td>
-                    <td>2475</td>
-                    <td>2239</td>
-                    <td>2458</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16410614 8424</td>
-                    <td>Fuentes, Blina C.</td>
-                    <td>Niger</td>
-                    <td>1996</td>
-                    <td>arcu</td>
-                    <td>1888</td>
-                    <td>2291</td>
-                    <td>1682</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16170201 0024</td>
-                    <td>Bennett, Abra W.</td>
-                    <td>Libya</td>
-                    <td>1963</td>
-                    <td>lobortis</td>
-                    <td>2377</td>
-                    <td>1480</td>
-                    <td>2316</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16391110 7229</td>
-                    <td>Guerrero, Breanna P.</td>
-                    <td>Cuba</td>
-                    <td>1962</td>
-                    <td>sollicitudin</td>
-                    <td>1872</td>
-                    <td>1525</td>
-                    <td>1854</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16730202 7748</td>
-                    <td>Byrd, Priscilla D.</td>
-                    <td>Marshall Islands</td>
-                    <td>1984</td>
-                    <td>rutrum</td>
-                    <td>1933</td>
-                    <td>2152</td>
-                    <td>1939</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16390309 9541</td>
-                    <td>Ochoa, Delilah D.</td>
-                    <td>San Marino</td>
-                    <td>1970</td>
-                    <td>ut</td>
-                    <td>1896</td>
-                    <td>2608</td>
-                    <td>1616</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16731003 4967</td>
-                    <td>Fulton, Yvette P.</td>
-                    <td>Dominican Republic</td>
-                    <td>1970</td>
-                    <td>at</td>
-                    <td>2205</td>
-                    <td>1258</td>
-                    <td>1159</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16201030 8746</td>
-                    <td>Orr, Adria X.</td>
-                    <td>Germany</td>
-                    <td>1964</td>
-                    <td>orci</td>
-                    <td>1927</td>
-                    <td>1804</td>
-                    <td>2684</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16441210 3303</td>
-                    <td>Mccarthy, Brandy H.</td>
-                    <td>Guinea</td>
-                    <td>1977</td>
-                    <td>libero</td>
-                    <td>2208</td>
-                    <td>2345</td>
-                    <td>2295</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16390430 1656</td>
-                    <td>Ramsey, Wing W.</td>
-                    <td>Sierra Leone</td>
-                    <td>1991</td>
-                    <td>hymenaeos.</td>
-                    <td>2118</td>
-                    <td>1881</td>
-                    <td>1418</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16660420 7867</td>
-                    <td>Preston, Oprah P.</td>
-                    <td>Cuba</td>
-                    <td>1975</td>
-                    <td>accumsan</td>
-                    <td>2291</td>
-                    <td>1766</td>
-                    <td>2646</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16760422 7665</td>
-                    <td>Alford, Uma G.</td>
-                    <td>Cape Verde</td>
-                    <td>1990</td>
-                    <td>amet</td>
-                    <td>2011</td>
-                    <td>1287</td>
-                    <td>1403</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16550809 8935</td>
-                    <td>Lloyd, Risa C.</td>
-                    <td>Equatorial Guinea</td>
-                    <td>1971</td>
-                    <td>velit</td>
-                    <td>2583</td>
-                    <td>1280</td>
-                    <td>1911</td>
-                    <td>Yes</td>
-                </tr>
+                <?php
+                while ($player = $result->fetch_assoc()) { 
+
+                    $name = htmlspecialchars($player['name']);
+                    $inactive = $player['inactive'];
+                    $fed = htmlspecialchars($player['country_name']);
+                    $birth = $player['birth_year'] ?? 'Unknown';
+                    $title = htmlspecialchars($player['full_title']) ?? '';
+                    $ratingstd = $player['rating_standard'] ?? '--';
+                    $ratingrap = $player['rating_rapid'] ?? '--';
+                    $ratingblitz = $player['rating_blitz'] ?? '--';
+                    $fide = $player['fide_id'];
+                    
+                    echo "<tr>
+                        <td>{$fide}</td>
+                        <td><a class='my-light-link' href='playeredit.php?id={$fide}'>{$name}</a></td>
+                        <td>{$fed}</td>
+                        <td>{$birth}</td>
+                        <td>{$title}</td>
+                        <td>{$ratingstd}</td>
+                        <td>{$ratingrap}</td>
+                        <td>{$ratingblitz}</td>";
+                        if($inactive) {
+                            echo "<td>Withdrawn</td>";
+                        } else {
+                            echo "<td>Active</td>";
+                        }
+                    echo "</tr>";
+                }
+                ?>
             </tbody>
         </table>
 
@@ -351,9 +184,9 @@ include('../db.php');
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <!-- <li class="page-item active"><a class="page-link" href="#">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li> -->
                 <li class="page-item">
                     <a class="page-link" href="#" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>

@@ -13,8 +13,14 @@
     include("../_partials/adminnav.html");
     ?>
 
+    <?php
+        if(isset($_GET['error'])) {
+            echo "Invalid login credentials";
+        }
+    ?>
+
     <!-- Login -->
-    <div class="card mb-3 my-card" style="max-width: 800px; padding-bottom: 40px;">
+    <div class="card mb-3 my-detail-card" style="max-width: 800px; padding-bottom: 40px;">
         <div class="row g-0">
         <div class="col-md-3">
                 <img src="../public/img/bishop.png" alt="silhouette of a bishop chess piece" class="img-responsive" id="bishop-img">

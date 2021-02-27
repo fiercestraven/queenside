@@ -1,16 +1,18 @@
 <?php
     include ("../db.php");
 
-    // if(!isset($_GET["id"])) {
-    //     http_response_code(400);
-    //     echo "No ID supplied";
-    //     die();
-    // }
-    
-    // $playerid = $conn->real_escape_string($_GET["id"]);
+    if(!isset($_GET["id"])) {
+        //if no id set, re-route to home page
+        header("Location: ./");
+        die();
+    }
 
-    
-    $sql = "SELECT * FROM top_women_chess_players WHERE fide_id=$_GET['fide_id']";
+    $id = $conn->real_escape_string($_GET['id']);
+    $sql = "SELECT * 
+            FROM top_women_chess_players 
+            LEFT JOIN twcp_federations USING (federation)
+            LEFT JOIN twcp_titles USING (title)
+            WHERE fide_id=$id";
     $result = $conn->query($sql);
 
     if(!$result) {
@@ -37,11 +39,12 @@
 
     <?php
         if(isset($player)) {
+            
             $name = htmlspecialchars($player['name']);
             $inactive = $player['inactive'];
-            $fed = htmlspecialchars($player['federation']);
+            $fed = htmlspecialchars($player['country_name']);
             $birth = $player['birth_year'] ?? 'Unknown';
-            $title = htmlspecialchars($player['title']) ?? '';
+            $title = htmlspecialchars($player['full_title']) ?? '';
             $ratingstd = $player['rating_standard'] ?? '--';
             $ratingrap = $player['rating_rapid'] ?? '--';
             $ratingblitz = $player['rating_blitz'] ?? '--';
