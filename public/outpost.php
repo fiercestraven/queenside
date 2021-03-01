@@ -3,21 +3,23 @@
 
 <head>
     <?php
-        include("../_partials/head.html");
+    include("../_partials/head.html");
     ?>
 </head>
 
 <body>
     <!-- logo and nav -->
-   <?php
-     include("../_partials/nav.html");
-   ?>
+    <?php
+    include("../_partials/nav.html");
+    ?>
 
     <!-- begin content + about/welcome section -->
     <div class="container my-container">
         <div class="row">
             <div class="col-md-3">
-                <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
+                <a href="outpost.php">
+                    <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
+                </a>
             </div>
             <div class="col-md-9">
                 <h2>Welcome to the Outpost</h2>
@@ -30,10 +32,10 @@
         <a class="my-dark-link my-outpost-link" id="my-trivia-link" href="trivia.php">Trivia</a>
         <a class="my-dark-link my-outpost-link" id="my-country-link" href="countryshowdown.php">Country vs Country</a>
         <a class="my-dark-link my-outpost-link" id="my-queen-link" href="queenme.php">Queen Me!</a>
-</div>
+    </div>
 
-        <!-- accordion -->
-        <!-- <div class="accordion">
+    <!-- accordion -->
+    <!-- <div class="accordion">
             <div class="accordion-item" id="triviaAccordion">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -41,8 +43,8 @@
                         Trivia
                     </button>
                 </h2> -->
-                <!-- trivia -->
-                <!-- <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="trivia"
+    <!-- trivia -->
+    <!-- <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="trivia"
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <h4>So you think you know a thing or two?</h4>
@@ -50,8 +52,8 @@
                         <form>
                             <p class="question"><strong>Q1</strong>: Which Federation (country) is the top-ranking
                                 female Grandmaster (GM) from?</p> -->
-                            <!-- ans a -->
-                            <!-- <div class="form-check form-check-inline">
+    <!-- ans a -->
+    <!-- <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="one" id="q1r1"
                                     value="option1">
                                 <label class="form-check-label" for="q1r1">Scotland</label>
@@ -67,10 +69,10 @@
                                 <label class="form-check-label" for="q1r3">Georgia</label>
                             </div> -->
 
-                            <!-- <p class="question"><strong>Q2</strong>: What is the average blitz rating score of all Woman
+    <!-- <p class="question"><strong>Q2</strong>: What is the average blitz rating score of all Woman
                                 Grandmasters (WGM)?</p> -->
-                            <!-- ans unknown, dummy data -->
-                            <!-- <div class="form-check form-check-inline">
+    <!-- ans unknown, dummy data -->
+    <!-- <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="two" id="q2r1"
                                     value="option1">
                                 <label class="form-check-label" for="q2r1">2205</label>
@@ -88,8 +90,8 @@
 
                             <p class="question"><strong>Q3</strong>: When was the oldest active Woman Grandmaster (WGM)
                                 born?</p> -->
-                            <!-- ans b FIDE ID 14561 -->
-                            <!-- <div class="form-check form-check-inline">
+    <!-- ans b FIDE ID 14561 -->
+    <!-- <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="three" id="q3r1"
                                     value="option1">
                                 <label class="form-check-label" for="q3r1">1946</label>
@@ -105,9 +107,9 @@
                                 <label class="form-check-label" for="q3r3">1961</label>
                             </div> -->
 
-                            <!-- <p class="question"><strong>Q4</strong>: How many Woman Grandmasters are there in India?</p> -->
-                            <!-- c -->
-                            <!-- <div class="form-check form-check-inline">
+    <!-- <p class="question"><strong>Q4</strong>: How many Woman Grandmasters are there in India?</p> -->
+    <!-- c -->
+    <!-- <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="four" id="q4r1"
                                     value="option1">
                                 <label class="form-check-label" for="q4r1">20</label>
@@ -123,10 +125,10 @@
                                 <label class="form-check-label" for="q4r3">11</label>
                             </div> -->
 
-                            <!-- <p class="question"><strong>Q5</strong>: What year was the youngest Woman Grandmaster born?
+    <!-- <p class="question"><strong>Q5</strong>: What year was the youngest Woman Grandmaster born?
                             </p> -->
-                            <!-- c FIDE ID 34127035-->
-                            <!-- <div class="form-check form-check-inline">
+    <!-- c FIDE ID 34127035-->
+    <!-- <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="five" id="q5r1"
                                     value="option1">
                                 <label class="form-check-label" for="q5r1">2002</label>
@@ -152,8 +154,8 @@
                 </div>
             </div> -->
 
-            <!-- country vs country -->
-            <!-- <div class="accordion-item" id="countryAccordion">
+    <!-- country vs country -->
+    <!-- <div class="accordion-item" id="countryAccordion">
                 <h2 class="accordion-header my-accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -169,8 +171,8 @@
                 </div>
             </div> -->
 
-            <!-- queen me -->
-            <!-- <div class="accordion-item" id="queenAccordion">
+    <!-- queen me -->
+    <!-- <div class="accordion-item" id="queenAccordion">
                 <h2 class="accordion-header" id="headingThree">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -183,8 +185,8 @@
                         <h4>Find yourself!</h4>
                         <p>If you were a chess queen, who would you be?</p>
                         <form> -->
-                            <!-- Federation -->
-                            <!-- <div class="row mb-3">
+    <!-- Federation -->
+    <!-- <div class="row mb-3">
                                 <label for="inputHomeCountry" class="col-sm-2 col-form-label">Enter your home country:</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" placeholder="e.g., Chile"
@@ -192,8 +194,8 @@
                                 </div>
                             </div> -->
 
-                            <!-- Birth Year -->
-                            <!-- <div class="row mb-3">
+    <!-- Birth Year -->
+    <!-- <div class="row mb-3">
                                 <label for="inputBirthYear" class="col-sm-2 col-form-label">Enter your birth year:</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" placeholder="e.g., 1987"
@@ -201,8 +203,8 @@
                                 </div>
                             </div> -->
 
-                            <!-- submission button -->
-                            <!-- <button type="submit">Submit</button>
+    <!-- submission button -->
+    <!-- <button type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -212,13 +214,11 @@
 
     <!-- Footer -->
     <?php
-        include("../_partials/footer.html");
-    ?>  
+    include("../_partials/footer.html");
+    ?>
 
     <!-- JS Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
 </body>
 

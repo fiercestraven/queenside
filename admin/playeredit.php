@@ -59,7 +59,7 @@
     ?>
     
     <div class="container" id="player-edit-container">
-        <form>
+        <form method="POST" action="">
             <h2 class="admin-intro">Admin: Player Edit</h2>
             <!-- Player image/icon -->
             <div class="row mb-3">
@@ -93,7 +93,7 @@
                         <option selected>Select</option>
                         <?php
                             //not escaping as this table is not edited by other users
-                            $sqlfed = "SELECT * FROM twcp_federations";
+                            $sqlfed = "SELECT * FROM twcp_federations ORDER BY country_name ASC";
 
                             $result = $conn->query($sqlfed);
                             if($result) {

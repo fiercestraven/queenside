@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if (isset($_SESSION['admin_40275431'])) {
+        header("Location: admin.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

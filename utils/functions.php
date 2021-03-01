@@ -12,8 +12,9 @@
         session_start();
 
         if (!isset($_SESSION['admin_40275431'])) {
-            echo "Invalid login";
+            echo "<h2>Invalid login</h2>";
             header("Location: login.php");
         }
     }
+    
 ?>

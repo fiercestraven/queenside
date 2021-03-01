@@ -1,5 +1,9 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
 <?php
-include("../_partials/head.html");
+    include("../_partials/head.html");
 ?>
 </head>
 

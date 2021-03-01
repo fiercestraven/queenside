@@ -15,10 +15,11 @@
 
     <!-- player card setup -->
     <div class="container my-container">
-        <h3>Top 3 Active Players</h3>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+    <h3 >Top 3 Active Players</h3>
+        <div class="row mb-5 row-cols-1 row-cols-md-3 g-4">
             <div class="col">
                 <div class="card h-100">
+                    <!-- update below to link to specific player detail card! -->
                     <a class="card-link my-discover-card" href="playerdetail.php">
                         <img class="img-responsive card-img-top my-card-icon" src="img/playerimage.jpg" alt="collage of six female chess players">
                         <!-- player info -->
@@ -60,8 +61,9 @@
                 </div>
             </div>
         </div>
+        
         <h3>Top 3 Players in the United Kingdom</h3>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row mb-5 row-cols-1 row-cols-md-3 g-4">    
             <div class="col">
                 <div class="card h-100">
                     <a class="card-link my-discover-card" href="playerdetail.php">
@@ -105,8 +107,9 @@
                 </div>
             </div>
         </div>
+
         <h3>Top 3 Players Over Age 40</h3>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row mb-5 row-cols-1 row-cols-md-3 g-4">
             <div class="col">
                 <div class="card h-100">
                     <a class="card-link my-discover-card" href="playerdetail.php">

@@ -18,7 +18,9 @@
     <div class="container my-container">
         <div class="row mt-5 mb-2">
             <div class="col-md-3">
-                <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
+                <a href="outpost.php">
+                    <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
+                </a>
             </div>
             <div class="col-md-9">
                 <h2>Country vs Country</h2>
@@ -27,48 +29,53 @@
             </div>
         </div>
 
-        <!-- map image -->
-
         <!-- Country dropdowns -->
-        <div class="row mb-5">
-            <div class="col-sm-6">
-                <select class="form-select" aria-label="Dropdown selection for player federation">
-                    <option selected>Country 1</option>
-                    <?php
-                    //not escaping as this table is not edited by other users
-                    $sqlfed = "SELECT * FROM twcp_federations";
+        <div class="row mb-3">
+            <form method="POST" action="countryaction.php">
+                <div class="col-sm-6">
+                    <select class="form-select" aria-label="Dropdown for first country selection" name="country1">
+                        <option value="country1" selected>Country 1</option>
+                        <?php
+                        //not escaping as this table is not edited by other users
+                        $sqlfed = "SELECT * FROM twcp_federations ORDER BY country_name ASC";
 
-                    $result = $conn->query($sqlfed);
-                    if ($result) {
-                        while ($fed = $result->fetch_assoc()) {
-                            echo "<option value='{$fed['federation']}'>{$fed['country_name']}</option>";
+                        $result = $conn->query($sqlfed);
+                        if ($result) {
+                            while ($fed = $result->fetch_assoc()) {
+                                echo "<option value='{$fed['federation']}'>{$fed['country_name']}</option>";
+                            }
                         }
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="col-sm-6">
-                <select class="form-select" aria-label="Dropdown selection for player federation">
-                    <option selected>Country 2</option>
-                    <?php
-                    //not escaping as this table is not edited by other users
-                    $sqlfed = "SELECT * FROM twcp_federations";
+                        ?>
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <select class="form-select" aria-label="Dropdown for second country selection" name="country1">
+                        <option value="country1" selected>Country 2</option>
+                        <?php
+                        //not escaping as this table is not edited by other users
+                        $sqlfed = "SELECT * FROM twcp_federations ORDER BY country_name ASC";
 
-                    $result = $conn->query($sqlfed);
-                    if ($result) {
-                        while ($fed = $result->fetch_assoc()) {
-                            echo "<option value='{$fed['federation']}'>{$fed['country_name']}</option>";
+                        $result = $conn->query($sqlfed);
+                        if ($result) {
+                            while ($fed = $result->fetch_assoc()) {
+                                echo "<option value='{$fed['federation']}'>{$fed['country_name']}</option>";
+                            }
                         }
-                    }
-                    ?>
-                </select>
-            </div>
+                        ?>
+                    </select>
+                </div>
+            </form>
         </div>
 
-        <div class="row mb-5"> 
+        <div class="row">
             <button type="submit" class="btn btn-secondary">Submit</button>
         </div>
 
+    </div>
+
+    <!-- map image -->
+    <div class="row">
+        <img class="img-responsive" id="my-map-image" src="img/mapDenmark.jpg" alt="brightly coloured map detail of part of Denmark">;
     </div>
 
     <!-- Footer -->

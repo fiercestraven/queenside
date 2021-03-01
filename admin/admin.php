@@ -4,11 +4,27 @@ checksessionuser();
 
 include('../db.php');
 
+    // get count of how many players for pagination purposes
+    $sqlcount = "SELECT COUNT(*) FROM top_women_chess_players";
+    $countresult = $conn->query($sqlcount);
+    $count = $countresult->fetch_array()[0];
+
+    $per_page = 30;
+    $page = (int)($_GET['page'] ?? 1);
+    $last_page = ceil($count / $per_page);
+
+    //handle page count of 0 or below
+    if ($page < 1) {
+        $page = 1;
+    }
+    $offset = $per_page * ($page - 1);
+
     $sql = "SELECT * 
             FROM top_women_chess_players 
             LEFT JOIN twcp_federations USING (federation)
             LEFT JOIN twcp_titles USING (title)
-            LIMIT 10";
+            LIMIT $per_page
+            OFFSET $offset";
     $result = $conn->query($sql);
 
     if(!$result) {
@@ -179,19 +195,25 @@ include('../db.php');
         <!-- pagination: will implement when real data is present -->
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-end">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+                <?php
+                if ($page > 1) {
+                echo "<li class='page-item'>
+                    <a class='page-link' href='admin.php?page=" . ($page - 1) . "' aria-label='Previous'>
+                        <span aria-hidden='true'>&laquo;</span>
                     </a>
-                </li>
-                <!-- <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
+                </li>";
+                }
+                // <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                // <li class="page-item"><a class="page-link" href="#">2</a></li>
+                // <li class="page-item"><a class="page-link" href="#">3</a></li> 
+                if ($page < $last_page) {
+                echo "<li class='page-item'>
+                    <a class='page-link' href='admin.php?page=" . ($page + 1) . "' aria-label='Next'>
+                        <span aria-hidden='true'>&raquo;</span>
                     </a>
-                </li>
+                </li>";
+                }
+                ?>
             </ul>
         </nav>
     </div>

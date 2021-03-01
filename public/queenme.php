@@ -15,14 +15,17 @@
     ?>
 
     <!-- content -->
-    <div class="container my-container">
+    <div class="container my-outpost-container">
         <div class="row mt-5">
             <div class="col-md-3">
-                <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
+                <a href="outpost.php">
+                    <img src="img/queenmeLogo.png" alt="an icon of a pawn with the words The Outpost and a crown" id="outpost-logo">
+                </a>
             </div>
             <div class="col-md-9">
                 <h1>Queen Me!</h1>
                 <h5>If you were a chess queen, who would you be?</h5>
+                <p>We've combed the data for the best of the best... simply select your home country and enter your year of birth to see the chess queen who most closely matches your details.</p>
             </div>
         </div>
 
@@ -35,7 +38,7 @@
                         <option selected>Select</option>
                         <?php
                         //not escaping as this table is not edited by other users
-                        $sqlfed = "SELECT * FROM twcp_federations";
+                        $sqlfed = "SELECT * FROM twcp_federations ORDER BY country_name ASC";
 
                         $result = $conn->query($sqlfed);
                         if ($result) {
@@ -57,7 +60,9 @@
             </div>
 
             <!-- submission button -->
-            <button type="submit" class="btn btn-secondary">Submit</button>
+            <div class="row mb-3">
+                <button type="submit" class="btn btn-secondary">Submit</button>
+            </div>
         </form>
 
     </div>
