@@ -25,7 +25,8 @@ switch ($method) {
         break;
         
     case 'POST':
-        //basic authentication
+ 
+       //basic authentication
         if(!(isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']))) {
             http_response_code(401);
             echo "401 Unauthorized";

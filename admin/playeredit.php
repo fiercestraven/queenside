@@ -59,21 +59,24 @@
     ?>
     
     <div class="container" id="player-edit-container">
+            <?php
+            echo "<p id='my-login-confirmation'>Logged in as {$_SESSION['admin_40275431']}</p>";
+            ?>
         <form method="POST" action="">
             <h2 class="admin-intro">Admin: Player Edit</h2>
             <!-- Player image/icon -->
             <div class="row mb-3">
-                <label for="formFile" class="col-sm-2 col-form-label">Profile Image</label>
+                <label for="form_image" class="col-sm-2 col-form-label">Profile Image</label>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control" id="formFile">
+                    <input type="file" class="form-control" id="form_image">
                 </div>
             </div>
 
             <!-- FIDE ID -->
             <div class="row mb-3">
-                <label for="inputFIDE" class="col-sm-2 col-form-label">FIDE ID</label>
+                <label for="FIDE" class="col-sm-2 col-form-label">FIDE ID</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" value="<?=$fide?>" id="inputFIDE">
+                    <input type="text" class="form-control" value="<?=$fide?>" id="FIDE">
                 </div>
             </div>
 
@@ -87,10 +90,10 @@
 
             <!-- Federation -->
             <div class="row mb-3">
-                <label for="inputFederation" class="col-sm-2 col-form-label">Federation</label>
+                <label for="fed" class="col-sm-2 col-form-label">Federation</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Dropdown selection for player federation">
-                        <option selected>Select</option>
+                    <select class="form-select" aria-label="Dropdown selection for player federation" name="country" id="fed">
+                        <option value="country" selected>Select</option>
                         <?php
                             //not escaping as this table is not edited by other users
                             $sqlfed = "SELECT * FROM twcp_federations ORDER BY country_name ASC";
@@ -109,17 +112,17 @@
 
             <!-- Birth Year -->
             <div class="row mb-3">
-                <label for="inputBirthYear" class="col-sm-2 col-form-label">Birth Year</label>
+                <label for="birth" class="col-sm-2 col-form-label">Birth Year</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" value="<?=$birth?>" id="inputBirthYear">
+                    <input type="text" class="form-control" value="<?=$birth?>" id="birth">
                 </div>
             </div>
 
             <!-- Player title -->
             <div class="row mb-3">
-                <label for="inputPlayerTitle" class="col-sm-2 col-form-label">Title</label>
+                <label for="title" class="col-sm-2 col-form-label">Title</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Dropdown selection for player title">
+                    <select class="form-select" aria-label="Dropdown selection for player title" id="title">
                         <option selected>Select</option>
                         <?php
                             //not escaping as this table is not edited by other users
@@ -162,25 +165,25 @@
                 <legend class="col-form-label col-sm-2 pt-0">Status</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="radioActive" value="active"
+                        <input class="form-check-input" type="radio" name="status" id="radio_active" value="active"
                         <?php
                             if(!$inactive) {
                                 echo "checked";
                             }
                         ?>>
-                        <label class="form-check-label" for="radioActive">
+                        <label class="form-check-label" for="radio_active">
                             Active
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="radioWithdrawn"
+                        <input class="form-check-input" type="radio" name="status" id="radio_withdrawn"
                             value="withdrawn"
                             <?php
                             if($inactive) {
                                 echo "checked";
                             }
                         ?>>
-                        <label class="form-check-label" for="radioWithdrawn">
+                        <label class="form-check-label" for="radio_withdrawn">
                             Withdrawn
                         </label>
                     </div>

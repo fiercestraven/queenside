@@ -1,14 +1,13 @@
     <!-- logo and search -->
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <a href="/project/public/index.php"><img src="/project/public/img/QueensideLogo.png" class="img-responsive my-logo"
                         alt="Queenside logo"></a>
             </div>
-            <div class="col-md-3 my-search">
-                <form class="form-inline justify-content-center md-form form-sm">
-                    <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search players"
-                        aria-label="Search">
+            <div class="col-md-4 my-search">
+                <form class="form-inline justify-content-center md-form form-sm" action="../public/playerdetail.php" method="post">
+                    <input class="form-control form-control-sm w-75" type="text" placeholder="Player name or FIDE ID" aria-label="Search" name="playersearch">
                     <i class="fa fa-search fa-lg" aria-hidden="true"></i>
                 </form>
             </div>

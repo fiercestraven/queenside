@@ -6,7 +6,7 @@
 }
 
 .my-search {
-  min-width: 220px;
+  min-width: 275px;
 }
 
 /* navbar */
@@ -208,9 +208,16 @@
   padding: 30px;
 }
 
+#my-login-confirmation {
+  padding-left: 0;
+  color: gray;
+  font-style: italic;
+}
+
 .admin-intro {
   color:#AD0000;
-  margin-bottom: 25px;
+  padding-left: 0;
+  margin-bottom: 20px;
 }
 
 .my-logout-button {
@@ -392,6 +399,11 @@ span.psw {
   margin-left: 0 auto 0 auto;
 }
 
+#my-country-form {
+  display: inline-flex;
+  padding-left: 0;
+}
+
 #my-queen-link {
   background-color: #5C2B56;
 }
@@ -400,6 +412,20 @@ h1, h2, h3, h4 {
   font-family: proxima-nova, Arial, sans-serif;
   text-transform: uppercase;
   font-weight: bold;
+}
+
+#my-country-feedback {
+  color: red;
+  text-align: center;
+}
+
+#my-country-feedback h5{
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+.hidden {
+  visibility: hidden;
 }
   
 /* Change some styling for other screen sizes */

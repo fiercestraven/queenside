@@ -34,8 +34,8 @@
             <div class="row mt-2">
                 <label for="country" class="col-sm-2 col-form-label">Your home country:</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Dropdown selection for home country">
-                        <option selected>Select</option>
+                    <select class="form-select" aria-label="Dropdown selection for home country" name="usercountry" id="country">
+                        <option value="country" selected>Select</option>
                         <?php
                         //not escaping as this table is not edited by other users
                         $sqlfed = "SELECT * FROM twcp_federations ORDER BY country_name ASC";
@@ -55,7 +55,7 @@
             <div class="row mb-3">
                 <label for="birth_year" class="col-sm-2 col-form-label">Enter your birth year:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="e.g., 1987" id="birth_year">
+                    <input type="text" class="form-control" placeholder="e.g., 1987" name="playerbirth" id="birth_year">
                 </div>
             </div>
 
