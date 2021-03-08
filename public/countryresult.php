@@ -15,21 +15,6 @@
     ?>
 
     <!-- calculate and display result of match-up -->
-
-    <!-- query to get average score for a player... -->
-    <!-- SELECT *, round((a + b + c) / 3) as avg FROM dataset
-    ...eep, except that dataset not set up for this for countries
-    SELECT country, avg(a)
-    FROM test
-    WHERE country IN ('USA', 'CAN') --- echo a php variable for 'USA'
-    GROUP BY country;
-
-    or SELECT country, avg(a)
-    FROM test
-    WHERE country IN ('USA')
-    run it twice, then compare
-    ---first way is better, but 2nd way easier for me -->
-
     <div class="container my-container my-outpost-container">
         <div class="row">
             <div class="col-md-3">

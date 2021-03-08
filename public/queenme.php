@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <form>
+        <form action="yourqueen.php" method="GET">
             <!-- Federation -->
             <div class="row mt-2">
                 <label for="country" class="col-sm-2 col-form-label">Your home country:</label>
@@ -55,17 +55,31 @@
             <div class="row mb-3">
                 <label for="birth_year" class="col-sm-2 col-form-label">Enter your birth year:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="e.g., 1987" name="playerbirth" id="birth_year">
+                    <input type="text" class="form-control" placeholder="e.g., 1987" name="userbirth" id="birth_year">
                 </div>
             </div>
 
             <!-- submission button -->
             <div class="row mb-3">
-                <button type="submit" class="btn btn-secondary">Submit</button>
+                <button type="submit" class="btn btn-secondary" id="submit" disabled>Submit</button>
             </div>
         </form>
 
     </div>
+
+    <script>
+        var ucountry = document.getElementById("country");
+        var ubirth = document.getElementById("birth_year");
+
+        //don't allow user to submit unless they've filled out both bits
+        // FIXME birth year isn't working - what to put for value?
+        if (ucountry.value == "Select" || ubirth.value == "") {
+            // FIXME switch false below back to true once value for birth year is fixed
+                submit.disabled = false;
+            } else {
+                submit.disabled = false;
+            }
+    </script>
 
     <!-- Footer -->
     <?php

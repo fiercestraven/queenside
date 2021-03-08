@@ -15,7 +15,7 @@ if (isset($_GET['playerid']) && $_GET['playerid']) {
 if (isset($_GET['playername']) && $_GET['playername']) {
     $playername = $conn->real_escape_string($_GET['playername']);
     $playernamevalue = htmlspecialchars($_GET['playername']);
-    $clauses[] = "name LIKE '%$playername%'";
+    $clauses[] = "name LIKE '%$playername%' ";
 }
 
 if (isset($_GET['statusswitch']) && $_GET['statusswitch']) {
@@ -253,7 +253,7 @@ $result = $conn->query($sql);
             </tbody>
         </table>
 
-        <!-- pagination: will implement when real data is present -->
+        <!-- pagination -->
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-end">
                 <?php
