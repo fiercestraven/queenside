@@ -1,3 +1,83 @@
+<?php
+include("../db.php");
+include("../utils/functions.php");
+
+//set vars for queries
+$featuredcountry = 'ENG';
+$featuredcountryname = 'United Kingdom';
+
+$upperage = 40;
+
+//query to get top 3 active players
+$sqltopactive = "SELECT fide_id, name, federation, birth_year, title, 
+                    rating_standard,
+                    country_name, full_title
+                    FROM top_women_chess_players
+                    LEFT JOIN twcp_federations USING (federation)
+                    LEFT JOIN twcp_titles USING (title)
+                    WHERE rating_standard IS NOT NULL AND inactive IS FALSE
+                    ORDER BY rating_standard DESC
+                    LIMIT 3";
+
+//query to get top 3 country players
+$sqltopcountry = "SELECT fide_id, name, federation, birth_year, title, 
+                rating_standard,
+                country_name, full_title
+                FROM top_women_chess_players
+                LEFT JOIN twcp_federations USING (federation)
+                LEFT JOIN twcp_titles USING (title)
+                WHERE rating_standard IS NOT NULL AND federation = '$featuredcountry'
+                ORDER BY rating_standard DESC
+                LIMIT 3";
+
+//query to get top 3 active players over age limit
+$sqltopage = "SELECT fide_id, name, federation, birth_year, title, 
+                rating_standard,
+                country_name, full_title
+                FROM top_women_chess_players
+                LEFT JOIN twcp_federations USING (federation)
+                LEFT JOIN twcp_titles USING (title)
+                WHERE rating_standard IS NOT NULL AND inactive IS FALSE AND (YEAR(now()) - birth_year) >= $upperage 
+                ORDER BY rating_standard DESC
+                LIMIT 3";
+
+// query to pull num players with the 6 most common titles
+$sqltitlenums = "SELECT title, full_title, count(*) as count
+                FROM top_women_chess_players
+                LEFT JOIN twcp_titles USING (title)
+                WHERE title IS NOT NULL
+                GROUP BY full_title
+                ORDER BY count DESC
+                LIMIT 6";
+
+//query to pull top 15 countries by number of GM/WGM
+$sqlcountrynums = "SELECT federation, title, country_name, full_title, count(*) as count
+            FROM top_women_chess_players
+            LEFT JOIN twcp_federations USING (federation)
+            LEFT JOIN twcp_titles USING (title)
+            WHERE title IS NOT NULL AND title = 'GM' OR title = 'WGM'
+            GROUP BY country_name
+            ORDER BY count DESC
+            LIMIT 15";
+
+$resulttopactive = $conn->query($sqltopactive);
+$resulttopcountry = $conn->query($sqltopcountry);
+$resulttopage = $conn->query($sqltopage);
+$resulttitlenums = $conn->query($sqltitlenums);
+$resultcountrynums = $conn->query($sqlcountrynums);
+
+if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenums || !$resultcountrynums) {
+    // FIXME handle if less than 3 results rather than 404 error (put in empty array?)
+    http_response_code(404);
+} else {
+    $dataactive = $resulttopactive->fetch_all(MYSQLI_ASSOC);
+    $datacountry = $resulttopcountry->fetch_all(MYSQLI_ASSOC);
+    $dataage = $resulttopage->fetch_all(MYSQLI_ASSOC);
+    $datatitlenums = $resulttitlenums->fetch_all(MYSQLI_ASSOC);
+    $datacountrynums = $resultcountrynums->fetch_all(MYSQLI_ASSOC);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +85,7 @@
     <?php
     include("../_partials/head.html");
     ?>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 
 <body>
@@ -13,484 +94,150 @@
     include("../_partials/nav.html");
     ?>
 
-    <!-- player card setup -->
+    <!-- intro and chart -->
     <div class="container my-container">
-    <h3 >Top 3 Active Players</h3>
-        <div class="row mb-5 row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-                <div class="card h-100">
-                    <!-- update below to link to specific player detail card! -->
-                    <a class="card-link my-discover-card" href="playerdetail.php">
-                        <img class="img-responsive card-img-top my-card-icon" src="img/playerimage.jpg" alt="collage of six female chess players">
-                        <!-- player info -->
-                        <div class="card-body">
-                            <p class="my-card-header">Humpy Koneru</p>
-                            <p class="my-card-text">Federation: India</p>
-                            <p class="my-card-text">Birth Year: 1987</p>
-                            <p class="my-card-text">Title: Grandmaster</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <a class="card-link my-discover-card" href="playerdetail.php">
-                        <img class="img-responsive card-img-top my-card-icon" src="img/playerimage.jpg" alt="collage of six female chess players">
-                        <!-- player info -->
-                        <div class="card-body">
-                            <p class="my-card-header">Humpy Koneru</p>
-                            <p class="my-card-text">Federation: India</p>
-                            <p class="my-card-text">Birth Year: 1987</p>
-                            <p class="my-card-text">Title: Grandmaster</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <a class="card-link my-discover-card" href="playerdetail.php">
-                        <img class="img-responsive card-img-top my-card-icon" src="img/playerimage.jpg" alt="collage of six female chess players">
-                        <!-- player info -->
-                        <div class="card-body">
-                            <p class="my-card-header">Humpy Koneru</p>
-                            <p class="my-card-text">Federation: India</p>
-                            <p class="my-card-text">Birth Year: 1987</p>
-                            <p class="my-card-text">Title: Grandmaster</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <h3>Top 3 Players in the United Kingdom</h3>
-        <div class="row mb-5 row-cols-1 row-cols-md-3 g-4">    
-            <div class="col">
-                <div class="card h-100">
-                    <a class="card-link my-discover-card" href="playerdetail.php">
-                        <img class="img-responsive card-img-top my-card-icon" src="img/Chess_qlt45.svg" alt="icon of a chess queen">
-                        <!-- player info -->
-                        <div class="card-body">
-                            <p class="my-card-header">Humpy Koneru</p>
-                            <p class="my-card-text">Federation: India</p>
-                            <p class="my-card-text">Birth Year: 1987</p>
-                            <p class="my-card-text">Title: Grandmaster</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <a class="card-link my-discover-card" href="playerdetail.php">
-                        <img class="img-responsive card-img-top my-card-icon" src="img/Chess_qlt45.svg" alt="icon of a chess queen">
-                        <!-- player info -->
-                        <div class="card-body">
-                            <p class="my-card-header">Humpy Koneru</p>
-                            <p class="my-card-text">Federation: India</p>
-                            <p class="my-card-text">Birth Year: 1987</p>
-                            <p class="my-card-text">Title: Grandmaster</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <a class="card-link my-discover-card" href="playerdetail.php">
-                        <img class="img-responsive card-img-top my-card-icon" src="img/Chess_qlt45.svg" alt="icon of a chess queen">
-                        <!-- player info -->
-                        <div class="card-body">
-                            <p class="my-card-header">Humpy Koneru</p>
-                            <p class="my-card-text">Federation: India</p>
-                            <p class="my-card-text">Birth Year: 1987</p>
-                            <p class="my-card-text">Title: Grandmaster</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
+        <h1>Discover the Best Women in Chess</h1>
+        <p>Who determines who's best, you ask? It's not easy with this many strong contenders. Here, we look at who's tops in standard rating in a variety of categories. Click on a player to learn more.</p>
+        <canvas id="numCountriesChart"></canvas>
+        <canvas id="numTitlesChart"></canvas>
 
-        <h3>Top 3 Players Over Age 40</h3>
-        <div class="row mb-5 row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-                <div class="card h-100">
-                    <a class="card-link my-discover-card" href="playerdetail.php">
-                        <img class="img-responsive card-img-top my-card-icon" src="img/Chess_qlt45.svg" alt="icon of a chess queen">
-                        <!-- player info -->
-                        <div class="card-body">
-                            <p class="my-card-header">Humpy Koneru</p>
-                            <p class="my-card-text">Federation: India</p>
-                            <p class="my-card-text">Birth Year: 1987</p>
-                            <p class="my-card-text">Title: Grandmaster</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <a class="card-link my-discover-card" href="playerdetail.php">
-                        <img class="img-responsive card-img-top my-card-icon" src="img/Chess_qlt45.svg" alt="icon of a chess queen">
-                        <!-- player info -->
-                        <div class="card-body">
-                            <p class="my-card-header">Humpy Koneru</p>
-                            <p class="my-card-text">Federation: India</p>
-                            <p class="my-card-text">Birth Year: 1987</p>
-                            <p class="my-card-text">Title: Grandmaster</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <a class="card-link my-discover-card" href="playerdetail.php">
-                        <img class="img-responsive card-img-top my-card-icon" src="img/Chess_qlt45.svg" alt="icon of a chess queen">
-                        <!-- player info -->
-                        <div class="card-body">
-                            <p class="my-card-header">Humpy Koneru</p>
-                            <p class="my-card-text">Federation: India</p>
-                            <p class="my-card-text">Birth Year: 1987</p>
-                            <p class="my-card-text">Title: Grandmaster</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
+        <!-- set arrays for charts -->
+        <?php
+        $labelarrctry = array();
+        $dataarrctry = array();
+        $labelarrtitles = array();
+        $dataarrtitles = array();
+
+        if (isset($datacountrynums)) {
+            foreach ($datacountrynums as $row) {
+                $labelarrctry[] = $row['country_name'];
+                $dataarrctry[] = $row['count'];
+            }
+        }
+
+        if (isset($datatitlenums)) {
+            foreach ($datatitlenums as $row) {
+                $labelarrtitles[] = $row['full_title'];
+                $dataarrtitles[] = $row['count'];
+            }
+        }
+
+        //convert arrays to JSON
+        $labelarrctry_json = json_encode($labelarrctry);
+        $dataarrctry_json = json_encode($dataarrctry);
+        $labelarrtitles_json = json_encode($labelarrtitles);
+        $dataarrtitles_json = json_encode($dataarrtitles);
+
+        ?>
+
+        <script>
+            //translate arrays into JS
+            var labelarrctry = JSON.parse('<?= $labelarrctry_json; ?>');
+            var dataarrctry = JSON.parse('<?= $dataarrctry_json; ?>');;
+            var labelarrtitles = JSON.parse('<?= $labelarrtitles_json; ?>');
+            var dataarrtitles = JSON.parse('<?= $dataarrtitles_json; ?>');;
+
+            //set up chart
+            var ctx = document.getElementById('numCountriesChart').getContext('2d');
+            var numCountriesChart = new Chart(ctx, {
+                type: 'bar',
+
+                data: {
+                    labels: labelarrctry,
+                    datasets: [{
+                        label: 'Countries with the highest number of Grandmasters/Woman Grandmasters',
+                        backgroundColor: [
+                            '#5C2B56',
+                            '#823D79',
+                            '#A84F9B',
+                            '#CF61BC',
+                            '#D98FCE',
+                            '#5C2B56',
+                            '#823D79',
+                            '#A84F9B',
+                            '#CF61BC',
+                            '#D98FCE',
+                            '#5C2B56',
+                            '#823D79',
+                            '#A84F9B',
+                            '#CF61BC',
+                            '#D98FCE'
+                        ],
+                        data: dataarrctry
+                    }]
+                },
+            });
+
+            var ctx = document.getElementById('numTitlesChart').getContext('2d');
+            var numTitlesChart = new Chart(ctx, {
+                type: 'doughnut',
+
+                // bring in data
+                data: {
+                    labels: labelarrtitles,
+                    datasets: [{
+                        label: 'Number of players holding the 6 most common titles',
+                        backgroundColor: [
+                            '#5C2B56',
+                            '#823D79',
+                            '#A84F9B',
+                            '#CF61BC',
+                            '#D98FCE',
+                            '#421E3C'
+                        ],
+                        data: dataarrtitles
+                    }]
+                },
+            });
+        </script>
     </div>
 
-    <!-- Filtering options for player listings -->
-    <!-- <div class="container my-container">
-        <div class="row">
-            <div class="col-3">
-                <button type="button" class="btn dropdown-toggle my-filter-button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Search Filters
-                </button>
-                <div class="dropdown-menu my-filter-menu">
-                    <form class="px-4 py-3">
-                        <div class="mb-3"> -->
-    <!-- FIDE ID -->
-    <!-- <div class="row mb-3">
-                                <label for="inputFIDE" class="col-sm-2 col-form-label">FIDE ID</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="e.g., 5000123" id="inputFIDE">
-                                </div>
-                            </div> -->
+    <!-- player cards -->
+    <div class="container my-container">
+        <div class="row mt-5">
+            <h3>Top 3 Active Players</h3>
+        </div>
+        <div class="row mb-1 row-cols-1 row-cols-md-3 g-4">
+            <?php
+            if (isset($dataactive)) {
+                foreach ($dataactive as $player) {
+                    echo create_discover_card($player);
+                }
+            }
+            ?>
+        </div>
+        <div class="row col-md-12 mt-2 mb-5">
+            <a class="my-light-link my-discover-link" href="players.php?statusswitch=status">Find more active players! &raquo;</a>
+        </div>
 
-    <!-- Player name -->
-    <!-- <div class="row mb-3">
-                                <label for="inputPlayerName" class="col-sm-2 col-form-label">Name</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="Enter all or part of the player's name" id="inputPlayerName">
-                                </div>
-                            </div> -->
+        <h3>Top 3 Players in the <?= $featuredcountryname ?></h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <?php
+            if (isset($datacountry)) {
+                foreach ($datacountry as $player) {
+                    echo create_discover_card($player);
+                }
+            }
+            ?>
+        </div>
+        <div class="row col-md-12 mt-2 mb-5">
+            <a class="my-light-link my-discover-link" href="players.php?playercountry=<?= $featuredcountry ?>">Find more players from the <?= $featuredcountryname ?>! &raquo;</a>
+        </div>
 
-    <!-- Federation -->
-    <!-- <div class="row mb-3">
-                                <label for="inputFederation" class="col-sm-2 col-form-label">Federation</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="Player's home country" id="inputFederation">
-                                </div>
-                            </div> -->
-
-    <!-- Player title -->
-    <!-- <div class="row mb-3">
-                                <label for="inputPlayerTitle" class="col-sm-2 col-form-label">Title</label>
-                                <div class="col-sm-10">
-                                    <select class="form-select" aria-label="Dropdown selection for player title">
-                                        <option selected>Select</option>
-                                        <option value="1">Grandmaster</option>
-                                        <option value="2">Woman Grandmaster</option>
-                                        <option value="3">International Master</option>
-                                        <option value="4">International Arbiter</option>
-                                        <option value="5">FIDE Arbiter</option>
-                                    </select>
-                                </div>
-                            </div> -->
-
-    <!-- Player status -->
-    <!-- <fieldset class="row mb-3">
-                                <legend class="col-form-label col-sm-2 pt-0">Include inactive players?</legend>
-                                <div class="col-sm-10">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" name="flexSwitchCheck" id="switch" value="option1">
-                                    </div>
-                                </div>
-                            </fieldset> -->
-
-    <!-- Form submission -->
-    <!-- <button type="submit" class="btn btn-secondary">Apply</button>
-                        </div>
-                    </form>
-                </div>
-            </div> -->
-
-    <!-- Sorting options for player list -->
-    <!-- <div class="col-6"></div>
-            <div class="col-3">
-                <button type="button" class="btn dropdown-toggle my-sort-button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Sort by
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#">FIDE ID</a></li>
-                    <li><a class="dropdown-item" href="#">Name</a></li>
-                    <li><a class="dropdown-item" href="#">Federation</a></li>
-                    <li><a class="dropdown-item" href="#">Birth Year</a></li>
-                    <li><a class="dropdown-item" href="#">Title</a></li>
-                    <li><a class="dropdown-item" href="#">Standard Rating</a></li>
-                    <li><a class="dropdown-item" href="#">Rapid Rating</a></li>
-                    <li><a class="dropdown-item" href="#">Blitz Rating</a></li>
-                    <li><a class="dropdown-item" href="#">Active Status</a></li>
-                </ul>
-            </div> -->
-    <!-- </div>
-    </div> -->
-
-    <!-- player table, currently w/ dummy data -->
-    <!-- <div class="container my-container">
-        <h2>Internationally Ranked Women Chess Players</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">FIDE ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Federation (Country)</th>
-                    <th scope="col">Birth Year</th>
-                    <th scope="col">Chess Title</th>
-                    <th scope="col">Standard Rating</th>
-                    <th scope="col">Rapid Rating</th>
-                    <th scope="col">Blitz Rating</th>
-                    <th scope="col">Active</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>5008123</td>
-                    <td><a class="my-light-link" href="playerdetail.php">Koneru, Humpy</a></td>
-                    <td>India</td>
-                    <td>1987</td>
-                    <td>Grandmaster</td>
-                    <td>2586</td>
-                    <td>2483</td>
-                    <td>2483</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16340801 5729</td>
-                    <td>Valencia, Jolina X.</td>
-                    <td>Cape Verde</td>
-                    <td>1964</td>
-                    <td>lacus</td>
-                    <td>2630</td>
-                    <td>1706</td>
-                    <td>2027</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16171219 6797</td>
-                    <td>Conway, Emery N.</td>
-                    <td>Burundi</td>
-                    <td>1981</td>
-                    <td>Phasellus</td>
-                    <td>2452</td>
-                    <td>1604</td>
-                    <td>2495</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16000817 0029</td>
-                    <td>Gay, Rachael K.</td>
-                    <td>Turkey</td>
-                    <td>1954</td>
-                    <td>luctus</td>
-                    <td>2126</td>
-                    <td>1813</td>
-                    <td>1620</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16270224 3425</td>
-                    <td>Barker, Maris X.</td>
-                    <td>Venezuela</td>
-                    <td>1950</td>
-                    <td>quam</td>
-                    <td>2311</td>
-                    <td>2628</td>
-                    <td>1344</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16130918 6557</td>
-                    <td>Nixon, Hayley Y.</td>
-                    <td>Syria</td>
-                    <td>1991</td>
-                    <td>lectus</td>
-                    <td>2145</td>
-                    <td>2541</td>
-                    <td>2238</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16940823 5829</td>
-                    <td>Daniels, Zia V.</td>
-                    <td>Botswana</td>
-                    <td>1978</td>
-                    <td>pretium</td>
-                    <td>2475</td>
-                    <td>2239</td>
-                    <td>2458</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16410614 8424</td>
-                    <td>Fuentes, Blina C.</td>
-                    <td>Niger</td>
-                    <td>1996</td>
-                    <td>arcu</td>
-                    <td>1888</td>
-                    <td>2291</td>
-                    <td>1682</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16170201 0024</td>
-                    <td>Bennett, Abra W.</td>
-                    <td>Libya</td>
-                    <td>1963</td>
-                    <td>lobortis</td>
-                    <td>2377</td>
-                    <td>1480</td>
-                    <td>2316</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16391110 7229</td>
-                    <td>Guerrero, Breanna P.</td>
-                    <td>Cuba</td>
-                    <td>1962</td>
-                    <td>sollicitudin</td>
-                    <td>1872</td>
-                    <td>1525</td>
-                    <td>1854</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16730202 7748</td>
-                    <td>Byrd, Priscilla D.</td>
-                    <td>Marshall Islands</td>
-                    <td>1984</td>
-                    <td>rutrum</td>
-                    <td>1933</td>
-                    <td>2152</td>
-                    <td>1939</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16390309 9541</td>
-                    <td>Ochoa, Delilah D.</td>
-                    <td>San Marino</td>
-                    <td>1970</td>
-                    <td>ut</td>
-                    <td>1896</td>
-                    <td>2608</td>
-                    <td>1616</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16731003 4967</td>
-                    <td>Fulton, Yvette P.</td>
-                    <td>Dominican Republic</td>
-                    <td>1970</td>
-                    <td>at</td>
-                    <td>2205</td>
-                    <td>1258</td>
-                    <td>1159</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16201030 8746</td>
-                    <td>Orr, Adria X.</td>
-                    <td>Germany</td>
-                    <td>1964</td>
-                    <td>orci</td>
-                    <td>1927</td>
-                    <td>1804</td>
-                    <td>2684</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16441210 3303</td>
-                    <td>Mccarthy, Brandy H.</td>
-                    <td>Guinea</td>
-                    <td>1977</td>
-                    <td>libero</td>
-                    <td>2208</td>
-                    <td>2345</td>
-                    <td>2295</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16390430 1656</td>
-                    <td>Ramsey, Wing W.</td>
-                    <td>Sierra Leone</td>
-                    <td>1991</td>
-                    <td>hymenaeos.</td>
-                    <td>2118</td>
-                    <td>1881</td>
-                    <td>1418</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16660420 7867</td>
-                    <td>Preston, Oprah P.</td>
-                    <td>Cuba</td>
-                    <td>1975</td>
-                    <td>accumsan</td>
-                    <td>2291</td>
-                    <td>1766</td>
-                    <td>2646</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>16760422 7665</td>
-                    <td>Alford, Uma G.</td>
-                    <td>Cape Verde</td>
-                    <td>1990</td>
-                    <td>amet</td>
-                    <td>2011</td>
-                    <td>1287</td>
-                    <td>1403</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>16550809 8935</td>
-                    <td>Lloyd, Risa C.</td>
-                    <td>Equatorial Guinea</td>
-                    <td>1971</td>
-                    <td>velit</td>
-                    <td>2583</td>
-                    <td>1280</td>
-                    <td>1911</td>
-                    <td>Yes</td>
-                </tr>
-            </tbody>
-        </table> -->
-
-    <!-- pagination: will implement when real data is present -->
-    <!-- <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav> -->
-    <!-- </div> -->
+        <h3>Top 3 Active Players Over Age 40</h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <?php
+            if (isset($dataage)) {
+                foreach ($dataage as $player) {
+                    echo create_discover_card($player);
+                }
+            }
+            ?>
+        </div>
+        <div class="row col-md-12 mt-2 mb-5">
+            <a class="my-light-link my-discover-link" href="players.php">Search for more players by birth year, title, and more &raquo;</a>
+        </div>
+    </div>
 
     <!-- Footer -->
     <?php

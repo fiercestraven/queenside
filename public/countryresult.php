@@ -17,7 +17,7 @@
     <!-- calculate and display result of match-up -->
     <div class="container my-container my-outpost-container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 mt-4">
                 <a href="outpost.php">
                     <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
                 </a>
@@ -47,31 +47,50 @@
             if (!$result) {
                 http_response_code(404);
             } else {
-                $data = $result->fetch_all(MYSQLI_ASSOC); 
+                $data = $result->fetch_all(MYSQLI_ASSOC);
                 $first = $data[0];
                 $second = $data[1];
                 if ($first['score'] == $second['score']) {
                     $winner = $first['country_name'] . " and " . $second['country_name'] . " had a tie!";
                 } else {
                     $winner = $first['country_name'] . "!";
-                } 
+                }
             }
             ?>
 
             <div class="col-md-9">
-                <h1>And the winner is...</h1>
-                <h3><?=$winner?></h3>
-                <table class="my-country-results">
-                    <tr>
-                        <td><?=$first['country_name']?></td>
-                        <td><?=$first['score']?></td>
-                    </tr>
-                    <tr>
-                        <td><?=$second['country_name']?></td>
-                        <td><?=$second['score']?></td>
-                    </tr>
-                </table>
+                <div class="mt-3">
+                    <h1>And the winner is...</h1>
+                </div>
+                <div class="mt-2">
+                    <p style="font-size: 30px; font-style: italic;"><?= $winner ?></p>
+                </div>
+                <div class="mt-5">
+                    <table class="table my-country-results">
+                        <thead>
+                            <tr>
+                                <th>Country</th>
+                                <th>Average Standard Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-active">
+                                <td><?= $first['country_name'] ?></td>
+                                <td><?= $first['score'] ?></td>
+                            </tr>
+                            <tr>
+                                <td><?= $second['country_name'] ?></td>
+                                <td><?= $second['score'] ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
+
+        <!-- link to go back to Country Showdown -->
+        <div class="row mt-3 mb-5">
+            <a href="countryshowdown.php" class="my-light-link">&laquo; Pick two more countries</a>
         </div>
     </div>
 

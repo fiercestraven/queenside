@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-<?php
+    <?php
     include("../_partials/head.html");
-?>
+    ?>
 </head>
 
 <body>
@@ -46,35 +46,40 @@
     <div class="container my-container my-outpost-container">
         <div class="row">
             <div class="col-md-3">
-                <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
+                <a href="outpost.php">
+                    <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
+                </a>
             </div>
             <div class="col-md-9">
                 <h2>Well, well, well.... how did you do?</h2>
                 <?php
                 switch ($totalCorrect) {
                     case 0:
-                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. OUCH. Study up.</p>";
+                        $message = "You scored $totalCorrect / 5. OUCH. Study up.";
                         break;
                     case 1:
-                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. Sleeping much?</p>";
+                        $message = "You scored $totalCorrect / 5. Sleeping much?";
                         break;
                     case 2:
-                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. Needs improvement, to say the least.</p>";
+                        $message = "You scored $totalCorrect / 5. Needs improvement, to say the least.";
                         break;
                     case 3:
-                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. Them's the breaks!</p>";
+                        $message = "You scored $totalCorrect / 5. Them's the breaks!";
                         break;
                     case 4:
-                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. Hey, not bad!</p>";
+                        $message = "You scored $totalCorrect / 5. Hey, not bad!";
                         break;
                     case 5:
-                        echo "<p class='my-trivia-result'>You scored $totalCorrect / 5. On fire!</p>";
+                        $message = "You scored $totalCorrect / 5. On fire!";
                         break;
                     default:
-                        echo "<p class='my-trivia-result'>Score not understood.</p>";
+                        $message = "Score not understood.</p>";
                         break;
                 }
                 ?>
+                <p class='my-trivia-result'><?= $message ?></p>
+                 <!-- link to go back to trivia -->
+                <a href="trivia.php" class="my-light-link">&laquo; Try again!</a>   
             </div>
         </div>
     </div>

@@ -35,7 +35,7 @@
                 <label for="country" class="col-sm-2 col-form-label">Your home country:</label>
                 <div class="col-sm-10">
                     <select class="form-select" aria-label="Dropdown selection for home country" name="usercountry" id="country">
-                        <option value="country" selected>Select</option>
+                        <option value="country" selected>Select Country</option>
                         <?php
                         //not escaping as this table is not edited by other users
                         $sqlfed = "SELECT * FROM twcp_federations ORDER BY country_name ASC";
@@ -53,9 +53,16 @@
 
             <!-- Birth Year -->
             <div class="row mb-3">
-                <label for="birth_year" class="col-sm-2 col-form-label">Enter your birth year:</label>
+                <label for="birth_year" class="col-sm-2 col-form-label">Year of Birth:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="e.g., 1987" name="userbirth" id="birth_year">
+                    <select class="form-select" aria-label="Dropdown selection for birth year" name="userbirth" id="birth_year">
+                        <option value="birth" selected>Select Year</option>
+                        <?php
+                        for ($i = (date("Y") - 100); $i <= date("Y"); $i++) {
+                            echo "<option value='$i'>$i</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
             </div>
 
@@ -65,20 +72,28 @@
             </div>
         </form>
 
+        <!-- link to go back to the Outpost -->
+        <div class="my-3">
+            <a href="outpost.php" class="my-light-link">&laquo; Back to the Outpost</a>
+        </div>
+
     </div>
 
     <script>
         var ucountry = document.getElementById("country");
         var ubirth = document.getElementById("birth_year");
+        var submit = document.getElementById("submit");
 
-        //don't allow user to submit unless they've filled out both bits
-        // FIXME birth year isn't working - what to put for value?
-        if (ucountry.value == "Select" || ubirth.value == "") {
-            // FIXME switch false below back to true once value for birth year is fixed
-                submit.disabled = false;
+        function queenFunction() {
+            //don't allow user to submit unless they've filled out both bits    
+            if (ucountry.value == "country" || ubirth.value == "birth") {
+                submit.disabled = true;
             } else {
                 submit.disabled = false;
             }
+        }
+        ucountry.oninput = queenFunction;
+        ubirth.oninput = queenFunction;
     </script>
 
     <!-- Footer -->

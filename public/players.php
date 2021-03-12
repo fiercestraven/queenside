@@ -1,7 +1,4 @@
 <?php
-include('../utils/functions.php');
-checksessionuser();
-
 include('../db.php');
 
 //set up filters to work
@@ -35,46 +32,17 @@ if (isset($_GET['playercountry']) && $_GET['playercountry']) {
     $clauses[] = "federation = '$playerfed'";
 }
 
-$whereclause = '';
+$newclause = '';
 
-//build up WHERE clauses for filtering
+//build up WHERE clauses
 if (count($clauses) > 0) {
-    $whereclause = 'WHERE ' . join(' AND ', $clauses);
-}
-
-//set up sort clause for main query
-switch ($_GET['sortfield']) {
-    case 'ratingstd':
-        if ($_GET['sortdirection'] == 'ASC') {
-            $direction = 'ASC';
-        } else {
-            $direction = 'DESC';
-        }
-        $sortclause = "ORDER BY 'rating_standard' $direction";
-        break;
-
-    case 'birthyear':
-        if ($_GET['sortdirection'] == 'ASC') {
-            $direction = 'ASC';
-        } else {
-            $direction = 'DESC';
-        }
-        $sortclause = "ORDER BY 'birth_year' $direction";
-        break;
-
-    default:
-
-        $direction = 'ASC';
-        $sortclause = '';
-        break;
-        
-}
-
+    $newclause = 'WHERE ' . join(' AND ', $clauses);
+} 
 
 //get count of how many players for pagination purposes
 $sqlcount = "SELECT COUNT(*) 
             FROM top_women_chess_players
-            $whereclause";
+            $newclause";
 $countresult = $conn->query($sqlcount);
 $count = $countresult->fetch_array()[0];
 
@@ -93,13 +61,12 @@ if ($page < 1) {
 //calculate correct offset
 $offset = $per_page * ($page - 1);
 
-// sql main query including LIMIT and OFFSET for page population
+// sql statement including LIMIT and OFFSET for page population
 $sql = "SELECT * 
             FROM top_women_chess_players 
             LEFT JOIN twcp_federations USING (federation)
             LEFT JOIN twcp_titles USING (title) 
-            $whereclause
-            $sortclause
+            $newclause
             LIMIT $per_page
             OFFSET $offset";
 
@@ -119,26 +86,15 @@ $result = $conn->query($sql);
 <body>
     <!-- logo and nav -->
     <?php
-    include("../_partials/adminnav.html");
+    include("../_partials/nav.html");
     ?>
 
-    <!-- Filtering options for players -->
     <div class="container my-container">
         <div class="row">
-            <div class="col-sm-7"></div>
-            <div class="col-sm-3">
-                <?php
-                echo "<p id='my-login-confirmation'>Logged in as {$_SESSION['admin_40275431']}</p>";
-                ?>
-            </div>
-            <div class="col-sm-2">
-                <a class="btn btn-secondary my-logout-button" role="button" href="../admin/logout.php">Log Out</a>
-            </div>
-        </div>
-        <div class="row">
-            <h1 class="player-intro">Admin Player Search</h1>
+            <h1 class="player-intro">Player Search</h1>
         </div>
 
+        <!-- Search filters -->
         <div class="row">
             <h4>Search Filters</h4>
             <form method="GET">
@@ -219,46 +175,23 @@ $result = $conn->query($sql);
         <hr>
     </div>
 
-    <!-- player table-->
+    <!-- player table -->
     <div class="container my-container">
         <h4>Internationally Ranked Women Chess Players</h4>
         <?php
-        if ($count > 0) {
-            echo "<p>$count results found</p>";
-        }
-        ?>
-        <table class="table table-striped">
+            if ($count > 0) {
+                echo "<p>$count results found</p>";     
+            }
+            ?>
+            <table class="table table-striped">
             <thead>
                 <tr>
-                    <!-- FIXME  -->
                     <th scope="col">FIDE ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Federation (Country)</th>
-
-                    <!-- set up sort & header for birth year -->
-                    <?php
-                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($GET['sortfield']) && $_GET['sortfield'] == 'birthyear') {
-                        $sortflip = 'DESC';
-                    } else {
-                        $sortflip = 'ASC';
-                    }
-                    $qsby = http_build_query(array_merge($_GET, array("sortfield" => "birthyear", "sortdirection" => $sortflip)));
-                    ?>
-                    <th scope="col"><a href='?<?= $qsby ?>'>Birth Year</a></th>
-
+                    <th scope="col">Birth Year</th>
                     <th scope="col">Chess Title</th>
-
-                    <!-- set up sort & header for standard rating -->
-                    <?php
-                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($GET['sortfield']) && $_GET['sortfield'] == 'ratingstd') {
-                        $sortflip = 'DESC';
-                    } else {
-                        $sortflip = 'ASC';
-                    }
-                    $qssr = http_build_query(array_merge($_GET, array("sortfield" => "ratingstd", "sortdirection" => $sortflip)));
-                    ?>
-                    <th scope="col"><a href='?<?= $qssr ?>'>Standard Rating</a></th>
-
+                    <th scope="col">Standard Rating</th>
                     <th scope="col">Rapid Rating</th>
                     <th scope="col">Blitz Rating</th>
                     <th scope="col">Active</th>
@@ -307,6 +240,9 @@ $result = $conn->query($sql);
                 ?>
             </tbody>
         </table>
+        <div>
+            <a class="my-light-link" href="discover.php">&laquo; Discover more</a>
+        </div>
 
         <!-- pagination -->
         <nav aria-label="Page navigation">

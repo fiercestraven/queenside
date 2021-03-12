@@ -114,6 +114,10 @@
 
         </form>
 
+        <!-- link to go back to the Outpost -->
+        <div class="my-3">
+            <a href="outpost.php" class="my-light-link">&laquo; Back to the Outpost</a>
+        </div>
 
     </div>
 

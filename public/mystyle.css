@@ -95,10 +95,19 @@
 }
 
 .my-detail-card {
+    max-width: 800px;
     border: none;
     margin: 0 auto; 
     margin-top: 4em;
     float: none;
+}
+
+.my-queen-card {
+  max-width: 800px;
+  border: none;
+  margin: -10px auto 0 auto; 
+  padding-bottom: 10px;
+  float: none;
 }
 
 .my-card-header {
@@ -149,7 +158,7 @@
   margin-top: 30px;
 }
 
-/* players page table styling*/
+/* playeredit page table styling*/
 .pagination > li > a
 {
     background-color: white;
@@ -179,16 +188,16 @@
     border: solid 1px #5C2B56;
 }
 
-.my-filter-button {
+/* .my-filter-button {
   width: 150px;
   padding: 10px 15px;
   margin-bottom: 10px;
   border: 1px solid gray;
   border-radius: 5px;
   text-align: left;
-}
+} */
 
-.my-filter-menu {
+/* .my-filter-menu {
   min-width: 550px;
 }
 
@@ -200,66 +209,39 @@
   border: 1px solid gray;
   border-radius: 5px;
   text-align: left;
+} */
+
+/* discover page styling */
+#countriesChart {
+  max-width: 350px;
+  max-height: 350px;
 }
 
-/* player edit admin page */
+/* playeredit admin page */
 #player-edit-container {
   width: 80%;
   padding: 30px;
 }
 
 #my-login-confirmation {
-  padding-left: 0;
+  float: right;
   color: gray;
   font-style: italic;
 }
 
+.my-logout-button { 
+  padding-bottom: 10px;
+}
 .admin-intro {
   color:#AD0000;
   padding-left: 0;
   margin-bottom: 20px;
 }
 
-.my-logout-button {
-  float: right;
-  margin-top: 15px;
-  padding-bottom: 10px;
+.player-intro {
+  padding-left: 0;
+  margin-bottom: 20px;
 }
-
-/* #triviaAccordion {
-  background-color: #D98FCE;
-}
-
-#countryAccordion{
-  background-color: #96598C;
-  color: white;
-}
-
-#queenAccordion {
-  background-color: #5C2B56;
-  color: white;
-}
-
-.accordion-button.collapsed {
-  color: white;
-  font-size: 26px;
-  height: 170px;
-}
-
-#triviaAccordion .accordion-button:not(.collapsed) {
-  color:black;
-  background-color: #D98FCE;
-}
-
-#countryAccordion .accordion-button:not(.collapsed) {
-  color:white;
-  background-color: #96598C;
-}
-
-#queenAccordion .accordion-button:not(.collapsed) {
-  color:white;
-  background-color: #5C2B56;
-} */
 
 .question {
   margin-top: 15px;
@@ -300,7 +282,7 @@
     background-color: black;
     color: white;
     padding: 0;
-    font-size: 15px;
+    font-size: 18px;
   }
   
   button {
@@ -328,6 +310,10 @@
   border: 1px solid #ccc;
 }
 
+.my-response {
+  margin-top: 90px;
+}
+
 .my-contact-img {
   max-height: 130px;
 }
@@ -340,7 +326,7 @@ span.psw {
   /* link styling */
   .my-light-link {
     text-decoration: none;
-    font-size: 16px;
+    font-size: 18px;
     color: #96598C;
 }
 
@@ -350,12 +336,16 @@ span.psw {
 
 .my-dark-link {
     text-decoration: none;
-    font-size: 16px;
+    font-size: 18px;
     color: white;
 }
 
 .my-dark-link:hover {
     color: gray;
+}
+
+.my-discover-link {
+  text-align: right;
 }
 
 /* outpost styling */
@@ -364,8 +354,8 @@ span.psw {
 }
 
 #outpost-logo {
-  width: 140px;
-  margin-bottom: 15px;
+  width: 130px;
+  margin: 0 auto 15px auto;
 }
 
 .my-outpost-link {

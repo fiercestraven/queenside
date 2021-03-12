@@ -51,7 +51,7 @@
             $fide = $player['fide_id'];
     ?>
         <!-- player info -->
-        <div class="card mb-3 my-detail-card" style="max-width: 800px;">
+        <div class="card mb-3 my-detail-card">
             <div class="row g-0">
                 <div class="col-md-4">
                     <img class="img-responsive my-profile-icon" src="img/Chess_qlt45.svg" alt="icon of a chess queen">
@@ -105,7 +105,7 @@
 
     <!-- link to go back to player list -->
     <div class="container my-card-return">
-        <!-- may need to change link below if players moves/changes -->
+        <!-- FIXME may need to change link below if players moves/changes -->
         <a href="../public/discover.php" class="my-light-link">&laquo; Discover more players</a>
     </div>
 

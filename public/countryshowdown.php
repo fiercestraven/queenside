@@ -111,11 +111,14 @@
         select2.oninput = countryFunction;
     </script>
 
-    </div>
-
     <!-- map image -->
     <div class="row">
         <img class="img-responsive" id="my-map-image" src="img/mapDenmark.jpg" alt="brightly coloured map detail of part of Denmark">;
+    </div>
+
+    <!-- link to go back to the Outpost -->
+    <div class="mb-3 container">
+        <a href="outpost.php" class="my-light-link">&laquo; Back to the Outpost</a>
     </div>
 
     <!-- Footer -->

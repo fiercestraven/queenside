@@ -16,15 +16,15 @@
     <!-- begin content + about/welcome section -->
     <div class="container my-container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 mt-4">
                 <a href="outpost.php">
                     <img src="img/outpostLogo.png" alt="an icon of a pawn with the words The Outpost" id="outpost-logo">
                 </a>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9 my-3">
                 <h2>Welcome to the Outpost</h2>
                 <p></p>
-                <p>Did you know? An outpost is a chess term for a position where you get a piece nice and close to your opponent in such a way that it's difficult for them to remove. We hope you'll stick around and explore a bit more about the women powerhouses of chess. Here you'll find trivia to test your wits, and the opportunity to see yourself in the chess world.</p>
+                <p>Did you know? An outpost is a term for a chess piece that you place nice and close to your opponent in such a way that it's difficult for them to remove. We hope you'll stick around and explore a bit more about the women powerhouses of chess. Here you'll find trivia to test your wits, a chance to put one country head to head with another, and the opportunity to see yourself in the chess world.</p>
             </div>
         </div>
 

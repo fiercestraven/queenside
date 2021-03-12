@@ -36,9 +36,9 @@ $stmt->execute();
         echo $stmt->error;
         die();
     }else{
-        echo "<div class='container my-container my-thanks'>
-                <h1 class='display=3'>Thanks for your message!</h1>
-                <p>Someone will be in touch shortly.</p>
+        echo "<div class='m5 container my-container my-thanks'>
+                    <h1 class='my-response'>Thanks for your message!</h1>
+                    <p>Someone will be in touch shortly.</p>
             </div>";
     }
     ?>
