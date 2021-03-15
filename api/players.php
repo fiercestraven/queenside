@@ -2,8 +2,8 @@
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-include("../../db.php");
-include("../../utils/functions.php");
+include("../db.php");
+include("../utils/functions.php");
 
 switch ($method) {
     //read player

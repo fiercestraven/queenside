@@ -1,8 +1,8 @@
 <?php
 $method = $_SERVER['REQUEST_METHOD'];
 
-include("../../db.php");
-include("../../utils/functions.php");
+include("../db.php");
+include("../utils/functions.php");
 
 if(!isset($_GET["id"])) {
     http_response_code(400);
@@ -88,29 +88,29 @@ switch ($method) {
         break;
 
     case 'DELETE':
-        //basic authentication
-        if(!(isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']))) {
+        //authentication
+        $keycheck = authorized($conn, $_SERVER['HTTP_API_KEY'] ?? NULL);
+
+        if (!$keycheck) {
             http_response_code(401);
             echo "401 Unauthorized";
             break;
-        }
-        
-        if (!checkauth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], $conn)) {
-            http_response_code(401);
-            echo "401 Unauthorized";
+         } else {
+            $sql = "DELETE FROM top_women_chess_players WHERE fide_id=$playerid";
+
+            $result = $conn->query($sql);
+    
+            if (!$result) {
+                echo $conn->error;
+            } 
+            
+            if ($conn->affected_rows > 0) {
+                echo "Player {$playerid} Deleted";
+            } else {
+                echo "No player found";
+            }
             break;
-        }  
-
-        $sql = "DELETE FROM top_women_chess_players WHERE fide_id=$playerid";
-
-        $result = $conn->query($sql);
-
-        if (!$result) {
-            echo $conn->error;
-        } else {
-            echo "Player {$playerid} Deleted";
         }
-        break;
 
     default:
         http_response_code(400);

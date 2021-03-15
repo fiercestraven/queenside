@@ -43,33 +43,32 @@ if (count($clauses) > 0) {
 }
 
 //set up sort clause for main query
-switch ($_GET['sortfield']) {
-    case 'ratingstd':
-        if ($_GET['sortdirection'] == 'ASC') {
-            $direction = 'ASC';
-        } else {
-            $direction = 'DESC';
-        }
-        $sortclause = "ORDER BY 'rating_standard' $direction";
-        break;
+$sortclause = '';
 
-    case 'birthyear':
-        if ($_GET['sortdirection'] == 'ASC') {
-            $direction = 'ASC';
-        } else {
-            $direction = 'DESC';
-        }
-        $sortclause = "ORDER BY 'birth_year' $direction";
-        break;
+if (isset($_GET['sortfield'])) {
+    switch ($_GET['sortfield']) {
+        case 'ratingstd':
+            if ($_GET['sortdirection'] == 'ASC') {
+                $direction = 'ASC';
+            } else {
+                $direction = 'DESC';
+            }
+            $sortclause = "ORDER BY 'rating_standard' $direction";
+            break;
 
-    default:
+        case 'birthyear':
+            if ($_GET['sortdirection'] == 'ASC') {
+                $direction = 'ASC';
+            } else {
+                $direction = 'DESC';
+            }
+            $sortclause = "ORDER BY 'birth_year' $direction";
+            break;
 
-        $direction = 'ASC';
-        $sortclause = '';
-        break;
-        
+        default:
+            break;
+    }
 }
-
 
 //get count of how many players for pagination purposes
 $sqlcount = "SELECT COUNT(*) 
@@ -237,7 +236,7 @@ $result = $conn->query($sql);
 
                     <!-- set up sort & header for birth year -->
                     <?php
-                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($GET['sortfield']) && $_GET['sortfield'] == 'birthyear') {
+                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($_GET['sortfield']) && $_GET['sortfield'] == 'birthyear') {
                         $sortflip = 'DESC';
                     } else {
                         $sortflip = 'ASC';
@@ -250,12 +249,12 @@ $result = $conn->query($sql);
 
                     <!-- set up sort & header for standard rating -->
                     <?php
-                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($GET['sortfield']) && $_GET['sortfield'] == 'ratingstd') {
+                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($_GET['sortfield']) && $_GET['sortfield'] == 'ratingstd') {
                         $sortflip = 'DESC';
                     } else {
                         $sortflip = 'ASC';
                     }
-                    $qssr = http_build_query(array_merge($_GET, array("sortfield" => "ratingstd", "sortdirection" => $sortflip)));
+                    $qssr = http_build_query(array_merge($_GET, array("sortfield" => "ratingstd", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
                     <th scope="col"><a href='?<?= $qssr ?>'>Standard Rating</a></th>
 
