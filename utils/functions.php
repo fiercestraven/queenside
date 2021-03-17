@@ -18,20 +18,21 @@ function checksessionuser()
     if (!isset($_SESSION['admin_40275431'])) {
         echo "<h2>Invalid login</h2>";
         header("Location: login.php");
+        die();
     }
 }
 
 //returns true or false depending if the api key exists in the database
-function authorized($conn, $apikey)
-{
+function authorized($conn, $apikey) {
     if (!$apikey) {
         return false;
     } else {
+        $apikey = MD5($apikey);
         $sql = "SELECT *
                     FROM twcp_users
                     WHERE apikey = '$apikey'";
         $result = $conn->query($sql);
-
+        
         if (!$result) {
             return false;
         } else {

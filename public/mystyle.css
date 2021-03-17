@@ -230,8 +230,10 @@
 }
 
 .my-logout-button { 
-  padding-bottom: 10px;
+  margin-bottom: 15px;
+  float: right;
 }
+
 .admin-intro {
   color:#AD0000;
   padding-left: 0;

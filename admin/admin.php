@@ -47,13 +47,31 @@ $sortclause = '';
 
 if (isset($_GET['sortfield'])) {
     switch ($_GET['sortfield']) {
-        case 'ratingstd':
+        case 'fideid':
             if ($_GET['sortdirection'] == 'ASC') {
                 $direction = 'ASC';
             } else {
                 $direction = 'DESC';
             }
-            $sortclause = "ORDER BY 'rating_standard' $direction";
+            $sortclause = "ORDER BY fide_id $direction";
+            break;
+
+        case 'name':
+            if ($_GET['sortdirection'] == 'ASC') {
+                $direction = 'ASC';
+            } else {
+                $direction = 'DESC';
+            }
+            $sortclause = "ORDER BY name $direction";
+            break;
+
+        case 'federation':
+            if ($_GET['sortdirection'] == 'ASC') {
+                $direction = 'ASC';
+            } else {
+                $direction = 'DESC';
+            }
+            $sortclause = "ORDER BY country_name $direction";
             break;
 
         case 'birthyear':
@@ -62,7 +80,52 @@ if (isset($_GET['sortfield'])) {
             } else {
                 $direction = 'DESC';
             }
-            $sortclause = "ORDER BY 'birth_year' $direction";
+            $sortclause = "ORDER BY birth_year $direction";
+            break;
+
+        case 'title':
+            if ($_GET['sortdirection'] == 'ASC') {
+                $direction = 'ASC';
+            } else {
+                $direction = 'DESC';
+            }
+            $sortclause = "ORDER BY title $direction";
+            break;
+
+        case 'ratingstd':
+            if ($_GET['sortdirection'] == 'ASC') {
+                $direction = 'ASC';
+            } else {
+                $direction = 'DESC';
+            }
+            $sortclause = "ORDER BY rating_standard $direction";
+            break;
+
+        case 'ratingrap':
+            if ($_GET['sortdirection'] == 'ASC') {
+                $direction = 'ASC';
+            } else {
+                $direction = 'DESC';
+            }
+            $sortclause = "ORDER BY rating_rapid $direction";
+            break;
+
+        case 'ratingblitz':
+            if ($_GET['sortdirection'] == 'ASC') {
+                $direction = 'ASC';
+            } else {
+                $direction = 'DESC';
+            }
+            $sortclause = "ORDER BY rating_blitz $direction";
+            break;
+
+        case 'status':
+            if ($_GET['sortdirection'] == 'ASC') {
+                $direction = 'ASC';
+            } else {
+                $direction = 'DESC';
+            }
+            $sortclause = "ORDER BY inactive $direction";
             break;
 
         default:
@@ -134,6 +197,34 @@ $result = $conn->query($sql);
                 <a class="btn btn-secondary my-logout-button" role="button" href="../admin/logout.php">Log Out</a>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-9"></div>
+            <div class="col-sm-3">
+                <form id="ajaxform" method="POST" action="createtoken.php">
+                    <button type="submit" class="btn btn-info">Generate API Token</button>
+                </form>
+                <!-- create place for ajax response -->
+                <div>
+                    <p id="response"></p>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // https://stackoverflow.com/a/21342556
+            document.getElementById('ajaxform').addEventListener('submit', function(event) {
+                //prevent action redirect
+                event.preventDefault();
+
+                // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+                fetch("createtoken.php", { method: "POST" })
+                .then(function(response) { 
+                    var token = response.text();
+                    document.getElementById('response').innerText = token;
+                });
+            });
+        </script>
+
         <div class="row">
             <h1 class="player-intro">Admin Player Search</h1>
         </div>
@@ -229,10 +320,38 @@ $result = $conn->query($sql);
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <!-- FIXME  -->
-                    <th scope="col">FIDE ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Federation (Country)</th>
+                    <!-- set up sort & header for FIDE ID -->
+                    <?php
+                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($_GET['sortfield']) && $_GET['sortfield'] == 'fideid') {
+                        $sortflip = 'DESC';
+                    } else {
+                        $sortflip = 'ASC';
+                    }
+                    $qsfide = http_build_query(array_merge($_GET, array("sortfield" => "fideid", "sortdirection" => $sortflip, "page" => 1)));
+                    ?>
+                    <th scope="col"><a href='?<?= $qsfide ?>'>FIDE ID</a></th>
+
+                    <!-- set up sort & header for player name -->
+                    <?php
+                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($_GET['sortfield']) && $_GET['sortfield'] == 'name') {
+                        $sortflip = 'DESC';
+                    } else {
+                        $sortflip = 'ASC';
+                    }
+                    $qsname = http_build_query(array_merge($_GET, array("sortfield" => "name", "sortdirection" => $sortflip, "page" => 1)));
+                    ?>
+                    <th scope="col"><a href='?<?= $qsname ?>'>Name</a></th>
+
+                    <!-- set up sort & header for federation -->
+                    <?php
+                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($_GET['sortfield']) && $_GET['sortfield'] == 'federation') {
+                        $sortflip = 'DESC';
+                    } else {
+                        $sortflip = 'ASC';
+                    }
+                    $qsfed = http_build_query(array_merge($_GET, array("sortfield" => "federation", "sortdirection" => $sortflip, "page" => 1)));
+                    ?>
+                    <th scope="col"><a href='?<?= $qsfed ?>'>Federation (Country)</a></th>
 
                     <!-- set up sort & header for birth year -->
                     <?php
@@ -241,26 +360,64 @@ $result = $conn->query($sql);
                     } else {
                         $sortflip = 'ASC';
                     }
-                    $qsby = http_build_query(array_merge($_GET, array("sortfield" => "birthyear", "sortdirection" => $sortflip)));
+                    $qsby = http_build_query(array_merge($_GET, array("sortfield" => "birthyear", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
                     <th scope="col"><a href='?<?= $qsby ?>'>Birth Year</a></th>
 
-                    <th scope="col">Chess Title</th>
-
-                    <!-- set up sort & header for standard rating -->
+                    <!-- set up sort & header for title -->
                     <?php
-                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($_GET['sortfield']) && $_GET['sortfield'] == 'ratingstd') {
+                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($_GET['sortfield']) && $_GET['sortfield'] == 'title') {
                         $sortflip = 'DESC';
                     } else {
                         $sortflip = 'ASC';
+                    }
+                    $qstit = http_build_query(array_merge($_GET, array("sortfield" => "title", "sortdirection" => $sortflip, "page" => 1)));
+                    ?>
+                    <th scope="col"><a href='?<?= $qstit ?>'>Chess Title</a></th>
+
+                    <!-- set up sort & header for standard rating -->
+                    <?php
+                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'DESC' && isset($_GET['sortfield']) && $_GET['sortfield'] == 'ratingstd') {
+                        $sortflip = 'ASC';
+                    } else {
+                        $sortflip = 'DESC';
                     }
                     $qssr = http_build_query(array_merge($_GET, array("sortfield" => "ratingstd", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
                     <th scope="col"><a href='?<?= $qssr ?>'>Standard Rating</a></th>
 
-                    <th scope="col">Rapid Rating</th>
-                    <th scope="col">Blitz Rating</th>
-                    <th scope="col">Active</th>
+                    <!-- set up sort & header for rapid rating -->
+                    <?php
+                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'DESC' && isset($_GET['sortfield']) && $_GET['sortfield'] == 'ratingrap') {
+                        $sortflip = 'ASC';
+                    } else {
+                        $sortflip = 'DESC';
+                    }
+                    $qsrap = http_build_query(array_merge($_GET, array("sortfield" => "ratingrap", "sortdirection" => $sortflip, "page" => 1)));
+                    ?>
+                    <th scope="col"><a href='?<?= $qsrap ?>'>Rapid Rating</a></th>
+
+                    <!-- set up sort & header for blitz rating -->
+                    <?php
+                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'DESC' && isset($_GET['sortfield']) && $_GET['sortfield'] == 'ratingblitz') {
+                        $sortflip = 'ASC';
+                    } else {
+                        $sortflip = 'DESC';
+                    }
+                    $qsbl = http_build_query(array_merge($_GET, array("sortfield" => "ratingblitz", "sortdirection" => $sortflip, "page" => 1)));
+                    ?>
+                    <th scope="col"><a href='?<?= $qsbl ?>'>Blitz Rating</a></th>
+
+                    <!-- set up sort & header for status -->
+                    <?php
+                    if (isset($_GET['sortdirection']) && $_GET['sortdirection'] == 'ASC' && isset($_GET['sortfield']) && $_GET['sortfield'] == 'status') {
+                        $sortflip = 'DESC';
+                    } else {
+                        $sortflip = 'ASC';
+                    }
+                    $qsst = http_build_query(array_merge($_GET, array("sortfield" => "status", "sortdirection" => $sortflip, "page" => 1)));
+                    ?>
+                    <th scope="col"><a href='?<?= $qsst ?>'>Status</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -280,7 +437,7 @@ $result = $conn->query($sql);
                         $inactive = $player['inactive'];
                         $fed = htmlspecialchars($player['country_name']);
                         $birth = $player['birth_year'] ?? 'Unknown';
-                        $title = htmlspecialchars($player['full_title']) ?? '';
+                        $title = htmlspecialchars($player['full_title'] ?? '--');
                         $ratingstd = $player['rating_standard'] ?? '--';
                         $ratingrap = $player['rating_rapid'] ?? '--';
                         $ratingblitz = $player['rating_blitz'] ?? '--';
@@ -320,11 +477,6 @@ $result = $conn->query($sql);
                     </a>
                 </li>";
                 }
-                // FIXME remove if not using
-                // <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                // <li class="page-item"><a class="page-link" href="#">2</a></li>
-                // <li class="page-item"><a class="page-link" href="#">3</a></li> 
-
                 $qs = http_build_query(array_merge($_GET, array("page" => $page + 1)));
                 if ($page < $last_page) {
                     echo "<li class='page-item'>
