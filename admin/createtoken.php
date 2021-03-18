@@ -17,7 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("ss", $hashedtoken, $user);
     $stmt->execute();
 
-    echo $token;
+    echo "<div class='row my-box-text'>
+            <h4>Your API key:</h4>
+            <p>$token</p>
+            <p style = 'font-style: italic; color: red;'>Please retain this code. It will not be shown again.</p>
+        </div>";
 } else {
     header("Location: admin.php");
 }

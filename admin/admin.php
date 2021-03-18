@@ -166,7 +166,6 @@ $sql = "SELECT *
             OFFSET $offset";
 
 $result = $conn->query($sql);
-
 ?>
 
 <!DOCTYPE html>
@@ -203,32 +202,36 @@ $result = $conn->query($sql);
                 <form id="ajaxform" method="POST" action="createtoken.php">
                     <button type="submit" class="btn btn-info">Generate API Token</button>
                 </form>
-                <!-- create place for ajax response -->
-                <div>
-                    <p id="response"></p>
-                </div>
-            </div>
+            </div>    
         </div>
 
+        <!-- create place for ajax response -->
+        <div class="row">
+            <div class="col-md-7"></div>
+            <div class="col-md-5">
+                <p id="response"></p>
+            </div>
+        
+
         <script>
-            // https://stackoverflow.com/a/21342556
-            document.getElementById('ajaxform').addEventListener('submit', function(event) {
-                //prevent action redirect
+            $("#ajaxform").submit(function(event) {
                 event.preventDefault();
 
-                // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-                fetch("createtoken.php", { method: "POST" })
-                .then(function(response) { 
-                    var token = response.text();
-                    document.getElementById('response').innerText = token;
+                $.ajax({
+                type: "POST",
+                url: 'createtoken.php',
+                success: function(token) {
+                    $("#response").html(token);
+                }
                 });
-            });
+            })
         </script>
 
         <div class="row">
             <h1 class="player-intro">Admin Player Search</h1>
         </div>
 
+        <!-- search filters -->
         <div class="row">
             <h4>Search Filters</h4>
             <form method="GET">
@@ -245,7 +248,7 @@ $result = $conn->query($sql);
                     </div>
                     <!-- Status -->
                     <legend class="col-sm-2 col-form-label" id="statusswitch">Exclude inactive players?</legend>
-                    <div class="col-sm-1">
+                    <div class="col-sm-1" style="padding-top: 7px;">
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" name="statusswitch" value="status" <?php if (isset($inactive)) {
                                                                                                                     echo 'checked';
@@ -329,7 +332,7 @@ $result = $conn->query($sql);
                     }
                     $qsfide = http_build_query(array_merge($_GET, array("sortfield" => "fideid", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
-                    <th scope="col"><a href='?<?= $qsfide ?>'>FIDE ID</a></th>
+                    <th scope="col"><a class='my-light-link' href='?<?= $qsfide ?>'>FIDE ID <i class="fa fa-arrows-v" aria-hidden="true"></i></a></th>
 
                     <!-- set up sort & header for player name -->
                     <?php
@@ -340,7 +343,7 @@ $result = $conn->query($sql);
                     }
                     $qsname = http_build_query(array_merge($_GET, array("sortfield" => "name", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
-                    <th scope="col"><a href='?<?= $qsname ?>'>Name</a></th>
+                    <th scope="col"><a class='my-light-link' href='?<?= $qsname ?>'>Name <i class="fa fa-arrows-v" aria-hidden="true"></i></a></th>
 
                     <!-- set up sort & header for federation -->
                     <?php
@@ -351,7 +354,7 @@ $result = $conn->query($sql);
                     }
                     $qsfed = http_build_query(array_merge($_GET, array("sortfield" => "federation", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
-                    <th scope="col"><a href='?<?= $qsfed ?>'>Federation (Country)</a></th>
+                    <th scope="col"><a class='my-light-link' href='?<?= $qsfed ?>'>Federation <i class="fa fa-arrows-v" aria-hidden="true"></i></a></th>
 
                     <!-- set up sort & header for birth year -->
                     <?php
@@ -362,7 +365,7 @@ $result = $conn->query($sql);
                     }
                     $qsby = http_build_query(array_merge($_GET, array("sortfield" => "birthyear", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
-                    <th scope="col"><a href='?<?= $qsby ?>'>Birth Year</a></th>
+                    <th scope="col"><a class='my-light-link' href='?<?= $qsby ?>'>Birth Year <i class="fa fa-arrows-v" aria-hidden="true"></i></a></th>
 
                     <!-- set up sort & header for title -->
                     <?php
@@ -373,7 +376,7 @@ $result = $conn->query($sql);
                     }
                     $qstit = http_build_query(array_merge($_GET, array("sortfield" => "title", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
-                    <th scope="col"><a href='?<?= $qstit ?>'>Chess Title</a></th>
+                    <th scope="col"><a class='my-light-link' href='?<?= $qstit ?>'>Chess Title <i class="fa fa-arrows-v" aria-hidden="true"></i></a></th>
 
                     <!-- set up sort & header for standard rating -->
                     <?php
@@ -384,7 +387,7 @@ $result = $conn->query($sql);
                     }
                     $qssr = http_build_query(array_merge($_GET, array("sortfield" => "ratingstd", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
-                    <th scope="col"><a href='?<?= $qssr ?>'>Standard Rating</a></th>
+                    <th scope="col"><a class='my-light-link' href='?<?= $qssr ?>'>Standard Rating <i class="fa fa-arrows-v" aria-hidden="true"></i></a></th>
 
                     <!-- set up sort & header for rapid rating -->
                     <?php
@@ -395,7 +398,7 @@ $result = $conn->query($sql);
                     }
                     $qsrap = http_build_query(array_merge($_GET, array("sortfield" => "ratingrap", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
-                    <th scope="col"><a href='?<?= $qsrap ?>'>Rapid Rating</a></th>
+                    <th scope="col"><a class='my-light-link' href='?<?= $qsrap ?>'>Rapid Rating <i class="fa fa-arrows-v" aria-hidden="true"></i></a></th>
 
                     <!-- set up sort & header for blitz rating -->
                     <?php
@@ -406,7 +409,7 @@ $result = $conn->query($sql);
                     }
                     $qsbl = http_build_query(array_merge($_GET, array("sortfield" => "ratingblitz", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
-                    <th scope="col"><a href='?<?= $qsbl ?>'>Blitz Rating</a></th>
+                    <th scope="col"><a class='my-light-link' href='?<?= $qsbl ?>'>Blitz Rating <i class="fa fa-arrows-v" aria-hidden="true"></i></a></th>
 
                     <!-- set up sort & header for status -->
                     <?php
@@ -417,7 +420,7 @@ $result = $conn->query($sql);
                     }
                     $qsst = http_build_query(array_merge($_GET, array("sortfield" => "status", "sortdirection" => $sortflip, "page" => 1)));
                     ?>
-                    <th scope="col"><a href='?<?= $qsst ?>'>Status</a></th>
+                    <th scope="col"><a class='my-light-link' href='?<?= $qsst ?>'>Status <i class="fa fa-arrows-v" aria-hidden="true"></i></a></th>
                 </tr>
             </thead>
             <tbody>
@@ -433,15 +436,15 @@ $result = $conn->query($sql);
                             break;
                         }
 
+                        $fide = $player['fide_id'];
                         $name = htmlspecialchars($player['name']);
-                        $inactive = $player['inactive'];
                         $fed = htmlspecialchars($player['country_name']);
                         $birth = $player['birth_year'] ?? 'Unknown';
                         $title = htmlspecialchars($player['full_title'] ?? '--');
                         $ratingstd = $player['rating_standard'] ?? '--';
                         $ratingrap = $player['rating_rapid'] ?? '--';
                         $ratingblitz = $player['rating_blitz'] ?? '--';
-                        $fide = $player['fide_id'];
+                        $inactive = $player['inactive'];
 
                         echo "<tr>
                         <td>{$fide}</td>
