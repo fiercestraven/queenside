@@ -15,7 +15,11 @@ $playerid = $conn->real_escape_string($_GET["id"]);
 switch ($method) {
     //read player
     case 'GET':
-        $sql = "SELECT * FROM top_women_chess_players WHERE fide_id=$playerid";
+        $sql = "SELECT fide_id, name, country_name, birth_year, full_title, rating_standard, rating_rapid, rating_blitz, inactive
+            FROM top_women_chess_players 
+            LEFT JOIN twcp_federations USING (federation)
+            LEFT JOIN twcp_titles USING (title) 
+            WHERE fide_id=$playerid";
 
         $result = $conn->query($sql);
 
@@ -45,7 +49,7 @@ switch ($method) {
         if (!$keycheck) {
             http_response_code(401);
             echo "401 Unauthorized";
-            break;
+            die();
          } else {
             // From https://lornajane.net/posts/2008/accessing-incoming-put-data-from-php
             parse_str(file_get_contents("php://input"), $_PUT);

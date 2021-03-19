@@ -76,7 +76,7 @@ include('../db.php');
             <div class="row mb-3">
                 <label for="FIDE" class="col-sm-2 col-form-label">FIDE ID</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="fide" value="<?= $fide ?>" id="FIDE">
+                    <input type="text" class="form-control" name="fide" value="<?= $fide ?>" id="FIDE" readonly>
                 </div>
             </div>
 
@@ -101,7 +101,7 @@ include('../db.php');
                         $result = $conn->query($sqlfed);
                         if ($result) {
                             while ($fed = $result->fetch_assoc()) {
-                                $selected = $fed['federation'] == $player['federation'] ? 'selected' : '';
+                                $selected = $fed['country_name'] == $player['country_name'] ? 'selected' : '';
                                 echo "<option $selected value='{$fed['federation']}'>{$fed['country_name']}</option>";
                             }
                         }
@@ -131,7 +131,7 @@ include('../db.php');
                         $result = $conn->query($sqltitle);
                         if ($result) {
                             while ($title = $result->fetch_assoc()) {
-                                $selected = $title['title'] == $player['title'] ? 'selected' : '';
+                                $selected = $title['full_title'] == $player['full_title'] ? 'selected' : '';
                                 echo "<option $selected value='{$title['title']}'>{$title['full_title']}</option>";
                             }
                         }
@@ -196,7 +196,6 @@ include('../db.php');
 
     <!-- JS Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-
 </body>
 
 </html>
