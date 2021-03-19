@@ -1,6 +1,4 @@
 <?php
-include('../db.php');
-
 include("../utils/functions.php");
 checksessionuser();
 
@@ -10,23 +8,16 @@ if (!isset($_GET["id"])) {
     die();
 }
 
-//fetch correct player to edit
-$id = $conn->real_escape_string($_GET['id']);
+$endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/player.php';
+$arr = ['id' => $_GET['id']];
+$qs = http_build_query($arr);
+$result = file_get_contents("$endpoint?$qs", false);
 
-//query to select player info
-//not escaping federations or titles tables as they not edited by other users
-$sql = "SELECT * 
-            FROM top_women_chess_players 
-            LEFT JOIN twcp_federations USING (federation)
-            LEFT JOIN twcp_titles USING (title)
-            WHERE fide_id=$id";
-$result = $conn->query($sql);
+$player = json_decode($result, true);
 
-if (!$result) {
-    http_response_code(404);
-} else {
-    $player = $result->fetch_assoc();
-}
+//include db connection to retrieve full names for countries & titles
+include('../db.php');
+
 ?>
 
 <!DOCTYPE html>
