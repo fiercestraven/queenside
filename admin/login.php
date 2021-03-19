@@ -37,15 +37,15 @@
                     <h2 class="card-title" style="margin-bottom: 15px;">Admin Login</h2>
                     <form action="sign.php" method="post">
                         <div class="row mb-3">
-                            <label for="username" class="col-sm-2 col-form-label">Username</label>
-                            <div class="col-sm-10">
+                            <label for="username" class="col-sm-3 col-form-label">Username</label>
+                            <div class="col-sm-9">
                                 <input name="username" type="text" class="form-control" id="username">
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="pass" class="col-sm-2 col-form-label">Password</label>
-                            <div class="col-sm-10">
+                            <label for="pass" class="col-sm-3 col-form-label">Password</label>
+                            <div class="col-sm-9">
                                 <input name="pass" type="password" class="form-control" id="pass">
                             </div>
                         </div>

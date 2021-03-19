@@ -32,7 +32,7 @@ if (isset($_GET['playercountry']) && $_GET['playercountry']) {
     $clauses[] = "federation = '$playerfed'";
 }
 
-$newclause = '';
+$whereclause = '';
 
 //build up WHERE clauses for filtering
 if (count($clauses) > 0) {
@@ -115,7 +115,7 @@ if (isset($_GET['sortfield'])) {
 //get count of how many players for pagination purposes
 $sqlcount = "SELECT COUNT(*) 
             FROM top_women_chess_players
-            $newclause";
+            $whereclause";
 $countresult = $conn->query($sqlcount);
 $count = $countresult->fetch_array()[0];
 

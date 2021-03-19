@@ -2,8 +2,6 @@
 
 include('../db.php');
 
-// FIXME if only one result, redirect to playerdetail card
-
 if (isset($_GET['playersearch']) && $_GET['playersearch']) {
     $idquery = (int)($_GET['playersearch']);
     $namequery = $_GET['playersearch'];
@@ -14,13 +12,13 @@ if (isset($_GET['playersearch']) && $_GET['playersearch']) {
 
     //build up WHERE clauses
     if (count($clauses) > 0) {
-        $newclause = 'WHERE ' . join(' OR ', $clauses);
+        $wherelause = 'WHERE ' . join(' OR ', $clauses);
     }
 
     //get count of how many players for pagination and redirect for one result
     $sqlcount = "SELECT COUNT(*) 
             FROM top_women_chess_players
-            $newclause";
+            $whereclause";
     $countresult = $conn->query($sqlcount);
     $count = $countresult->fetch_array()[0];
 
@@ -44,7 +42,7 @@ if (isset($_GET['playersearch']) && $_GET['playersearch']) {
             FROM top_women_chess_players 
             LEFT JOIN twcp_federations USING (federation)
             LEFT JOIN twcp_titles USING (title) 
-            $newclause
+            $whereclause
             LIMIT $per_page
             OFFSET $offset";
 

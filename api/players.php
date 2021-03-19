@@ -170,12 +170,25 @@ switch ($method) {
             OFFSET $offset";
         $result = $conn->query($sql);
 
-        if (!$result) {
+        // get count of results
+        $sqlcount = "SELECT COUNT(*) 
+            FROM top_women_chess_players
+            $whereclause";
+            $countresult = $conn->query($sqlcount);
+
+        //set up arrays
+        if (!$result || !$countresult) {
             echo $conn->error;
         } else {
             header('Content-Type: application/json');
+            $totalfound = $countresult->fetch_array()[0];
             $playerarr = $result->fetch_all(MYSQLI_ASSOC);
-            echo json_encode($playerarr);
+            $data = [
+                'totalfound' => $totalfound,
+                'per_page' => $per_page,
+                'players' => $playerarr
+            ];
+            echo json_encode($data);
         }
         break;
 
