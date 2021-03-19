@@ -245,7 +245,7 @@ switch ($method) {
         echo "405 Method Not Allowed";
         break;
 
-        //if I want to allow for deleting all players, un-comment the following
+        // FIXME if I want to allow for deleting all players, un-comment the following
         // $keycheck = authorized($conn, $_SERVER['HTTP_API_KEY'] ?? NULL);
 
         // if (!$keycheck) {

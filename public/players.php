@@ -360,7 +360,7 @@ $result = $conn->query($sql);
 
                         echo "<tr>
                         <td>{$fide}</td>
-                        <td><a class='my-light-link' href='playeredit.php?id={$fide}'>{$name}</a></td>
+                        <td><a class='my-light-link' href='playerdetail.php?id={$fide}'>{$name}</a></td>
                         <td>{$fed}</td>
                         <td>{$birth}</td>
                         <td>{$title}</td>
