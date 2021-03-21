@@ -2,18 +2,18 @@
 include("../utils/functions.php");
 checksessionuser();
 
-if (!isset($_GET["id"])) {
-    //if no id set, re-route to admin page
-    header("Location: admin.php");
-    die();
+
+if(isset($_GET['id'])) {
+    $mode = 'edit';
+    $endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/player.php';
+    $arr = ['id' => $_GET['id']];
+    $qs = http_build_query($arr);
+    $result = file_get_contents("$endpoint?$qs", false);
+
+    $player = json_decode($result, true);
+} else {
+    $mode = 'create';
 }
-
-$endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/player.php';
-$arr = ['id' => $_GET['id']];
-$qs = http_build_query($arr);
-$result = file_get_contents("$endpoint?$qs", false);
-
-$player = json_decode($result, true);
 
 //include db connection to retrieve full names for countries & titles
 include('../db.php');
@@ -35,7 +35,7 @@ include('../db.php');
     include("../_partials/adminnav.html");
     ?>
 
-    <!-- player edit form -->
+    <!-- local player vars -->
     <?php
     if (isset($player)) {
         $name = htmlspecialchars($player['name']);
@@ -50,33 +50,94 @@ include('../db.php');
     }
     ?>
 
+    <!-- buttons for player deletion and logout -->
     <div class="container" id="player-edit-container">
-        <div class="row">
-            <div class="col-sm-7"></div>
+        <form action="playerprocess.php" method="POST">
+        <?php
+        if ($mode == 'create') { ?>
+            <h2 class="mt-2 mb-3">Admin: Create New Player</h2>
+
+            <div class="col-sm-4"></div>
             <div class="col-sm-3">
                 <?php
                 echo "<p id='my-login-confirmation'>Logged in as {$_SESSION['admin_40275431']}</p>";
                 ?>
             </div>
+
             <div class="col-sm-2">
                 <a class="btn btn-secondary my-logout-button" role="button" href="../admin/logout.php">Log Out</a>
             </div>
         </div>
-        <form action="playerprocess.php" method="POST">
-            <h2 class="admin-intro">Admin: Player Edit</h2>
-            <!-- Player image/icon -->
-            <div class="row mb-3">
+
+        <?php
+        } else { ?>
+        <!-- delete button -->
+        <div class="row mb-4">
+            <div class="col-sm-3">
+                <button type="button" onclick="document.getElementById('deletebtn').style.display='block'" class="btn btn-danger">DELETE PLAYER</button>
+            </div>
+
+            <div class="col-sm-4"></div>
+            <div class="col-sm-3">
+                <?php
+                echo "<p id='my-login-confirmation'>Logged in as {$_SESSION['admin_40275431']}</p>";
+                ?>
+            </div>
+
+            <div class="col-sm-2">
+                <a class="btn btn-secondary my-logout-button" role="button" href="../admin/logout.php">Log Out</a>
+            </div>
+        </div>
+
+        <!-- https://www.w3schools.com/howto/howto_css_delete_modal.asp -->
+        <div id="deletebtn" class="modal">
+            <span onclick="document.getElementById('deletebtn').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <form class="modal-content" action="deleteplayer.php" method="POST">
+                <div class="container my-container">
+                    <h2>Delete Player</h2>
+                    <p>Are you sure you want to delete this player?</p>
+
+                    <!-- hidden field to hold player id -->
+                    <input type="hidden" name="playerid" value="<?= $_GET['id'] ?>">
+
+                    <div class="clearfix">
+                        <button onclick="document.getElementById('deletebtn').style.display='none'" type="button" class="cancelbtn">Cancel</button>
+                        <button type="submit" class="deletebtn">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            // FIXME
+            // Get the modal
+            var modal = document.getElementById('deletebtn');
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+
+        <!-- player edit form -->
+            <h2 class="mt-2 mb-3">Admin: Player Edit</h2>
+    <?php } ?>      
+
+            <!-- Player image/icon FIXME -->
+            <!-- <div class="row mb-3">
                 <label for="form_image" class="col-sm-2 col-form-label">Profile Image</label>
                 <div class="col-sm-10">
                     <input type="file" class="form-control" name="playerimage" id="form_image">
                 </div>
-            </div>
+            </div> -->
 
             <!-- FIDE ID -->
             <div class="row mb-3">
                 <label for="FIDE" class="col-sm-2 col-form-label">FIDE ID</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="fide" value="<?= $fide ?>" id="FIDE" readonly>
+                    <input type="text" class="form-control" name="fide" placeholder="e.g., 12345" <?php if($mode == 'edit') {echo "value = '$id' readonly";} ?> id="FIDE">
                 </div>
             </div>
 
@@ -84,7 +145,7 @@ include('../db.php');
             <div class="row mb-3">
                 <label for="inputPlayerName" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="playername" value="<?= $name ?>" id="inputPlayerName">
+                    <input type="text" class="form-control" name="playername" placeholder = "Last, First" <?php if ($mode == 'edit') {echo "value='$name'";} ?> id="inputPlayerName">
                 </div>
             </div>
 
@@ -114,7 +175,7 @@ include('../db.php');
             <div class="row mb-3">
                 <label for="birth" class="col-sm-2 col-form-label">Birth Year</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="birthyear" value="<?= $birth ?>" id="birth">
+                    <input type="text" class="form-control" name="birthyear" placeholder = "4-digit Year" <?php if (isset($_GET['id'])) echo "value='$birth'"; ?> id="birth">
                 </div>
             </div>
 
@@ -145,15 +206,15 @@ include('../db.php');
                 <div class="col-sm-2"></div>
                 <div class="col-sm-3">
                     <label for="ratingstandard">Standard Rating</label>
-                    <input type="text" class="form-control" value="<?= $ratingstd ?>" aria-label="Standard rating" name="ratingstandard">
+                    <input type="text" class="form-control" placeholder = "0000" <?php if (isset($_GET['id'])) echo "value='$ratingstd'"; ?> aria-label="Standard rating" name="ratingstandard">
                 </div>
                 <div class="col-sm-3">
                     <label for="ratingrapid">Rapid Rating</label>
-                    <input type="text" class="form-control" value="<?= $ratingrap ?>" aria-label="Rapid rating" name="ratingrapid">
+                    <input type="text" class="form-control" placeholder = "0000" <?php if (isset($_GET['id'])) echo "value='$ratingrap'"; ?> aria-label="Rapid rating" name="ratingrapid">
                 </div>
                 <div class="col-sm-3">
                     <label for="ratingblitz">Blitz Rating</label>
-                    <input type="text" class="form-control" value="<?= $ratingblitz ?>" aria-label="Blitz rating" name="ratingblitz">
+                    <input type="text" class="form-control" placeholder = "0000" <?php if (isset($_GET['id'])) echo "value='$ratingblitz'"; ?> aria-label="Blitz rating" name="ratingblitz">
                 </div>
             </div>
 
@@ -162,15 +223,25 @@ include('../db.php');
                 <legend class="col-form-label col-sm-2 pt-0">Status</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="radio_active" value="active" 
-                        <?php if (!$inactive) {echo "checked";}?>>
+                        <input class="form-check-input" type="radio" name="status" id="radio_active" value="active"
+                        <?php if(isset($_GET['id'])) 
+                                { if(!$inactive) 
+                                    {echo "checked";} 
+                                } 
+                        ?>
+                        >
                         <label class="form-check-label" for="radio_active">
                             Active
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="status" id="radio_withdrawn" value="withdrawn" 
-                        <?php if ($inactive) {echo "checked";}?>>
+                        <?php if(isset($_GET['id'])) 
+                                { if($inactive) 
+                                    {echo "checked";} 
+                                } 
+                        ?>
+                        >
                         <label class="form-check-label" for="radio_withdrawn">
                             Withdrawn
                         </label>
@@ -185,8 +256,7 @@ include('../db.php');
 
     <!-- link to return to player listing -->
     <div class="container my-card-return">
-        <!-- may need to change link below if players moves to admin side -->
-        <a href="admin.php" class="my-light-link">&laquo; Return to player list</a>
+        <a href="admin.php" class="my-light-link">&laquo; Return to players</a>
     </div>
 
     <!-- Footer -->
