@@ -41,10 +41,13 @@ if ($page < 1) {
     include("../_partials/adminnav.html");
     ?>
 
-    <!-- Filtering options for players -->
+    <!-- Intro and initial menu -->
     <div class="container my-container">
-        <div class="row">
-            <div class="col-sm-7"></div>
+        <div class="row mt-5">
+            <div class="col-md-7">
+                <h1 class="player-intro">Admin Player Menu</h1>
+            </div>
+
             <div class="col-sm-3">
                 <?php
                 echo "<p id='my-login-confirmation'>Logged in as {$_SESSION['admin_40275431']}</p>";
@@ -54,44 +57,40 @@ if ($page < 1) {
                 <a class="btn btn-secondary my-logout-button" role="button" href="../admin/logout.php">Log Out</a>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-md-9"></div>
-            <div class="col-sm-3">
+            <div class="col-md-3">
                 <form id="ajaxform" method="POST" action="createtoken.php">
-                    <button type="submit" class="btn btn-info">Generate API Token</button>
+                    <button type="submit" class="btn btn-secondary mb-3">Generate API Token</button>
                 </form>
-            </div>    
+            </div>
         </div>
 
-        <!-- create place for ajax response -->
-        <div class="row">
-            <div class="col-md-7"></div>
-            <div class="col-md-5">
-                <p id="response"></p>
-            </div>
-        
+    <!-- create place for ajax response -->
+    <div class="row">
+        <div class="col-md-5">
+            <p id="response"></p>
+        </div>
+        <hr>
 
         <script>
             $("#ajaxform").submit(function(event) {
                 event.preventDefault();
 
                 $.ajax({
-                type: "POST",
-                url: 'createtoken.php',
-                success: function(token) {
-                    $("#response").html(token);
-                }
+                    type: "POST",
+                    url: 'createtoken.php',
+                    success: function(token) {
+                        $("#response").html(token);
+                    }
                 });
             })
         </script>
-
-        <div class="row">
-            <h1 class="player-intro">Admin Player Search</h1>
-        </div>
+    </div>
 
         <!-- search filters -->
         <div class="row">
-            <h4>Search Filters</h4>
+            <h4>Player Search Filters</h4>
             <form method="GET">
                 <div class="row mb-3">
                     <!-- FIDE -->
@@ -108,7 +107,7 @@ if ($page < 1) {
                     <legend class="col-sm-2 col-form-label" id="statusswitch">Exclude inactive players?</legend>
                     <div class="col-sm-1" style="padding-top: 7px;">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="statusswitch" value="status" <?php if ($_GET['statusswitch'] ?? false) { echo 'checked'; } ?> id="statusswitch">
+                            <input class="form-check-input" type="checkbox" name="statusswitch" value="status" <?php if ($_GET['statusswitch'] ?? false) {echo 'checked';} ?> id="statusswitch">
                         </div>
                     </div>
                 </div>
@@ -166,16 +165,25 @@ if ($page < 1) {
             </form>
         </div>
         <hr>
-    </div>
 
     <!-- player table-->
     <div class="container my-container">
-        <h4>Internationally Ranked Women Chess Players</h4>
-        <?php
-        if ($count > 0) {
-            echo "<p>$count results found</p>";
-        }
-        ?>
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Players</h4>
+                <?php
+                if ($count > 0) {
+                    echo "<p>$count results found</p>";
+                }
+                ?>
+            </div>
+            <div class="col-md-6"></div>
+            <!-- button to create new player -->
+            <div class="col-md-3">
+                <a class="btn btn-secondary" href='playeredit.php' role="button">Create New Player</a>
+            </div>
+        </div>
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -286,7 +294,7 @@ if ($page < 1) {
                         <td colspan=9>No results found</td>
                     </tr>";
                 } else {
-                    foreach($players as $player) {
+                    foreach ($players as $player) {
                         $fide = $player['fide_id'];
                         $name = htmlspecialchars($player['name']);
                         $fed = htmlspecialchars($player['country_name']);
@@ -343,6 +351,7 @@ if ($page < 1) {
             </ul>
         </nav>
     </div>
+            </div>
 
     <!-- Footer -->
     <?php

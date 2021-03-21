@@ -1,10 +1,6 @@
- <!-- FIXME saving for edit Page            
- <div class="col-sm-10" style="padding: 7px 12px;">
-                    <?= $fide ?> -->
-
  <?php
 
-    //create local variables-- no real_escape_string needed due to prepare/bind steps below
+    //create local variables-- no real_escape_string needed due build query below
     $fideid = $_POST['fide'];
     $playername = $_POST['playername'];
     $federation = $_POST['country'];
@@ -20,21 +16,40 @@
         $inactive = 0;
     }
 
-    $endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/player.php';
+    if ((int)$ratingstd == 0) {$ratingstd = NULL;}
+    if ((int)$ratingrap == 0) {$ratingrap = NULL;}
+    if ((int)$ratingblitz == 0) {$ratingblitz = NULL;}
+
+    $mode = $_POST['mode'];
+
+    if ($mode == 'edit') {
+        $method = 'PUT';
+        $qs = "?id=$fideid";
+        $endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/player.php';
+    } else if ($mode == 'create') {
+        $method = 'POST';
+        $qs = '';
+        $endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/players.php';
+    } else {
+        http_response_code(401);
+        echo "UNAUTHORIZED";
+        die();
+    }
 
     $data = http_build_query([
+        'inputFIDE' => $fideid,
         'inputPlayerName' => $playername,
         'inputFederation' => $federation,
         'inputBirthYear' => $birthyear,
         'inputPlayerTitle' => $title,
         'ratingstandard' => $ratingstd,
-        'ratingrap' => $ratingrap,
+        'ratingrapid' => $ratingrap,
         'ratingblitz' => $ratingblitz
     ]);
 
     $options = [
         'http' => [
-            'method' => 'PUT',
+            'method' => $method,
             'header' => [
                 'Content-Type: application/x-www-form-urlencoded',
                 'API-Key: MyAPIKey'
@@ -46,7 +61,7 @@
 
     $context = stream_context_create($options);
 
-    $result = file_get_contents("$endpoint?id=$fideid", false, $context);
+    $result = file_get_contents("$endpoint$qs", false, $context);
     ?>
 
  <!DOCTYPE html>
@@ -67,6 +82,11 @@
      <!-- return message after form submission -->
      <div class='m5 container my-container my-thanks'>
          <h2 class='my-response'><?= $result ?></h2>
+     </div>
+
+     <!-- link to return to player listing -->
+     <div class="container my-card-return">
+         <a href="playeredit.php?id=<?=$fideid?>" class="my-light-link">&laquo; Return to player profile</a>
      </div>
 
      <!-- Footer -->

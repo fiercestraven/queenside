@@ -106,7 +106,7 @@
     <!-- link to go back to player list -->
     <div class="container my-card-return">
         <!-- FIXME may need to change link below if players moves/changes -->
-        <a href="../public/discover.php" class="my-light-link">&laquo; Discover more players</a>
+        <a href="../public/players.php" class="my-light-link">&laquo; Search players</a>
     </div>
 
     <!-- Footer -->

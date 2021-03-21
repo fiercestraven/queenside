@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("ss", $hashedtoken, $user);
     $stmt->execute();
 
-    echo "<div class='row my-box-text'>
+    echo "<div class='row my-box-text ms-1 mb-3'>
             <h4>Your API key:</h4>
             <p>$token</p>
             <p style = 'font-style: italic; color: red;'>Please retain this code. It will not be shown again.</p>

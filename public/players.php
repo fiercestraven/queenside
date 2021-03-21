@@ -32,11 +32,23 @@ if (isset($_GET['playercountry']) && $_GET['playercountry']) {
     $clauses[] = "federation = '$playerfed'";
 }
 
+if (isset($_GET['playersearch']) && $_GET['playersearch']) {
+    $idquery = (int)($_GET['playersearch']);
+    $namequery = $_GET['playersearch'];
+    $clauses[] = "fide_id = $idquery";
+    $clauses[] = "name LIKE '%$namequery%' ";
+} 
+
 $whereclause = '';
 
-//build up WHERE clauses for filtering
 if (count($clauses) > 0) {
-    $whereclause = 'WHERE ' . join(' AND ', $clauses);
+    if(isset($_GET['playersearch']) && $_GET['playersearch']) {
+        //build up WHERE clauses for search box results
+        $whereclause = 'WHERE ' . join(' OR ', $clauses);
+    } else {
+        //build up WHERE clauses for filters
+        $whereclause = 'WHERE ' . join(' AND ', $clauses);
+    }
 } 
 
 //set up sort clause for main query
@@ -145,6 +157,12 @@ $sql = "SELECT *
             OFFSET $offset";
 
 $result = $conn->query($sql);
+
+if ($count == 1) {
+    $player = $result->fetch_assoc();
+    $fideid = $player['fide_id'];
+    header("Location: playerdetail.php?id={$fideid}");
+}
 ?>
 
 <!DOCTYPE html>

@@ -8,14 +8,14 @@ if (isset($_GET['playersearch']) && $_GET['playersearch']) {
     $clauses[] = "fide_id = $idquery";
     $clauses[] = "name LIKE '%$namequery%' ";
 
-    $newclause = '';
+    $whereclause = '';
 
     //build up WHERE clauses
     if (count($clauses) > 0) {
-        $wherelause = 'WHERE ' . join(' OR ', $clauses);
+        $whereclause = 'WHERE ' . join(' OR ', $clauses);
     }
 
-    //get count of how many players for pagination and redirect for one result
+    //get count of how many players for pagination purposes
     $sqlcount = "SELECT COUNT(*) 
             FROM top_women_chess_players
             $whereclause";
@@ -160,9 +160,6 @@ if ($count == 1) {
                     </a>
                 </li>";
                 }
-                // <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                // <li class="page-item"><a class="page-link" href="#">2</a></li>
-                // <li class="page-item"><a class="page-link" href="#">3</a></li> 
 
                 $qs = http_build_query(array_merge($_GET, array("page" => $page + 1)));
                 if ($page < $last_page) {

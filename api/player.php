@@ -26,12 +26,12 @@ switch ($method) {
         if (!$result) {
             echo $conn->error;
         } else {
+            header('Content-Type: application/json');
             if ($row = $result->fetch_assoc()) {
-                header('Content-Type: application/json');
                 echo json_encode($row);
             } else {
                 http_response_code(404);
-                echo "404 Player Not Found";
+                echo json_encode(['error' => 'Player not found']);
             }
         }
         break;
