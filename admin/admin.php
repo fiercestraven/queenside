@@ -126,8 +126,10 @@ if ($page < 1) {
                             if ($resulttitle) {
                                 while ($chesstitle = $resulttitle->fetch_assoc()) {
                                     echo "<option value='{$chesstitle['title']}'";
-                                    if ($chesstitle['title'] == $_GET['playertitle']) {
-                                        echo "selected";
+                                    if (isset($_GET['playertitle'])) {
+                                        if ($chesstitle['title'] == $_GET['playertitle'] ?? '') {
+                                            echo "selected";
+                                        }
                                     }
                                     echo ">{$chesstitle['full_title']}</option>";
                                 }
@@ -148,8 +150,10 @@ if ($page < 1) {
                             if ($resultfed) {
                                 while ($fed = $resultfed->fetch_assoc()) {
                                     echo "<option value='{$fed['federation']}'";
-                                    if ($fed['federation'] == $_GET['playercountry']) {
+                                    if (isset($_GET['playercountry'])) {
+                                        if ($fed['federation'] == $_GET['playercountry']) {
                                         echo "selected";
+                                        }
                                     }
                                     echo ">{$fed['country_name']}</option>";
                                 }

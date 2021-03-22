@@ -39,12 +39,18 @@ switch ($method) {
             $clauses[] = "federation = '$playerfed'";
         }
 
+        if (isset($_GET['playersearch']) && $_GET['playersearch']) {
+            $idquery = (int)($_GET['playersearch']);
+            $namequery = $_GET['playersearch'];
+            $clauses[] = "(fide_id = $idquery OR name LIKE '%$namequery%')";
+        } 
         $whereclause = '';
 
         //build up WHERE clauses for filtering
         if (count($clauses) > 0) {
-            $whereclause = 'WHERE ' . join(' AND ', $clauses);
-        }
+                //build up WHERE clauses 
+                $whereclause = 'WHERE ' . join(' AND ', $clauses);
+        } 
 
         //set up sort clause for main query
         $sortclause = '';

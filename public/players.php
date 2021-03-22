@@ -1,138 +1,18 @@
 <?php
+
+$endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/players.php';
+$qs = http_build_query($_GET);
+$result = file_get_contents("$endpoint?$qs", false);
+
+$data = json_decode($result, true);
+$count = $data['totalfound'];
+$players = $data['players'];
+$per_page = $data['per_page'];
+
+//include db connection to retrieve full names for countries & titles
 include('../db.php');
 
-//set up filters to work
-$clauses = array();
-
-if (isset($_GET['playerid']) && $_GET['playerid']) {
-    $playerid = (int)($_GET['playerid']);
-    $clauses[] = "fide_id = $playerid";
-}
-
-if (isset($_GET['playername']) && $_GET['playername']) {
-    $playername = $conn->real_escape_string($_GET['playername']);
-    $playernamevalue = htmlspecialchars($_GET['playername']);
-    $clauses[] = "name LIKE '%$playername%' ";
-}
-
-if (isset($_GET['statusswitch']) && $_GET['statusswitch']) {
-    $inactive = (int)($_GET['statusswitch']);
-    $clauses[] = "inactive = $inactive";
-}
-
-if (isset($_GET['playertitle']) && $_GET['playertitle']) {
-    $playertitle = $conn->real_escape_string($_GET['playertitle']);
-    $playertitlevalue = htmlspecialchars($_GET['playertitle']);
-    $clauses[] = "title = '$playertitle'";
-}
-
-if (isset($_GET['playercountry']) && $_GET['playercountry']) {
-    $playerfed = $conn->real_escape_string($_GET['playercountry']);
-    $playerfedvalue = htmlspecialchars($_GET['playercountry']);
-    $clauses[] = "federation = '$playerfed'";
-}
-
-if (isset($_GET['playersearch']) && $_GET['playersearch']) {
-    $idquery = (int)($_GET['playersearch']);
-    $namequery = $_GET['playersearch'];
-    $clauses[] = "fide_id = $idquery";
-    $clauses[] = "name LIKE '%$namequery%' ";
-} 
-
-$whereclause = '';
-
-if (count($clauses) > 0) {
-    if(isset($_GET['playersearch']) && $_GET['playersearch']) {
-        //build up WHERE clauses for search box results
-        $whereclause = 'WHERE ' . join(' OR ', $clauses);
-    } else {
-        //build up WHERE clauses for filters
-        $whereclause = 'WHERE ' . join(' AND ', $clauses);
-    }
-} 
-
-//set up sort clause for main query
-$sortclause = '';
-
-if (isset($_GET['sortfield'])) {
-    switch ($_GET['sortfield']) {
-        case 'fideid':
-            if ($_GET['sortdirection'] == 'ASC') {
-                $direction = 'ASC';
-            } else {
-                $direction = 'DESC';
-            }
-            $sortclause = "ORDER BY fide_id $direction";
-            break;
-
-        case 'name':
-            if ($_GET['sortdirection'] == 'ASC') {
-                $direction = 'ASC';
-            } else {
-                $direction = 'DESC';
-            }
-            $sortclause = "ORDER BY name $direction";
-            break;
-
-        case 'federation':
-            if ($_GET['sortdirection'] == 'ASC') {
-                $direction = 'ASC';
-            } else {
-                $direction = 'DESC';
-            }
-            $sortclause = "ORDER BY country_name $direction";
-            break;
-
-        case 'birthyear':
-            if ($_GET['sortdirection'] == 'ASC') {
-                $direction = 'ASC';
-            } else {
-                $direction = 'DESC';
-            }
-            $sortclause = "ORDER BY birth_year $direction";
-            break;
-
-        case 'title':
-            if ($_GET['sortdirection'] == 'ASC') {
-                $direction = 'ASC';
-            } else {
-                $direction = 'DESC';
-            }
-            $sortclause = "ORDER BY title $direction";
-            break;
-
-        case 'ratingstd':
-            if ($_GET['sortdirection'] == 'ASC') {
-                $direction = 'ASC';
-            } else {
-                $direction = 'DESC';
-            }
-            $sortclause = "ORDER BY rating_standard $direction";
-            break;
-
-        case 'status':
-            if ($_GET['sortdirection'] == 'ASC') {
-                $direction = 'ASC';
-            } else {
-                $direction = 'DESC';
-            }
-            $sortclause = "ORDER BY inactive $direction";
-            break;
-
-        default:
-            break;
-    }
-}
-
-//get count of how many players for pagination purposes
-$sqlcount = "SELECT COUNT(*) 
-            FROM top_women_chess_players
-            $whereclause";
-$countresult = $conn->query($sqlcount);
-$count = $countresult->fetch_array()[0];
-
 //set up how many results per page
-$per_page = 30;
 $page = (int)($_GET['page'] ?? 1);
 
 //round up for final page
@@ -143,24 +23,8 @@ if ($page < 1) {
     $page = 1;
 }
 
-//calculate correct offset
-$offset = $per_page * ($page - 1);
-
-// sql statement including LIMIT and OFFSET for page population
-$sql = "SELECT * 
-            FROM top_women_chess_players 
-            LEFT JOIN twcp_federations USING (federation)
-            LEFT JOIN twcp_titles USING (title) 
-            $whereclause
-            $sortclause
-            LIMIT $per_page
-            OFFSET $offset";
-
-$result = $conn->query($sql);
-
 if ($count == 1) {
-    $player = $result->fetch_assoc();
-    $fideid = $player['fide_id'];
+    $fideid = $players[0]['playerid'];
     header("Location: playerdetail.php?id={$fideid}");
 }
 ?>
@@ -193,20 +57,18 @@ if ($count == 1) {
                     <!-- FIDE -->
                     <label for="FIDE" class="col-sm-1 col-form-label">FIDE ID</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" name="playerid" value="<?php echo $playerid ?? '' ?>" placeholder="e.g. 12345" id="FIDE">
+                        <input type="text" class="form-control" name="playerid" value="<?php echo $_GET['playerid'] ?? '' ?>" placeholder="e.g. 12345" id="FIDE">
                     </div>
                     <!-- name -->
                     <label for="name" class="col-sm-1 col-form-label me-2">Name</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" name="playername" value="<?php echo $playernamevalue ?? '' ?>" placeholder="First and/or last name" id="name">
+                        <input type="text" class="form-control" name="playername" value="<?php echo $_GET['playername'] ?? '' ?>" placeholder="First and/or last name" id="name">
                     </div>
                     <!-- Status -->
                     <legend class="col-sm-2 col-form-label" id="statusswitch">Exclude inactive players?</legend>
                     <div class="col-sm-1" style="padding-top: 7px;">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="statusswitch" value="status" <?php if (isset($inactive)) {
-                                                                                                                    echo 'checked';
-                                                                                                                } ?> id="statusswitch">
+                            <input class="form-check-input" type="checkbox" name="statusswitch" value="status" <?php if ($_GET['statusswitch'] ?? false) {echo 'checked';} ?> id="statusswitch">
                         </div>
                     </div>
                 </div>
@@ -225,8 +87,10 @@ if ($count == 1) {
                             if ($resulttitle) {
                                 while ($chesstitle = $resulttitle->fetch_assoc()) {
                                     echo "<option value='{$chesstitle['title']}'";
-                                    if (isset($playertitlevalue) && ($chesstitle['title'] == $playertitlevalue)) {
-                                        echo "selected";
+                                    if (isset($_GET['playertitle'])) {
+                                        if ($chesstitle['title'] == $_GET['playertitle'] ?? '') {
+                                            echo "selected";
+                                        }
                                     }
                                     echo ">{$chesstitle['full_title']}</option>";
                                 }
@@ -246,9 +110,12 @@ if ($count == 1) {
 
                             if ($resultfed) {
                                 while ($fed = $resultfed->fetch_assoc()) {
-                                    echo "<option value='{$fed['federation']}'";
-                                    if (isset($playerfedvalue) && ($fed['federation'] == $playerfedvalue)) {
+                                    echo "<option value='{$fed['federation']}'
+                                    ";
+                                    if (isset($_GET['playercountry'])) {
+                                        if ($fed['federation'] == $_GET['playercountry']) {
                                         echo "selected";
+                                        }
                                     }
                                     echo ">{$fed['country_name']}</option>";
                                 }
@@ -357,23 +224,20 @@ if ($count == 1) {
             </thead>
             <tbody>
                 <?php
-                if (!$result || $result->num_rows == 0) {
+                if (!$players) {
                     echo "<tr>
                         <td colspan=9>No results found</td>
                     </tr>";
                 } else {
-                    for ($i = 1; $i <= $per_page; $i++) {
-                        $player = $result->fetch_assoc();
-                        if (!$player) {
-                            break;
-                        }
-
+                    foreach ($players as $player) {
                         $fide = $player['fide_id'];
                         $name = htmlspecialchars($player['name']);
                         $fed = htmlspecialchars($player['country_name']);
                         $birth = $player['birth_year'] ?? 'Unknown';
                         $title = htmlspecialchars($player['full_title'] ?? '--');
                         $ratingstd = $player['rating_standard'] ?? '--';
+                        $ratingrap = $player['rating_rapid'] ?? '--';
+                        $ratingblitz = $player['rating_blitz'] ?? '--';
                         $inactive = $player['inactive'];
 
                         echo "<tr>
@@ -411,11 +275,6 @@ if ($count == 1) {
                     </a>
                 </li>";
                 }
-                // FIXME remove if not using
-                // <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                // <li class="page-item"><a class="page-link" href="#">2</a></li>
-                // <li class="page-item"><a class="page-link" href="#">3</a></li> 
-
                 $qs = http_build_query(array_merge($_GET, array("page" => $page + 1)));
                 if ($page < $last_page) {
                     echo "<li class='page-item'>
