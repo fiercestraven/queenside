@@ -13,7 +13,7 @@ if(!isset($_GET["id"])) {
 $playerid = $conn->real_escape_string($_GET["id"]);
 
 switch ($method) {
-    //read player
+
     case 'GET':
         $sql = "SELECT fide_id, name, country_name, birth_year, full_title, rating_standard, rating_rapid, rating_blitz, inactive
             FROM top_women_chess_players 
@@ -23,12 +23,13 @@ switch ($method) {
 
         $result = $conn->query($sql);
 
+        //set up response
         if (!$result) {
             echo $conn->error;
         } else {
             header('Content-Type: application/json');
-            if ($row = $result->fetch_assoc()) {
-                echo json_encode($row);
+            if ($player = $result->fetch_assoc()) {
+                echo json_encode($player);
             } else {
                 http_response_code(404);
                 echo json_encode(['error' => 'Player not found']);

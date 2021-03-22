@@ -7,19 +7,19 @@
         die();
     }
 
-    $id = $conn->real_escape_string($_GET['id']);
-    $sql = "SELECT * 
-            FROM top_women_chess_players 
-            LEFT JOIN twcp_federations USING (federation)
-            LEFT JOIN twcp_titles USING (title)
-            WHERE fide_id=$id";
-    $result = $conn->query($sql);
+    $endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/player.php';
+    $qs = http_build_query($_GET);
+    $options = [
+        'http' => ['ignore_errors' => true]
+    ];
+    $context = stream_context_create($options);
 
-    if(!$result) {
-        http_response_code(404);
-    } else {
-        $player = $result->fetch_assoc();
-    }
+    $result = file_get_contents("$endpoint?$qs", false, $context);
+
+    $player = json_decode($result, true);
+
+    //include db connection to retrieve full names for countries & titles
+    include('../db.php');
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +38,7 @@
    ?>
 
     <?php
-        if(isset($player)) {
-            
+        if(isset($player['fide_id'])) {
             $name = htmlspecialchars($player['name']);
             $inactive = $player['inactive'];
             $fed = htmlspecialchars($player['country_name']);
