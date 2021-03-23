@@ -1,3 +1,33 @@
+<?php
+
+//postback
+if (isset($_POST['submit'])) {
+    $answer1 = $_POST['one'] ?? NULL;
+    $answer2 = $_POST['two'] ?? NULL;
+    $answer3 = $_POST['three'] ?? NULL;
+    $answer4 = $_POST['four'] ?? NULL;
+    $answer5 = $_POST['five'] ?? NULL;
+
+    $totalCorrect = 0;
+
+    if ($answer1 == "option1") {
+        $totalCorrect++;
+    }
+    if ($answer2 == "option3") {
+        $totalCorrect++;
+    }
+    if ($answer3 == "option2") {
+        $totalCorrect++;
+    }
+    if ($answer4 == "option3") {
+        $totalCorrect++;
+    }
+    if ($answer5 == "option3") {
+        $totalCorrect++;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,13 +52,45 @@
                 </a>
             </div>
             <div class="col-md-9 mt-3">
-                <h1>Trivia</h1>
-                <h5>So you think you know a thing or two?</h5>
-                <p>Take the grandmaster trivia quiz!</p>
-            </div>
-        </div>
+                <?php if (isset($_POST['submit'])) {
+                    echo "<h2>Well, well, well.... how did you do?</h2>";
 
-        <form class="my-outpost-background" action="triviaans.php" method="post">
+                    switch ($totalCorrect) {
+                        case 0:
+                            $message = "You scored $totalCorrect / 5. OUCH. Study up.";
+                            break;
+                        case 1:
+                            $message = "You scored $totalCorrect / 5. Sleeping much?";
+                            break;
+                        case 2:
+                            $message = "You scored $totalCorrect / 5. Needs improvement, to say the least.";
+                            break;
+                        case 3:
+                            $message = "You scored $totalCorrect / 5. Them's the breaks!";
+                            break;
+                        case 4:
+                            $message = "You scored $totalCorrect / 5. Hey, not bad!";
+                            break;
+                        case 5:
+                            $message = "You scored $totalCorrect / 5. On fire!";
+                            break;
+                        default:
+                            $message = "Score not understood.</p>";
+                            break;
+                    }
+                ?>
+
+                    <p class='my-trivia-result'><?= $message ?></p>
+            </div>
+            <!-- link to go back to trivia -->
+            <a href="trivia.php" class="my-light-link mt-5">&laquo; Try again!</a>
+
+        <?php } else { ?>
+            <h1>Trivia</h1>
+            <h5>So you think you know a thing or two?</h5>
+            <p>Take the grandmaster trivia quiz!</p>
+        </div>
+        <form class="my-outpost-background" action="" method="post">
             <p class="question">Which Federation (country) is the top-ranking
                 female Grandmaster (GM) from?</p>
             <!-- ans a -->
@@ -109,15 +171,18 @@
 
             <div>
                 <p></p>
-                <button class="btn btn-light" type="submit">Submit</button>
+                <button class="btn btn-light" type="submit" name="submit" id="submit">Submit</button>
             </div>
 
         </form>
+    <?php } ?>
 
-        <!-- link to go back to the Outpost -->
-        <div class="my-3">
-            <a href="outpost.php" class="my-light-link">&laquo; Back to the Outpost</a>
-        </div>
+    <!-- link to go back to the Outpost -->
+    <div class="my-3">
+        <a href="outpost.php" class="my-light-link">&laquo; Back to the Outpost</a>
+    </div>
+
+    </div>
 
     </div>
 

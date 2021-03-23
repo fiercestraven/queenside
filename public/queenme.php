@@ -1,9 +1,12 @@
+<?php
+    include("../db.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <?php
-    include("../db.php");
     include("../_partials/head.html");
     ?>
 </head>
@@ -29,7 +32,7 @@
             </div>
         </div>
 
-        <form action="yourqueen.php" method="GET">
+        <form action="" method="GET">
             <!-- Federation -->
             <div class="row mt-2">
                 <label for="country" class="col-sm-2 col-form-label">Your home country:</label>
@@ -68,7 +71,7 @@
 
             <!-- submission button -->
             <div class="row mb-3">
-                <button type="submit" class="btn btn-secondary" id="submit" disabled>Submit</button>
+                <button type="submit" class="btn btn-secondary" name="submit" id="submit" disabled>Submit</button>
             </div>
         </form>
 

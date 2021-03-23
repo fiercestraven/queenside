@@ -2,12 +2,6 @@
 
 include("../db.php");
 
-// if (!isset($_GET["country1"]) || !isset($_GET["country2"])) {
-//     //if no id set, re-route to country showdown page
-//     header("Location: countryshowdown.php");
-//     die();
-// }
-
 //postback
 if (isset($_POST['submit'])) {
     $ctry1 = $conn->real_escape_string($_POST['country1']);
