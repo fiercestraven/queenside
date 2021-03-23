@@ -49,50 +49,51 @@
             $ratingblitz = $player['rating_blitz'] ?? '--';
             $fide = $player['fide_id'];
     ?>
-        <!-- player info -->
-        <div class="card mb-3 my-detail-card">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img class="img-responsive my-profile-icon" src="img/Chess_qlt45.svg" alt="icon of a chess queen">
-                </div>
-                <div class="col-md-8">
-                    <!-- player name -->
-                    <div class="card-header my-card-header"><?=$name?></div>
-                    <div class="card-body">
-                        <!-- other player info -->
-                        <p class="card-text">Status: 
-                            <?php
-                            if($inactive) {
-                                echo "<span class='my-player-inactive'>Withdrawn</span></p>";
-                            } else {
-                                echo "<span class='my-player-active'>Active</span></p>";
-                            }
-                            ?>
-                        <p class="card-text">Federation: <?=$fed?></p>
-                        <p class="card-text">Birth Year: <?=$birth?></p>
-                        <p class="card-text">Title: <?=$title?></p>
-                        <!-- rating stats -->
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm my-ratings">
-                                    Std Rating: <?=$ratingstd?>
-                                </div>
-                                <div class="col-sm my-ratings">
-                                    Rapid Rating: <?=$ratingrap?>
-                                </div>
-                                <div class="col-sm my-ratings">
-                                    Blitz Rating: <?=$ratingblitz?>
-                                </div>
+    
+    <!-- player info -->
+    <div class="card mb-3 my-detail-card">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img class="img-responsive my-profile-icon" src="img/Chess_qlt45.svg" alt="icon of a chess queen">
+            </div>
+            <div class="col-md-8">
+                <!-- player name -->
+                <div class="card-header my-card-header"><?=$name?></div>
+                <div class="card-body">
+                    <!-- other player info -->
+                    <p class="card-text">Status: 
+                        <?php
+                        if($inactive) {
+                            echo "<span class='my-player-inactive'>Withdrawn</span></p>";
+                        } else {
+                            echo "<span class='my-player-active'>Active</span></p>";
+                        }
+                        ?>
+                    <p class="card-text">Federation: <?=$fed?></p>
+                    <p class="card-text">Birth Year: <?=$birth?></p>
+                    <p class="card-text">Title: <?=$title?></p>
+                    <!-- rating stats -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm my-ratings">
+                                Std Rating: <?=$ratingstd?>
+                            </div>
+                            <div class="col-sm my-ratings">
+                                Rapid Rating: <?=$ratingrap?>
+                            </div>
+                            <div class="col-sm my-ratings">
+                                Blitz Rating: <?=$ratingblitz?>
                             </div>
                         </div>
-                        <!-- link to FIDE profile -->
-                        <p class="card-text mt-2"><small class="text-muted">FIDE ID: <a
-                                    href="https://ratings.fide.com/profile/<?=$fide?>" class="my-light-link"
-                                    target="_blank"><?=$fide?></a></small></p>
                     </div>
+                    <!-- link to FIDE profile -->
+                    <p class="card-text mt-2"><small class="text-muted">FIDE ID: <a
+                                href="https://ratings.fide.com/profile/<?=$fide?>" class="my-light-link"
+                                target="_blank"><?=$fide?></a></small></p>
                 </div>
             </div>
         </div>
+    </div>
     
     <?php
         } else {
@@ -104,8 +105,12 @@
 
     <!-- link to go back to player list -->
     <div class="container my-card-return">
-        <!-- FIXME may need to change link below if players moves/changes -->
         <a href="../public/players.php" class="my-light-link">&laquo; Search players</a>
+    </div>
+
+    <!-- link to go to discover page -->
+    <div class="container my-card-return">
+        <a href="../public/discover.php" class="my-light-link">&laquo; Discover top players and more</a>
     </div>
 
     <!-- Footer -->

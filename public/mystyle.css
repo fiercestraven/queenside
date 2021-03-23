@@ -37,8 +37,8 @@
 
 /* container styling */
 .my-container {
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin: 25px auto;
+  width: 90%;
   color: black;
 }
 
@@ -461,7 +461,7 @@ h1, h2, h3, h4 {
 }
 
 .hidden {
-  visibility: hidden;
+  display: none;
 }
   
 /* Change some styling for other screen sizes */

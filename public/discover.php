@@ -94,12 +94,13 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
     include("../_partials/nav.html");
     ?>
 
-    <!-- intro and chart -->
+    <!-- intro and first chart -->
     <div class="container my-container">
-        <h1>Discover the Best Women in Chess</h1>
+        <h1 class="mt-5">Discover the Best Women in Chess</h1>
         <p>Who determines who's best, you ask? It's not easy with this many strong contenders. Here, we look at who's tops in standard rating in a variety of categories. Click on a player to learn more.</p>
+
+        <h3 class="mt-5">Which countries have the most Grandmasters?</h3>
         <canvas id="numCountriesChart"></canvas>
-        <canvas id="numTitlesChart"></canvas>
 
         <!-- set arrays for charts -->
         <?php
@@ -127,8 +128,57 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
         $dataarrctry_json = json_encode($dataarrctry);
         $labelarrtitles_json = json_encode($labelarrtitles);
         $dataarrtitles_json = json_encode($dataarrtitles);
-
         ?>
+    </div>
+
+    <!-- player cards -->
+    <div class="container my-container">
+        <div class="row mt-5">
+            <h3>Top 3 Active Players</h3>
+        </div>
+        <div class="row mb-1 row-cols-1 row-cols-md-3 g-4">
+            <?php
+            if (isset($dataactive)) {
+                foreach ($dataactive as $player) {
+                    echo create_discover_card($player);
+                }
+            }
+            ?>
+        </div>
+        <div class="row col-md-12 mt-2 mb-5">
+            <a class="my-light-link my-discover-link" href="players.php?statusswitch=status">Find more active players &raquo;</a>
+        </div>
+
+        <h3>Top 3 Players in the <?= $featuredcountryname ?></h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <?php
+            if (isset($datacountry)) {
+                foreach ($datacountry as $player) {
+                    echo create_discover_card($player);
+                }
+            }
+            ?>
+        </div>
+        <div class="row col-md-12 mt-2 mb-5">
+            <a class="my-light-link my-discover-link" href="players.php?playercountry=<?= $featuredcountry ?>">Find more players from the <?= $featuredcountryname ?>ß &raquo;</a>
+        </div>
+
+        <h3>Top 3 Active Players Over Age 40</h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <?php
+            if (isset($dataage)) {
+                foreach ($dataage as $player) {
+                    echo create_discover_card($player);
+                }
+            }
+            ?>
+        </div>
+        <div class="row col-md-12 mt-2 mb-5">
+            <a class="my-light-link my-discover-link" href="players.php">Search for more players by birth year, title, and more &raquo;</a>
+        </div>
+        
+        <h3>What proportion of players hold the most common titles?</h3>
+        <canvas id="numTitlesChart"></canvas>
 
         <script>
             //translate arrays into JS
@@ -137,7 +187,7 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
             var labelarrtitles = JSON.parse('<?= $labelarrtitles_json; ?>');
             var dataarrtitles = JSON.parse('<?= $dataarrtitles_json; ?>');;
 
-            //set up chart
+            //set up bar chart of countries w/ most titled players
             var ctx = document.getElementById('numCountriesChart').getContext('2d');
             var numCountriesChart = new Chart(ctx, {
                 type: 'bar',
@@ -145,7 +195,7 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
                 data: {
                     labels: labelarrctry,
                     datasets: [{
-                        label: 'Countries with the highest number of Grandmasters/Woman Grandmasters',
+                        label: 'Number of Grandmasters/Woman Grandmasters',
                         backgroundColor: [
                             '#5C2B56',
                             '#823D79',
@@ -168,6 +218,7 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
                 },
             });
 
+            // set up doughnut chart w/ frequency of titles
             var ctx = document.getElementById('numTitlesChart').getContext('2d');
             var numTitlesChart = new Chart(ctx, {
                 type: 'doughnut',
@@ -176,7 +227,6 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
                 data: {
                     labels: labelarrtitles,
                     datasets: [{
-                        label: 'Number of players holding the 6 most common titles',
                         backgroundColor: [
                             '#5C2B56',
                             '#823D79',
@@ -190,53 +240,6 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
                 },
             });
         </script>
-    </div>
-
-    <!-- player cards -->
-    <div class="container my-container">
-        <div class="row mt-5">
-            <h3>Top 3 Active Players</h3>
-        </div>
-        <div class="row mb-1 row-cols-1 row-cols-md-3 g-4">
-            <?php
-            if (isset($dataactive)) {
-                foreach ($dataactive as $player) {
-                    echo create_discover_card($player);
-                }
-            }
-            ?>
-        </div>
-        <div class="row col-md-12 mt-2 mb-5">
-            <a class="my-light-link my-discover-link" href="players.php?statusswitch=status">Find more active players! &raquo;</a>
-        </div>
-
-        <h3>Top 3 Players in the <?= $featuredcountryname ?></h3>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <?php
-            if (isset($datacountry)) {
-                foreach ($datacountry as $player) {
-                    echo create_discover_card($player);
-                }
-            }
-            ?>
-        </div>
-        <div class="row col-md-12 mt-2 mb-5">
-            <a class="my-light-link my-discover-link" href="players.php?playercountry=<?= $featuredcountry ?>">Find more players from the <?= $featuredcountryname ?>! &raquo;</a>
-        </div>
-
-        <h3>Top 3 Active Players Over Age 40</h3>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <?php
-            if (isset($dataage)) {
-                foreach ($dataage as $player) {
-                    echo create_discover_card($player);
-                }
-            }
-            ?>
-        </div>
-        <div class="row col-md-12 mt-2 mb-5">
-            <a class="my-light-link my-discover-link" href="players.php">Search for more players by birth year, title, and more &raquo;</a>
-        </div>
     </div>
 
     <!-- Footer -->

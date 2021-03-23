@@ -26,7 +26,7 @@
                         the results,
                         and view players in detail. Fancy yourself a future chess star? Head to the <a
                             href="outpost.php">Outpost</a> to find out which players are most
-                        like you and have a go with some chess trivia.</p>
+                        like you, pit countries against each other, and have a go at some chess trivia.</p>
                 </div>
             </div>
         </div>
