@@ -24,7 +24,7 @@
             <div class="col-md-9 my-3">
                 <h2>Welcome to the Outpost</h2>
                 <p></p>
-                <p>Did you know? An outpost is a term for a chess piece that you place nice and close to your opponent in such a way that it's difficult for them to remove. We hope you'll stick around and explore a bit more about the women powerhouses of chess. Here you'll find trivia to test your wits, a chance to put one country head to head with another, and the opportunity to see yourself in the chess world.</p>
+                <p>Did you know? An outpost is a term for a chess piece that's placed nice and close to your opponent in such a way that it's difficult for them to remove. We hope you'll stick around and explore a bit more about the women powerhouses of chess. Here you'll find trivia to test your wits, a chance to pit one country head to head with another, and the opportunity to see yourself in the chess world.</p>
             </div>
         </div>
 

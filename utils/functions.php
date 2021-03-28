@@ -42,19 +42,28 @@ function authorized($conn, $apikey) {
 }
 
 //creates player card in the style of the discover page
-function create_discover_card($player)
-{
+function create_discover_card($player) {
+    //set up image api
+    // $endpt = "https://api.unsplash.com/search/photos?query=woman-face&orientation=landscape&per_page=30&client_id={$SECRETS['unsplash']}";
+    // $jresult = file_get_contents($endpt);
+    // $data = json_decode($jresult, true);
+    // $random = array_rand($data['results']);
+    // $img = $data['results'][$random]['urls']['thumb'];
+
     $name = htmlspecialchars($player['name']);
     $fed = htmlspecialchars($player['country_name']);
     $birth = $player['birth_year'] ?? 'Unknown';
     $title = htmlspecialchars($player['full_title']) ?? '';
     $ratingstd = $player['rating_standard'] ?? '--';
     $fide = $player['fide_id'];
+    // FIXME add below line in and delete empty string img var
+    // $img = $player['img_url'];
+    $img = '';
 
     return "<div class='col'>
             <div class='card h-100'>     
                 <a class='card-link my-discover-card' href='playerdetail.php?id=$fide'>
-                    <img class='img-responsive card-img-top my-card-icon' src='img/playerimage.jpg' alt='collage of six female chess players'>
+                    <img class='img-responsive card-img-top my-card-icon' src='$img' alt='randomised image of a woman's face'>
                     <!-- player info -->
                     <div class='card-body'>
                         <p class='my-card-header'>$name</p>

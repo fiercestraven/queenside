@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
         </div>  
 
     <?php if (isset($_POST['submit'])) { ?>
-        <!-- link to go back to Country Showdown -->
+        <!-- link to try again -->
         <div class='row mt-3 mb-5'>
             <a href='countryshowdown.php' class='my-light-link'>&laquo; Pick two more countries</a>
         </div>

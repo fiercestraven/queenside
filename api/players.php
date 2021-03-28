@@ -234,7 +234,7 @@ switch ($method) {
                 echo $stmt->error;
                 die();
             } else {
-                echo "Data submitted";
+                echo "Player created";
             }
         }
         break;

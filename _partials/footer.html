@@ -8,7 +8,7 @@
 
             <div id="my-contact-form" class="modal">
 
-                <form class="modal-content animate" action="../public/contactus.php" method="POST">
+                <form class="modal-content my-modal-contact-content animate" action="../public/contactus.php" method="POST">
 
                     <div class="container">
                         <div class="row my-contact-us-row">
@@ -26,17 +26,13 @@
                         <input type="text" placeholder="First and last name" name="uname">
 
                         <label for="inputemail"><b>Your Email</b></label>
-                        <input type="text" placeholder="you@example.com" name="email" required>
+                        <input class="my-contact-email" type="email" placeholder="you@example.com" name="email" required>
 
                         <label for="inputmessage"><b>Message</b></label>
                         <textarea class="my-contact-message" placeholder="What's on your mind?" name="message" required></textarea>
-                    </div>
 
-                    <div class="container">
-                        <button type="submit" class="btn btn-secondary">Submit</button>
-                    </div>
+                        <button type="submit" class="btn btn-secondary mt-2 mb-3">Submit</button>
 
-                    <div class="container my-container">
                         <button type="button" onclick="document.getElementById('my-contact-form').style.display='none'"
                             class="cancelbtn">Cancel</button>
                     </div>

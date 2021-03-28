@@ -1,16 +1,12 @@
 <?php
-   include("db.php"); 
+    include("../db.php");
 
-    // echo "<p>This is my script.</p>";
-
-    $file = "top_women_chess_players_2020.csv";
+    $file = "../data/top_women_chess_players_2020.csv";
     $filepath = fopen($file, "r");
     //read and discard the header line
     fgetcsv($filepath);
     
     while(($line = fgetcsv($filepath)) !== FALSE) {
-        // echo "<p>{$line[0]}</p>";
-
         $fideid = $conn->real_escape_string($line[0]);
         $playername = $conn->real_escape_string($line[1]);
         $federation = $conn->real_escape_string($line[2]);
@@ -21,18 +17,24 @@
         $ratingblitz = $line[8] ? "'" . $conn->real_escape_string($line[8]) . "'" : "NULL";
         $inactive = (int)($line[9] == 'wi');
 
-        // echo "<p>INSERT INTO top_women_chess_players (fide_id,name,federation,birth_year,title,rating_standard,rating_rapid,rating_blitz,inactive) VALUES ('$fideid','$playername','$federation','$birthyear','$title','$ratingstd','$ratingrap','$ratingblitz','$inactive')</p>";
+        //set up image urls from unsplash api
+        $endpt = "https://api.unsplash.com/photos/random?query=woman-face&orientation=landscape&client_id={$SECRETS['unsplash']}";
+        $jresult = file_get_contents($endpt);
+        $data = json_decode($jresult, true);
+        //set up random var for image api results
+        // $random = array_rand($data['results']);
+        $imgurl = $data['urls']['thumb'];
 
-        $insertsql = "INSERT INTO top_women_chess_players (fide_id,name,federation,birth_year,title,rating_standard,rating_rapid,rating_blitz,inactive) VALUES ('$fideid','$playername','$federation',$birthyear,$title,$ratingstd,$ratingrap,$ratingblitz,'$inactive')";
+        $insertsql = "INSERT INTO top_women_chess_players (fide_id,name,federation,birth_year,title,rating_standard,rating_rapid,rating_blitz,inactive,img_url) VALUES ('$fideid','$playername','$federation',$birthyear,$title,$ratingstd,$ratingrap,$ratingblitz,'$inactive','$imgurl')";
 
-        //to add results from another table...
-        // $insertsql2 = "INSERT INTO federations () VALUES ()";
+        echo $imgurl;
 
-        $result = $conn->query($insertsql);
+        // $result = $conn->query($insertsql);
 
-        if(!$result) {
-            echo $conn->error;
-            die();
-        }
+        // if(!$result) {
+        //     echo $conn->error;
+        //     die();
+        // }
     }
+
 ?>

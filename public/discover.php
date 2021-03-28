@@ -160,7 +160,7 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
             ?>
         </div>
         <div class="row col-md-12 mt-2 mb-5">
-            <a class="my-light-link my-discover-link" href="players.php?playercountry=<?= $featuredcountry ?>">Find more players from the <?= $featuredcountryname ?>ß &raquo;</a>
+            <a class="my-light-link my-discover-link" href="players.php?playercountry=<?= $featuredcountry ?>">Find more players from the <?= $featuredcountryname ?> &raquo;</a>
         </div>
 
         <h3>Top 3 Active Players Over Age 40</h3>

@@ -65,8 +65,8 @@ switch ($method) {
             $ratingstd = $_PUT['ratingstandard'] ?? NULL;  
             $ratingrap = $_PUT['ratingrapid'] ?? NULL;
             $ratingblitz = $_PUT['ratingblitz'] ?? NULL;
-            //if anything is in the status field, inactive = true
-            $inactive = isset($_PUT['status']);
+            //if anything is in the status field, inactive = true, otherwise it's false
+            $inactive = (int)($_PUT['status'] ?? false);
 
             //prepared statement
             $stmt = $conn->prepare("
@@ -81,7 +81,12 @@ switch ($method) {
                 echo $stmt->error;
                 die();
             } else if ($stmt->affected_rows == 0) {
-                echo "No players found";
+                // TODO: Change message to "no updates made" -- either player not found, or submitted values matched the status quo in db.
+                // FIXME
+                echo var_dump($_PUT);
+                echo var_dump($inactive);
+                echo var_dump((int)$inactive);
+                // echo "No players found";
             } else {
                 echo "Player {$fideid} Updated";
             }

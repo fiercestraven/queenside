@@ -1,4 +1,5 @@
  <?php
+    include('..secrets.php');
 
     //create local variables-- no real_escape_string needed due build query below
     $fideid = $_POST['fide'];
@@ -10,8 +11,12 @@
     $ratingrap = $_POST['ratingrapid'] ?? NULL;
     $ratingblitz = $_POST['ratingblitz'] ?? NULL;
     //set boolean to true/false depending on status
-    if ($_POST['status'] == 'withdrawn') {
-        $inactive = 1;
+    if (isset($_POST['status'])) {
+        if ($_POST['status'] == 'withdrawn') {
+            $inactive = 1;
+        } else {
+            $inactive = 0;
+        }
     } else {
         $inactive = 0;
     }
@@ -44,7 +49,8 @@
         'inputPlayerTitle' => $title,
         'ratingstandard' => $ratingstd,
         'ratingrapid' => $ratingrap,
-        'ratingblitz' => $ratingblitz
+        'ratingblitz' => $ratingblitz,
+        'status' => $inactive
     ]);
 
     $options = [
@@ -52,7 +58,7 @@
             'method' => $method,
             'header' => [
                 'Content-Type: application/x-www-form-urlencoded',
-                'API-Key: MyAPIKey'
+                'API-Key: $SECRETS["unsplash"]'
             ],
             'content' => $data,
             'ignore_errors' => true
@@ -82,6 +88,12 @@
      <!-- return message after form submission -->
      <div class='m5 container my-container my-thanks'>
          <h2 class='my-response'><?= $result ?></h2>
+         <?php if($result == 'Player created') { ?>
+            <!-- button to create another new player -->
+            <div class="mt-4" style="float: left;">
+                <a class="btn btn-info" style="float: right;" href='playeredit.php' role="button">Create Another Player</a>
+            </div>
+        <?php } ?>
      </div>
 
      <!-- link to return to player listing -->

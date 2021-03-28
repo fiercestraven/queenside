@@ -45,9 +45,10 @@ if ($page < 1) {
     <div class="container my-container">
         <div class="row mt-5">
             <div class="col-md-7">
-                <h1 class="player-intro">Admin Player Menu</h1>
+                <h1 class="player-intro">Admin Menu</h1>
             </div>
 
+            <!-- logout button -->
             <div class="col-sm-3">
                 <?php
                 echo "<p id='my-login-confirmation'>Logged in as {$_SESSION['admin_40275431']}</p>";
@@ -59,34 +60,36 @@ if ($page < 1) {
         </div>
 
         <div class="row">
+            <!-- button to create new player -->
+            <div class="col-md-3">
+                <a class="btn btn-secondary" href='playeredit.php' role="button" style="width: 216px;">Create New Player</a>
+            </div>
+            <!-- button to create api token -->
             <div class="col-md-3">
                 <form id="ajaxform" method="POST" action="createtoken.php">
-                    <button type="submit" class="btn btn-secondary mb-3">Generate API Token</button>
+                    <button type="submit" class="btn btn-secondary mb-4">Generate API Token</button>
                 </form>
             </div>
+            <!-- create place for ajax response -->
+            <div class="col-md-5">
+                <p id="response"></p>
+            </div>
+            <hr>
+
+            <script>
+                $("#ajaxform").submit(function(event) {
+                    event.preventDefault();
+
+                    $.ajax({
+                        type: "POST",
+                        url: 'createtoken.php',
+                        success: function(token) {
+                            $("#response").html(token);
+                        }
+                    });
+                })
+            </script>
         </div>
-
-    <!-- create place for ajax response -->
-    <div class="row">
-        <div class="col-md-5">
-            <p id="response"></p>
-        </div>
-        <hr>
-
-        <script>
-            $("#ajaxform").submit(function(event) {
-                event.preventDefault();
-
-                $.ajax({
-                    type: "POST",
-                    url: 'createtoken.php',
-                    success: function(token) {
-                        $("#response").html(token);
-                    }
-                });
-            })
-        </script>
-    </div>
 
         <!-- search filters -->
         <div class="row">
@@ -107,7 +110,9 @@ if ($page < 1) {
                     <legend class="col-sm-2 col-form-label" id="statusswitch">Exclude inactive players?</legend>
                     <div class="col-sm-1" style="padding-top: 7px;">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="statusswitch" value="status" <?php if ($_GET['statusswitch'] ?? false) {echo 'checked';} ?> id="statusswitch">
+                            <input class="form-check-input" type="checkbox" name="statusswitch" value="status" <?php if ($_GET['statusswitch'] ?? false) {
+                                                                                                                    echo 'checked';
+                                                                                                                } ?> id="statusswitch">
                         </div>
                     </div>
                 </div>
@@ -152,7 +157,7 @@ if ($page < 1) {
                                     echo "<option value='{$fed['federation']}'";
                                     if (isset($_GET['playercountry'])) {
                                         if ($fed['federation'] == $_GET['playercountry']) {
-                                        echo "selected";
+                                            echo "selected";
                                         }
                                     }
                                     echo ">{$fed['country_name']}</option>";
@@ -169,10 +174,12 @@ if ($page < 1) {
             </form>
         </div>
         <hr>
+    </div>
+
 
     <!-- player table-->
     <div class="container my-container">
-        <div class="row">
+        <div class="row" style="margin-bottom: -15px;">
             <div class="col-md-3">
                 <h4>Players</h4>
                 <?php
@@ -180,11 +187,6 @@ if ($page < 1) {
                     echo "<p>$count results found</p>";
                 }
                 ?>
-            </div>
-            <div class="col-md-6"></div>
-            <!-- button to create new player -->
-            <div class="col-md-3">
-                <a class="btn btn-secondary" href='playeredit.php' role="button">Create New Player</a>
             </div>
         </div>
 
@@ -295,8 +297,8 @@ if ($page < 1) {
                 <?php
                 if (!$players) {
                     echo "<tr>
-                        <td colspan=9>No results found</td>
-                    </tr>";
+                    <td colspan=9>No results found</td>
+                </tr>";
                 } else {
                     foreach ($players as $player) {
                         $fide = $player['fide_id'];
@@ -310,14 +312,14 @@ if ($page < 1) {
                         $inactive = $player['inactive'];
 
                         echo "<tr>
-                        <td>{$fide}</td>
-                        <td><a class='my-light-link' href='playeredit.php?id={$fide}'>{$name}</a></td>
-                        <td>{$fed}</td>
-                        <td>{$birth}</td>
-                        <td>{$title}</td>
-                        <td>{$ratingstd}</td>
-                        <td>{$ratingrap}</td>
-                        <td>{$ratingblitz}</td>";
+                    <td>{$fide}</td>
+                    <td><a class='my-light-link' href='playeredit.php?id={$fide}'>{$name}</a></td>
+                    <td>{$fed}</td>
+                    <td>{$birth}</td>
+                    <td>{$title}</td>
+                    <td>{$ratingstd}</td>
+                    <td>{$ratingrap}</td>
+                    <td>{$ratingblitz}</td>";
                         if ($inactive) {
                             echo "<td>Withdrawn</td>";
                         } else {
@@ -338,24 +340,24 @@ if ($page < 1) {
                 $qs = http_build_query(array_merge($_GET, array("page" => $page - 1)));
                 if ($page > 1) {
                     echo "<li class='page-item'>
-                    <a class='page-link' href='?" . $qs . "' aria-label='Previous'>
-                        <span aria-hidden='true'>&laquo; Previous</span>
-                    </a>
-                </li>";
+                <a class='page-link' href='?" . $qs . "' aria-label='Previous'>
+                    <span aria-hidden='true'>&laquo; Previous</span>
+                </a>
+            </li>";
                 }
                 $qs = http_build_query(array_merge($_GET, array("page" => $page + 1)));
                 if ($page < $last_page) {
                     echo "<li class='page-item'>
-                    <a class='page-link' href='?" . $qs . "' aria-label='Next'>
-                        <span aria-hidden='true'>Next &raquo;</span>
-                    </a>
-                </li>";
+                <a class='page-link' href='?" . $qs . "' aria-label='Next'>
+                    <span aria-hidden='true'>Next &raquo;</span>
+                </a>
+            </li>";
                 }
                 ?>
             </ul>
         </nav>
     </div>
-            </div>
+
 
     <!-- Footer -->
     <?php

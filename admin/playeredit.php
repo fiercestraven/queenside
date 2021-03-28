@@ -98,9 +98,10 @@ include('../db.php');
         </div>
 
     <!-- https://www.w3schools.com/howto/howto_css_delete_modal.asp -->
+
     <div id="deletebtn" class="modal">
-        <span onclick="document.getElementById('deletebtn').style.display='none'" class="close" title="Close Modal">&times;</span>
-        <form class="modal-content" action="deleteplayer.php" method="POST">
+
+        <form class="modal-content my-modal-delete-content animate" action="deleteplayer.php" method="POST">
             <div class="container my-container">
                 <h2>Delete Player</h2>
                 <p>Are you sure you want to delete this player?</p>
@@ -108,26 +109,13 @@ include('../db.php');
                 <!-- hidden field to hold player id -->
                 <input type="hidden" name="playerid" value="<?= $_GET['id'] ?>">
 
-                <div class="clearfix">
-                    <button onclick="document.getElementById('deletebtn').style.display='none'" type="button" class="cancelbtn">Cancel</button>
-                    <button type="submit" class="deletebtn">Delete</button>
+                <div>
+                    <button type="button" onclick="document.getElementById('deletebtn').style.display='none'" class="cancelbtn">Cancel</button>
+                    <button type="submit" class="my-delete-btn">Delete</button>
                 </div>
             </div>
         </form>
     </div>
-
-    <script>
-        // FIXME
-        // Get the modal
-        var modal = document.getElementById('deletebtn');
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 
     <!-- player edit form -->
     <h2 class="mt-2 mb-3">Admin: Player Edit</h2>
@@ -318,6 +306,18 @@ include('../db.php');
 <?php
 include("../_partials/footer.html");
 ?>
+
+<script>
+        // Get the modal
+        var modal = document.getElementById('deletebtn');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 
 <!-- JS Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
