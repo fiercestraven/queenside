@@ -1,5 +1,5 @@
 <?php
-include('..secrets.php');
+include('../secrets.php');
 include('../utils/functions.php');
 checksessionuser();
 
@@ -10,7 +10,7 @@ $options = [
         'method' => 'DELETE',
         'header' => [
             'Content-Type: application/x-www-form-urlencoded',
-            'API-Key: $SECRETS["twcpapikey"]'
+            'API-Key: ' . $SECRETS['twcpapikey'],
         ],
         'ignore_errors' => true
     ]

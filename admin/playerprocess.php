@@ -1,5 +1,5 @@
  <?php
-    include('..secrets.php');
+    include('../secrets.php');
 
     //create local variables-- no real_escape_string needed due build query below
     $fideid = $_POST['fide'];
@@ -58,7 +58,7 @@
             'method' => $method,
             'header' => [
                 'Content-Type: application/x-www-form-urlencoded',
-                'API-Key: $SECRETS["unsplash"]'
+                'API-Key: ' . $SECRETS['twcpapikey'],
             ],
             'content' => $data,
             'ignore_errors' => true
