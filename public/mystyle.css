@@ -72,12 +72,13 @@
 
 /* card styling */
 .my-profile-icon {
-    width: 12em;
-    margin: 2.5em;
+    width: 90%;
+    margin-top: 60px;
 }
 
 .my-card-icon {
   display: block;
+  height: 200px;
 }
 
 .my-discover-card {

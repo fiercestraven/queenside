@@ -10,7 +10,7 @@ $upperage = 40;
 
 //query to get top 3 active players
 $sqltopactive = "SELECT fide_id, name, federation, birth_year, title, 
-                    rating_standard,
+                    rating_standard, img_url,
                     country_name, full_title
                     FROM top_women_chess_players
                     LEFT JOIN twcp_federations USING (federation)
@@ -21,7 +21,7 @@ $sqltopactive = "SELECT fide_id, name, federation, birth_year, title,
 
 //query to get top 3 country players
 $sqltopcountry = "SELECT fide_id, name, federation, birth_year, title, 
-                rating_standard,
+                rating_standard, img_url,
                 country_name, full_title
                 FROM top_women_chess_players
                 LEFT JOIN twcp_federations USING (federation)
@@ -32,7 +32,7 @@ $sqltopcountry = "SELECT fide_id, name, federation, birth_year, title,
 
 //query to get top 3 active players over age limit
 $sqltopage = "SELECT fide_id, name, federation, birth_year, title, 
-                rating_standard,
+                rating_standard, img_url,
                 country_name, full_title
                 FROM top_women_chess_players
                 LEFT JOIN twcp_federations USING (federation)

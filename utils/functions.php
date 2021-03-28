@@ -43,8 +43,9 @@ function authorized($conn, $apikey) {
 
 //creates player card in the style of the discover page
 function create_discover_card($player) {
-    //set up image api
-    // $endpt = "https://api.unsplash.com/search/photos?query=woman-face&orientation=landscape&per_page=30&client_id={$SECRETS['unsplash']}";
+    include('../secrets.php');
+    // FIXME
+    //$endpt = "https://api.unsplash.com/search/photos?query=woman-face&orientation=landscape&per_page=30&client_id={$SECRETS['unsplash']}";
     // $jresult = file_get_contents($endpt);
     // $data = json_decode($jresult, true);
     // $random = array_rand($data['results']);
@@ -53,12 +54,19 @@ function create_discover_card($player) {
     $name = htmlspecialchars($player['name']);
     $fed = htmlspecialchars($player['country_name']);
     $birth = $player['birth_year'] ?? 'Unknown';
-    $title = htmlspecialchars($player['full_title']) ?? '';
+    $title = htmlspecialchars($player['full_title'] ?? '');
     $ratingstd = $player['rating_standard'] ?? '--';
     $fide = $player['fide_id'];
-    // FIXME add below line in and delete empty string img var
-    // $img = $player['img_url'];
-    $img = '';
+    $imgurl = htmlspecialchars($player['img_url'] ?? '');
+    if ($imgurl == '') {
+        //set up image api 
+        $endpt = "https://api.unsplash.com/photos/random?query=woman-face&orientation=landscape&client_id={$SECRETS['unsplash']}";
+        $jresult = file_get_contents($endpt);
+        $data = json_decode($jresult, true);
+        $img = $data['urls']['thumb'];
+    } else {
+        $img = $imgurl;
+    }
 
     return "<div class='col'>
             <div class='card h-100'>     
@@ -75,4 +83,75 @@ function create_discover_card($player) {
                 </a>
             </div>
         </div>";
+}
+
+//creates player card in the style of the player detail page
+function create_player_card($player) {
+    include('../secrets.php');
+
+    $name = htmlspecialchars($player['name']);
+    $inactive = $player['inactive'];
+    $fed = htmlspecialchars($player['country_name']);
+    $birth = $player['birth_year'] ?? 'Unknown';
+    $title = htmlspecialchars($player['full_title'] ?? '');
+    $ratingstd = $player['rating_standard'] ?? '--';
+    $ratingrap = $player['rating_rapid'] ?? '--';
+    $ratingblitz = $player['rating_blitz'] ?? '--';
+    $fide = $player['fide_id'];
+    $imgurl = htmlspecialchars($player['img_url'] ?? '');
+
+    if ($imgurl == '') {
+        //set up image api 
+        $endpt = "https://api.unsplash.com/photos/random?query=woman-face&orientation=landscape&client_id={$SECRETS['unsplash']}";
+        $jresult = file_get_contents($endpt);
+        $data = json_decode($jresult, true);
+        $img = $data['urls']['thumb'];
+    } else {
+        $img = $imgurl;
+    }
+
+    //set up inactive return messages
+    if($inactive) {
+        $status = "<span class='my-player-inactive'>Withdrawn</span></p>";
+    } else {
+        $status = "<span class='my-player-active'>Active</span></p>";
+    }
+
+    // card creation
+    return "<div class='card mb-3 my-detail-card'>
+        <div class='row g-0'>
+            <div class='col-md-4'>
+                <img class='img-responsive my-profile-icon' src=$img alt='icon of a chess queen'>
+            </div>
+            <div class='col-md-8'>
+                <!-- player name -->
+                <div class='card-header my-card-header'>$name</div>
+                <div class='card-body'>
+                    <!-- other player info -->
+                    <p class='card-text'>Status: $status </p>
+                    <p class='card-text'>Federation: $fed</p>
+                    <p class='card-text'>Birth Year: $birth</p>
+                    <p class='card-text'>Title: $title</p>
+                    <!-- rating stats -->
+                    <div class='container'>
+                        <div class='row'>
+                            <div class='col-sm my-ratings'>
+                                Std Rating: $ratingstd
+                            </div>
+                            <div class='col-sm my-ratings'>
+                                Rapid Rating: $ratingrap
+                            </div>
+                            <div class='col-sm my-ratings'>
+                                Blitz Rating: $ratingblitz
+                            </div>
+                        </div>
+                    </div>
+                    <!-- link to FIDE profile -->
+                    <p class='card-text mt-2'><small class='text-muted'>FIDE ID: <a
+                                href='https://ratings.fide.com/profile/$fide' class='my-light-link'
+                                target='_blank'>$fide</a></small></p>
+                </div>
+            </div>
+        </div>
+    </div>";
 }

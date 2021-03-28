@@ -24,7 +24,7 @@ if ($page < 1) {
 }
 
 if ($count == 1) {
-    $fideid = $players[0]['playerid'];
+    $fideid = $players[0]['fide_id'];
     header("Location: playerdetail.php?id={$fideid}");
 }
 ?>

@@ -15,7 +15,7 @@ $playerid = $conn->real_escape_string($_GET["id"]);
 switch ($method) {
 
     case 'GET':
-        $sql = "SELECT fide_id, name, country_name, birth_year, full_title, rating_standard, rating_rapid, rating_blitz, inactive
+        $sql = "SELECT fide_id, name, country_name, birth_year, full_title, rating_standard, rating_rapid, rating_blitz, inactive, img_url
             FROM top_women_chess_players 
             LEFT JOIN twcp_federations USING (federation)
             LEFT JOIN twcp_titles USING (title) 
