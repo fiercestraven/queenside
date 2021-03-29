@@ -17,7 +17,7 @@
 <body>
     <!-- logo and nav -->
     <?php
-    include("../_partials/adminnav.html");
+    include("../_partials/nav.php");
     ?>
 
     <?php

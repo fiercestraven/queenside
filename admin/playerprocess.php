@@ -84,7 +84,7 @@
  <body>
      <!-- logo and nav -->
      <?php
-        include("../_partials/nav.html");
+        include("../_partials/nav.php");
         ?>
 
      <!-- return message after form submission -->

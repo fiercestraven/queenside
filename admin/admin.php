@@ -38,7 +38,7 @@ if ($page < 1) {
 <body>
     <!-- logo and nav -->
     <?php
-    include("../_partials/adminnav.html");
+    include("../_partials/nav.php");
     ?>
 
     <!-- Intro and initial menu -->

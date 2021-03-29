@@ -91,7 +91,7 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
 <body>
     <!-- logo and nav -->
     <?php
-    include("../_partials/nav.html");
+    include("../_partials/nav.php");
     ?>
 
     <!-- intro and first chart -->

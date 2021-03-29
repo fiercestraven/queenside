@@ -78,7 +78,7 @@ if ($count == 1) {
 <body>
     <!-- logo and nav -->
     <?php
-    include("../_partials/nav.html");
+    include("../_partials/nav.php");
     ?>
 
     <!-- player table-->

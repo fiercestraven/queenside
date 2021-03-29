@@ -11,7 +11,7 @@
 <body>
     <!-- logo and nav -->
     <?php
-    include("../_partials/nav.html");
+    include("../_partials/nav.php");
     ?>
 
     <div class="container my-container my-outpost-container">

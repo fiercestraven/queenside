@@ -5,17 +5,28 @@
                 <a href="/project/public/index.php"><img src="/project/public/img/QueensideLogo.png" class="img-responsive my-logo"
                         alt="Queenside logo"></a>
             </div>
-            <div class="col-md-4 my-search">
-                <form class="form-inline justify-content-center md-form form-sm" action="../public/players.php" method="GET">
-                    <input class="form-control form-control-sm w-75" type="text" placeholder="Player name or FIDE ID" aria-label="Search" name="playersearch">
-                    <i class="fa fa-search fa-lg" aria-hidden="true"></i>
-                </form>
-            </div>
+            <?php
+                //add search box if the page is public-facing
+                if (strpos($_SERVER['REQUEST_URI'], 'admin') == false) { ?>
+                    <div class="col-md-4 my-search">
+                    <form class="form-inline justify-content-center md-form form-sm" action="../public/players.php" method="GET">
+                        <input class="form-control form-control-sm w-75" type="text" placeholder="Player name or FIDE ID" aria-label="Search" name="playersearch">
+                        <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+                    </form>
+                </div>
+                <?php } ?>
         </div>
     </div>
 
     <!-- navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark my-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark 
+    <?php 
+        if(strpos($_SERVER['REQUEST_URI'], 'admin') == false) {
+            echo "my-navbar";
+        } else {
+            echo "my-admin-navbar";
+        }
+    ?>">
         <div class="container">
             <button class="navbar-toggler my-nav-button" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
