@@ -166,7 +166,7 @@ switch ($method) {
         $offset = $per_page * ($page - 1);
 
         // sql main query including LIMIT and OFFSET for page population
-        $sql = "SELECT fide_id, name, country_name, birth_year, full_title, rating_standard, rating_rapid, rating_blitz, inactive
+        $sql = "SELECT fide_id, name, country_name, birth_year, full_title, rating_standard, rating_rapid, rating_blitz, inactive, img_url
             FROM top_women_chess_players 
             LEFT JOIN twcp_federations USING (federation)
             LEFT JOIN twcp_titles USING (title) 
@@ -218,15 +218,16 @@ switch ($method) {
             $ratingblitz = $_POST['ratingblitz'] ?? NULL;
             //if anything is in the status field, inactive = true
             $inactive = isset($_POST['status']);
+            $imgurl = $_POST['inputImage'] ?? NULL;
 
             //prepared statement
             $stmt = $conn->prepare("
             INSERT INTO top_women_chess_players (
-                fide_id, name, federation, birth_year, title, rating_standard, rating_rapid, rating_blitz, inactive
+                fide_id, name, federation, birth_year, title, rating_standard, rating_rapid, rating_blitz, inactive, img_url
             ) VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
             )");
-            $stmt->bind_param("issisiiii", $fideid, $playername, $federation, $birthyear, $title, $ratingstd, $ratingrap, $ratingblitz, $inactive);
+            $stmt->bind_param("issisiiiis", $fideid, $playername, $federation, $birthyear, $title, $ratingstd, $ratingrap, $ratingblitz, $inactive, $imgurl);
 
             $stmt->execute();
 

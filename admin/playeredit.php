@@ -52,11 +52,12 @@ include('../db.php');
         $inactive = $player['inactive'];
         $fed = htmlspecialchars($player['country_name']);
         $birth = $player['birth_year'] ?? 'Unknown';
-        $title = htmlspecialchars($player['full_title']) ?? '';
+        $title = htmlspecialchars($player['full_title'] ?? '');
         $ratingstd = $player['rating_standard'] ?? '';
         $ratingrap = $player['rating_rapid'] ?? '';
         $ratingblitz = $player['rating_blitz'] ?? '';
         $fide = $player['fide_id'];
+        $imgurl = htmlspecialchars($player['img_url'] ?? '');
     }
     ?>
 
@@ -125,19 +126,19 @@ include('../db.php');
         <!-- send mode -->
         <input type="hidden" name="mode" value=<?=$mode?>>
 
-<!-- Player image/icon FIXME -->
-        <!-- <div class="row mb-3">
-                <label for="form_image" class="col-sm-2 col-form-label">Profile Image</label>
-                <div class="col-sm-10">
-                    <input type="file" class="form-control" name="playerimage" id="form_image">
-                </div>
-            </div> -->
-
 <!-- FIDE ID -->
 <div class="row mb-3">
     <label for="FIDE" class="col-sm-2 col-form-label">FIDE ID</label>
     <div class="col-sm-10">
         <input type="text" class="form-control" name="fide" placeholder="e.g., 12345" <?php if ($mode == 'edit') {echo "value = '$fide' readonly";} ?> id="FIDE" required>
+    </div>
+</div>
+
+<!-- Player image/icon -->
+<div class="row mb-3">
+    <label for="inputImage" class="col-sm-2 col-form-label">Image URL</label>
+    <div class="col-sm-10">
+        <input type="url" class="form-control" name="imageurl" placeholder="http://imagelocation.com" <?php if ($mode == 'edit') {echo "value='$imgurl'";} ?> id="inputImage">
     </div>
 </div>
 

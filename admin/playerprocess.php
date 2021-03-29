@@ -10,6 +10,7 @@
     $ratingstd = $_POST['ratingstandard'] ?? NULL;
     $ratingrap = $_POST['ratingrapid'] ?? NULL;
     $ratingblitz = $_POST['ratingblitz'] ?? NULL;
+    $imgurl = $_POST['imageurl'] ?? NULL;
     //set boolean to true/false depending on status
     if (isset($_POST['status'])) {
         if ($_POST['status'] == 'withdrawn') {
@@ -50,7 +51,8 @@
         'ratingstandard' => $ratingstd,
         'ratingrapid' => $ratingrap,
         'ratingblitz' => $ratingblitz,
-        'status' => $inactive
+        'inputImage' => $imgurl,
+        'status' => $inactive,
     ]);
 
     $options = [

@@ -57,7 +57,6 @@ switch ($method) {
 
             //create local variables
             $fideid = $playerid;
-
             $playername = $_PUT['inputPlayerName'];
             $federation = $_PUT['inputFederation'];
             $birthyear = $_PUT['inputBirthYear'] ?? NULL;
@@ -67,13 +66,14 @@ switch ($method) {
             $ratingblitz = $_PUT['ratingblitz'] ?? NULL;
             //if anything is in the status field, inactive = true, otherwise it's false
             $inactive = (int)($_PUT['status'] ?? false);
+            $imgurl = $_PUT['inputImage'] ?? NULL;
 
             //prepared statement
             $stmt = $conn->prepare("
-                UPDATE top_women_chess_players SET name = ?, federation = ?, birth_year = ?, title = ?, rating_standard = ?, rating_rapid = ?, rating_blitz = ?, inactive = ? WHERE fide_id = ? 
+                UPDATE top_women_chess_players SET name = ?, federation = ?, birth_year = ?, title = ?, rating_standard = ?, rating_rapid = ?, rating_blitz = ?, inactive = ?, img_url = ? WHERE fide_id = ? 
                 ");  
                     
-            $stmt->bind_param("ssisiiiii", $playername, $federation, $birthyear, $title, $ratingstd, $ratingrap, $ratingblitz, $inactive, $fideid);
+            $stmt->bind_param("ssisiiiisi", $playername, $federation, $birthyear, $title, $ratingstd, $ratingrap, $ratingblitz, $inactive, $imgurl, $fideid);
 
             $stmt->execute();
 
@@ -81,12 +81,8 @@ switch ($method) {
                 echo $stmt->error;
                 die();
             } else if ($stmt->affected_rows == 0) {
-                // TODO: Change message to "no updates made" -- either player not found, or submitted values matched the status quo in db.
-                // FIXME
-                echo var_dump($_PUT);
-                echo var_dump($inactive);
-                echo var_dump((int)$inactive);
-                // echo "No players found";
+                // either player not found, or submitted values matched the status quo in db.
+                echo "No updates made";
             } else {
                 echo "Player {$fideid} Updated";
             }
