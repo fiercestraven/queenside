@@ -53,7 +53,7 @@
     </div>
 
     <!-- link to go to discover page -->
-    <div class="container my-card-return">
+    <div class="container my-card-return mb-5">
         <a href="../public/discover.php" class="my-light-link">&laquo; Discover top players and more</a>
     </div>
 

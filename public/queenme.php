@@ -1,5 +1,6 @@
 <?php
 include("../db.php");
+include("../utils/functions.php");
 
 //postback
 if (isset($_POST['submit'])) {
@@ -25,23 +26,11 @@ if (isset($_POST['submit'])) {
         } else if ($birthdiff > 0 && $birthdiff >= 3) {
             $message = "There are no exact matches for chess stars in your country who were born in your same birth year. Here's your closest match!";
         } else {
-            $message = "YOU are your own unique queen! No chess stars were found within three years of your birth year. Here's an inspiring chess queen from your country.";
+            $message = "You are your own unique queen! No chess stars were found within three years of your birth year. Here's an inspiring chess queen from your country.";
         }
     } else {
         $message = "You will have to be your own chess star, as your search has returned no close matches. Practice up!";
     }
-}
-
-if (isset($queen)) {
-    $name = htmlspecialchars($queen['name']);
-    $inactive = $queen['inactive'];
-    $fed = htmlspecialchars($queen['country_name']);
-    $birth = $queen['birth_year'] ?? 'Unknown';
-    $title = htmlspecialchars($queen['full_title']) ?? '';
-    $ratingstd = $queen['rating_standard'] ?? '--';
-    $ratingrap = $queen['rating_rapid'] ?? '--';
-    $ratingblitz = $queen['rating_blitz'] ?? '--';
-    $fide = $queen['fide_id'];
 }
 ?>
 
@@ -81,56 +70,11 @@ if (isset($queen)) {
         </div>
 
         <?php if (isset($_POST['submit'])) {
-            if (isset($queen)) { ?>
-                <!-- player info -->
-                <div class="card my-queen-card">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img class="img-responsive my-profile-icon" src="img/Chess_qlt45.svg" alt="icon of a chess queen">
-                        </div>
-                        <div class="col-md-8">
-                            <!-- player name -->
-                            <div class="card-header my-card-header"><?= $name ?></div>
-                            <div class="card-body">
-                                <!-- other player info -->
-                                <p class="card-text">Status:
-                                    <?php
-                                    if ($inactive) {
-                                        echo "<span class='my-player-inactive'>Withdrawn</span></p>";
-                                    } else {
-                                        echo "<span class='my-player-active'>Active</span></p>";
-                                    }
-                                    ?>
-                                <p class="card-text">Federation: <?= $fed ?></p>
-                                <p class="card-text">Birth Year: <?= $birth ?></p>
-                                <p class="card-text">Title: <?= $title ?></p>
-                                <!-- rating stats -->
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-sm my-ratings">
-                                            Std Rating: <?= $ratingstd ?>
-                                        </div>
-                                        <div class="col-sm my-ratings">
-                                            Rapid Rating: <?= $ratingrap ?>
-                                        </div>
-                                        <div class="col-sm my-ratings">
-                                            Blitz Rating: <?= $ratingblitz ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- link to FIDE profile -->
-                                <p class="card-text mt-2"><small class="text-muted">FIDE ID: <a href="https://ratings.fide.com/profile/<?= $fide ?>" class="my-light-link" target="_blank"><?= $fide ?></a></small></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
-            <!-- link to try again -->
-                <div class="row">
-                    <a href="queenme.php" class="my-light-link">&laquo; Want to try again?</a>
-                </div>
-
-        <?php } else { ?>
+            if (isset($queen)) { 
+                // player card
+                echo create_player_card($queen);
+            } 
+        } else { ?>
             <form action="" method="POST">
                 <!-- Federation -->
                 <div class="row mt-2">
@@ -159,6 +103,7 @@ if (isset($queen)) {
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Dropdown selection for birth year" name="userbirth" id="birth_year">
                             <option value="birth" selected>Select Year</option>
+                            <!-- loop to show birth years from this year back 100 years -->
                             <?php
                             for ($i = (date("Y") - 100); $i <= date("Y"); $i++) {
                                 echo "<option value='$i'>$i</option>";
@@ -173,10 +118,15 @@ if (isset($queen)) {
                     <button type="submit" class="btn btn-secondary" name="submit" id="submit" disabled>Submit</button>
                 </div>
             </form>
-        <?php } ?>
+        <?php }  ?>
+
+        <!-- link to try again -->
+        <div class="row mt-3">
+            <a href="queenme.php" class="my-light-link">&laquo; Want to try again?</a>
+        </div>
 
         <!-- link to go back to the Outpost -->
-        <div class="mt-3 mb-5">
+        <div class="row mt-3 mb-5">
             <a href="outpost.php" class="my-light-link">&laquo; Back to the Outpost</a>
         </div>
 

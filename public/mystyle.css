@@ -96,17 +96,8 @@
 .my-detail-card {
     max-width: 800px;
     border: none;
-    margin: 0 auto; 
-    margin-top: 4em;
+    margin: 2em auto; 
     float: none;
-}
-
-.my-queen-card {
-  max-width: 800px;
-  border: none;
-  margin: -10px auto 0 auto; 
-  padding-bottom: 10px;
-  float: none;
 }
 
 .my-card-header {
@@ -132,21 +123,9 @@
 }
 
 .my-card-return {
-  /* width: 800px;  */
-  margin-top: -10px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   font-size: 15px;
 }
-
-/* not currently using collage photo */
-/* .my-player-collage {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 300px;
-  border: 2px solid black;
-  border-radius: 5px;
-} */
 
 #inputMessage {
   height: 170px;
