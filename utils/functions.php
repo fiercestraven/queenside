@@ -41,6 +41,24 @@ function authorized($conn, $apikey) {
     }
 }
 
+//gets data from twcp_titles table using titles api
+function get_titles() {
+    $endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/titles.php?sortdirection=ASC';
+    $result = file_get_contents($endpoint, false);
+
+    $titles = json_decode($result, true);
+    return $titles;
+}
+
+//gets data from twcp_federations table using federations api
+function get_federations() {
+    $endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/federations.php?sortdirection=ASC';
+    $result = file_get_contents($endpoint, false);
+
+    $federations = json_decode($result, true);
+    return $federations;
+}
+
 //creates player card in the style of the discover page
 function create_discover_card($player) {
     include('../secrets.php');

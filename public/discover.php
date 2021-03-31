@@ -13,9 +13,9 @@ $endpointactive = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/players.php?
 $endpointcountry = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/players.php?playercountry='.$featuredcountry.'&sortfield=ratingstd&sortdirection=DESC';
 $endpointage = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/players.php?bornbefore='.$bornbefore.'&statusswitch=status&sortfield=ratingstd&sortdirection=DESC';
 
-$resultactive = file_get_contents("$endpointactive", false);
-$resultcountry = file_get_contents("$endpointcountry", false);
-$resultage = file_get_contents("$endpointage", false);
+$resultactive = file_get_contents($endpointactive, false);
+$resultcountry = file_get_contents($endpointcountry, false);
+$resultage = file_get_contents($endpointage, false);
 
 $activearr = json_decode($resultactive, true);
 $countryarr = json_decode($resultcountry, true);

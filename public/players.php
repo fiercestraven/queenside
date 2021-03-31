@@ -1,4 +1,5 @@
 <?php
+include('../utils/functions.php');
 
 $endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/players.php';
 $qs = http_build_query($_GET);
@@ -8,9 +9,6 @@ $data = json_decode($result, true);
 $count = $data['totalfound'];
 $players = $data['players'];
 $per_page = $data['per_page'];
-
-//include db connection to retrieve full names for countries & titles
-include('../db.php');
 
 //set up how many results per page
 $page = (int)($_GET['page'] ?? 1);
@@ -80,20 +78,16 @@ if ($count == 1) {
                         <select class="form-select" aria-label="Dropdown selection for player title" name="playertitle" id="title">
                             <option value="">Select</option>
                             <?php
-                            //not escaping as this table is not edited by other users
-                            $sqltitle = "SELECT * FROM twcp_titles ORDER BY full_title ASC";
-                            $resulttitle = $conn->query($sqltitle);
+                            $resulttitles = get_titles();
 
-                            if ($resulttitle) {
-                                while ($chesstitle = $resulttitle->fetch_assoc()) {
-                                    echo "<option value='{$chesstitle['title']}'";
-                                    if (isset($_GET['playertitle'])) {
-                                        if ($chesstitle['title'] == $_GET['playertitle'] ?? '') {
-                                            echo "selected";
-                                        }
+                            foreach ($resulttitles as $chesstitle) {
+                                echo "<option value='{$chesstitle['title']}'";
+                                if (isset($_GET['playertitle'])) {
+                                    if ($chesstitle['title'] == $_GET['playertitle'] ?? '') {
+                                        echo "selected";
                                     }
-                                    echo ">{$chesstitle['full_title']}</option>";
                                 }
+                                echo ">{$chesstitle['full_title']}</option>";
                             }
                             ?>
                         </select>
@@ -104,21 +98,16 @@ if ($count == 1) {
                         <select class="form-select" aria-label="Dropdown selection for player federation" name="playercountry" id="fed">
                             <option value="">Select</option>
                             <?php
-                            //not escaping as this table is not edited by other users
-                            $sqlfed = "SELECT * FROM twcp_federations ORDER BY country_name ASC";
-                            $resultfed = $conn->query($sqlfed);
+                            $resultfeds = get_federations();
 
-                            if ($resultfed) {
-                                while ($fed = $resultfed->fetch_assoc()) {
-                                    echo "<option value='{$fed['federation']}'
-                                    ";
+                            foreach ($resultfeds as $fed) {
+                                    echo "<option value='{$fed['federation']}'";
                                     if (isset($_GET['playercountry'])) {
                                         if ($fed['federation'] == $_GET['playercountry']) {
-                                        echo "selected";
+                                            echo "selected";
                                         }
                                     }
                                     echo ">{$fed['country_name']}</option>";
-                                }
                             }
                             ?>
                         </select>
