@@ -2,7 +2,6 @@
 include("../utils/functions.php");
 checksessionuser();
 
-
 if (isset($_GET['id']) && $_GET['id']) {
     $mode = 'edit';
     $endpoint = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/player.php';
@@ -24,10 +23,6 @@ if (isset($_GET['id']) && $_GET['id']) {
 } else {
     $mode = 'create';
 }
-
-//include db connection to retrieve full names for countries & titles
-include('../db.php');
-
 ?>
 
 <!DOCTYPE html>
@@ -160,15 +155,11 @@ include('../db.php');
         <select class="form-select" aria-label="Dropdown selection for player federation" name="country" id="fed">
             <option selected>Select</option>
             <?php
-            //not escaping as this table is not edited by other users
-            $sqlfed = "SELECT * FROM twcp_federations ORDER BY country_name ASC";
+            $resultfeds = get_federations();
 
-            $result = $conn->query($sqlfed);
-            if ($result) {
-                while ($fed = $result->fetch_assoc()) {
-                    $selected = $fed['country_name'] == $player['country_name'] ? 'selected' : '';
-                    echo "<option $selected value='{$fed['federation']}'>{$fed['country_name']}</option>";
-                }
+            foreach ($resultfeds as $fed) {
+                $selected = $fed['country_name'] == $player['country_name'] ? 'selected' : '';
+                echo "<option $selected value='{$fed['federation']}'>{$fed['country_name']}</option>";
             }
             ?>
         </select>
@@ -193,15 +184,11 @@ include('../db.php');
         <select class="form-select" aria-label="Dropdown selection for player title" name="title" id="title">
             <option selected>Select</option>
             <?php
-            //not escaping as this table is not edited by other users
-            $sqltitle = "SELECT * FROM twcp_titles";
-
-            $result = $conn->query($sqltitle);
-            if ($result) {
-                while ($title = $result->fetch_assoc()) {
-                    $selected = $title['full_title'] == $player['full_title'] ? 'selected' : '';
-                    echo "<option $selected value='{$title['title']}'>{$title['full_title']}</option>";
-                }
+            $resulttitle = get_titles();
+            
+            foreach ($resulttitle as $title) {
+                $selected = $title['full_title'] == $player['full_title'] ? 'selected' : '';
+                echo "<option $selected value='{$title['title']}'>{$title['full_title']}</option>";
             }
             ?>
         </select>

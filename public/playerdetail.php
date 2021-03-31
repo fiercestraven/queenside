@@ -16,9 +16,6 @@
     $result = file_get_contents("$endpoint?$qs", false, $context);
 
     $player = json_decode($result, true);
-
-    //include db connection to retrieve full names for countries & titles
-    include('../db.php');
 ?>
 
 <!DOCTYPE html>
