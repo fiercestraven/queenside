@@ -44,12 +44,6 @@ function authorized($conn, $apikey) {
 //creates player card in the style of the discover page
 function create_discover_card($player) {
     include('../secrets.php');
-    // FIXME
-    //$endpt = "https://api.unsplash.com/search/photos?query=woman-face&orientation=landscape&per_page=30&client_id={$SECRETS['unsplash']}";
-    // $jresult = file_get_contents($endpt);
-    // $data = json_decode($jresult, true);
-    // $random = array_rand($data['results']);
-    // $img = $data['results'][$random]['urls']['thumb'];
 
     $name = htmlspecialchars($player['name']);
     $fed = htmlspecialchars($player['country_name']);
@@ -71,7 +65,7 @@ function create_discover_card($player) {
     return "<div class='col'>
             <div class='card h-100'>     
                 <a class='card-link my-discover-card' href='playerdetail.php?id=$fide'>
-                    <img class='img-responsive card-img-top my-card-icon' src='$img' alt='randomised image of a woman's face'>
+                    <img class='img-responsive card-img-top' src='$img' alt='randomised image of a woman's face'>
                     <!-- player info -->
                     <div class='card-body'>
                         <p class='my-card-header'>$name</p>
@@ -121,7 +115,7 @@ function create_player_card($player) {
     return "<div class='card mb-3 my-detail-card'>
         <div class='row g-0'>
             <div class='col-md-4'>
-                <img class='img-responsive my-profile-icon' src=$img alt='icon of a chess queen'>
+                <img class='img-responsive my-profile-icon' src=$img alt='randomised image of a woman's face'>
             </div>
             <div class='col-md-8'>
                 <!-- player name -->

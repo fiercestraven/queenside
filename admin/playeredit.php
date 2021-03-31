@@ -152,7 +152,7 @@ include('../db.php');
 
 <!-- Federation -->
 <div class="row mb-3">
-    <div class='row hidden' id='my-fed-feedback' style='color: red;'>  
+    <div class='row hidden mb-1' id='my-fed-feedback' style='color: #D64F51;'>  
         <h5>Federation is required</h5>
     </div>
     <label for="fed" class="col-sm-2 col-form-label">Federation</label>
@@ -179,13 +179,13 @@ include('../db.php');
 <div class="row mb-3">
     <label for="birth" class="col-sm-2 col-form-label">Birth Year</label>
     <div class="col-sm-10">
-        <input type="text" class="form-control" name="birthyear" placeholder="4-digit Year" <?php if ($mode == 'edit') echo "value='$birth'"; ?> id="birth">
+        <input type="number" min="<?php echo (date("Y") - 110);?>" max="<?php echo date("Y");?>" class="form-control" name="birthyear" placeholder="4-digit Year" <?php if ($mode == 'edit') echo "value='$birth'"; ?> id="birth">
     </div>
 </div>
 
 <!-- Player title -->
 <div class="row mb-3">
-    <div class='row hidden' id='my-title-feedback' style='color: red;';>  
+    <div class='row hidden' id='my-title-feedback' style='color: #D64F51;';>  
         <h5>Title is required</h5>
     </div>
     <label for="title" class="col-sm-2 col-form-label">Title</label>
@@ -213,15 +213,15 @@ include('../db.php');
     <div class="col-sm-2"></div>
     <div class="col-sm-3">
         <label for="ratingstandard">Standard Rating</label>
-        <input type="text" class="form-control" placeholder="0000" <?php if ($mode == 'edit') echo "value='$ratingstd'"; ?> aria-label="Standard rating" name="ratingstandard">
+        <input type="number" min="0" max="3000" class="form-control" placeholder="0000" <?php if ($mode == 'edit') echo "value='$ratingstd'"; ?> aria-label="Standard rating" name="ratingstandard">
     </div>
     <div class="col-sm-3">
         <label for="ratingrapid">Rapid Rating</label>
-        <input type="text" class="form-control" placeholder="0000" <?php if ($mode == 'edit') echo "value='$ratingrap'"; ?> aria-label="Rapid rating" name="ratingrapid">
+        <input type="number" min="0" max="3000" class="form-control" placeholder="0000" <?php if ($mode == 'edit') echo "value='$ratingrap'"; ?> aria-label="Rapid rating" name="ratingrapid">
     </div>
     <div class="col-sm-3">
         <label for="ratingblitz">Blitz Rating</label>
-        <input type="text" class="form-control" placeholder="0000" <?php if ($mode == 'edit') echo "value='$ratingblitz'"; ?> aria-label="Blitz rating" name="ratingblitz">
+        <input type="number" min="0" max="3000" class="form-control" placeholder="0000" <?php if ($mode == 'edit') echo "value='$ratingblitz'"; ?> aria-label="Blitz rating" name="ratingblitz">
     </div>
 </div>
 

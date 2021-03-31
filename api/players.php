@@ -6,10 +6,12 @@ include("../db.php");
 include("../utils/functions.php");
 
 switch ($method) {
-        //read players
     case 'GET':
         //set up filters to work
         $clauses = array();
+
+        //set up sort clause
+        $sortclause = '';
 
         if (isset($_GET['playerid']) && $_GET['playerid']) {
             $playerid = (int)($_GET['playerid']);
@@ -20,6 +22,12 @@ switch ($method) {
             $playername = $conn->real_escape_string($_GET['playername']);
             $playernamevalue = htmlspecialchars($_GET['playername']);
             $clauses[] = "name LIKE '%$playername%' ";
+        }
+
+        // to enable top age category on discover page
+        if(isset($_GET['bornbefore']) && $_GET['bornbefore']) {
+            $bornbefore = (int)($_GET['bornbefore']);
+            $clauses[] = "birth_year <= $bornbefore";
         }
 
         if (isset($_GET['statusswitch']) && $_GET['statusswitch']) {
@@ -51,9 +59,6 @@ switch ($method) {
                 //build up WHERE clauses 
                 $whereclause = 'WHERE ' . join(' AND ', $clauses);
         } 
-
-        //set up sort clause for main query
-        $sortclause = '';
 
         if (isset($_GET['sortfield'])) {
             switch ($_GET['sortfield']) {

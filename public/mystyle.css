@@ -34,10 +34,14 @@
   background-color: rgba(0, 0, 0, 0.79);
 }
 
+#navbarSupportedContent {
+  z-index: 1;
+}
+
 /* container styling */
 .my-container {
   margin: 25px auto;
-  width: 90%;
+  width: 85%;
   color: black;
 }
 
@@ -74,11 +78,6 @@
 .my-profile-icon {
     width: 90%;
     margin-top: 60px;
-}
-
-.my-card-icon {
-  display: block;
-  height: 200px;
 }
 
 .my-discover-card {
@@ -385,7 +384,7 @@ span.psw {
 
 /* outpost styling */
 .my-outpost-container {
-  max-width: 800px;
+  max-width: 65%;
 }
 
 #outpost-logo {
@@ -397,7 +396,6 @@ span.psw {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 2em;
   height: 90px;
   font-size: 20px;
 }
@@ -440,7 +438,7 @@ h1, h2, h3, h4 {
 }
 
 #my-country-feedback {
-  color: red;
+  color: #D64F51;
   text-align: center;
 }
 

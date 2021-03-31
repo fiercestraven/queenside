@@ -1,45 +1,28 @@
 <?php
-include("../db.php");
 include("../utils/functions.php");
+include("../secrets.php");
 
-//set vars for queries
+//set vars
 $featuredcountry = 'ENG';
 $featuredcountryname = 'United Kingdom';
-
 $upperage = 40;
+$bornbefore = date("Y") - 40;
 
-//query to get top 3 active players
-$sqltopactive = "SELECT fide_id, name, federation, birth_year, title, 
-                    rating_standard, img_url,
-                    country_name, full_title
-                    FROM top_women_chess_players
-                    LEFT JOIN twcp_federations USING (federation)
-                    LEFT JOIN twcp_titles USING (title)
-                    WHERE rating_standard IS NOT NULL AND inactive IS FALSE
-                    ORDER BY rating_standard DESC
-                    LIMIT 3";
+//set endpoints for api queries
+$endpointactive = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/players.php?statusswitch=status&sortfield=ratingstd&sortdirection=DESC';
+$endpointcountry = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/players.php?playercountry='.$featuredcountry.'&sortfield=ratingstd&sortdirection=DESC';
+$endpointage = 'http://fveit01.lampt.eeecs.qub.ac.uk/project/api/players.php?bornbefore='.$bornbefore.'&statusswitch=status&sortfield=ratingstd&sortdirection=DESC';
 
-//query to get top 3 country players
-$sqltopcountry = "SELECT fide_id, name, federation, birth_year, title, 
-                rating_standard, img_url,
-                country_name, full_title
-                FROM top_women_chess_players
-                LEFT JOIN twcp_federations USING (federation)
-                LEFT JOIN twcp_titles USING (title)
-                WHERE rating_standard IS NOT NULL AND federation = '$featuredcountry'
-                ORDER BY rating_standard DESC
-                LIMIT 3";
+$resultactive = file_get_contents("$endpointactive", false);
+$resultcountry = file_get_contents("$endpointcountry", false);
+$resultage = file_get_contents("$endpointage", false);
 
-//query to get top 3 active players over age limit
-$sqltopage = "SELECT fide_id, name, federation, birth_year, title, 
-                rating_standard, img_url,
-                country_name, full_title
-                FROM top_women_chess_players
-                LEFT JOIN twcp_federations USING (federation)
-                LEFT JOIN twcp_titles USING (title)
-                WHERE rating_standard IS NOT NULL AND inactive IS FALSE AND (YEAR(now()) - birth_year) >= $upperage 
-                ORDER BY rating_standard DESC
-                LIMIT 3";
+$activearr = json_decode($resultactive, true);
+$countryarr = json_decode($resultcountry, true);
+$agearr = json_decode($resultage, true);
+
+//include db connection to retrieve full country and title names from joined tables
+include("../db.php");
 
 // query to pull num players with the 6 most common titles
 $sqltitlenums = "SELECT title, full_title, count(*) as count
@@ -60,19 +43,12 @@ $sqlcountrynums = "SELECT federation, title, country_name, full_title, count(*) 
             ORDER BY count DESC
             LIMIT 15";
 
-$resulttopactive = $conn->query($sqltopactive);
-$resulttopcountry = $conn->query($sqltopcountry);
-$resulttopage = $conn->query($sqltopage);
 $resulttitlenums = $conn->query($sqltitlenums);
 $resultcountrynums = $conn->query($sqlcountrynums);
 
-if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenums || !$resultcountrynums) {
-    // FIXME handle if less than 3 results rather than 404 error (put in empty array?)
+if (!$resulttitlenums || !$resultcountrynums) {
     http_response_code(404);
 } else {
-    $dataactive = $resulttopactive->fetch_all(MYSQLI_ASSOC);
-    $datacountry = $resulttopcountry->fetch_all(MYSQLI_ASSOC);
-    $dataage = $resulttopage->fetch_all(MYSQLI_ASSOC);
     $datatitlenums = $resulttitlenums->fetch_all(MYSQLI_ASSOC);
     $datacountrynums = $resultcountrynums->fetch_all(MYSQLI_ASSOC);
 }
@@ -94,12 +70,30 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
     include("../_partials/nav.php");
     ?>
 
-    <!-- intro and first chart -->
+    <!-- intro -->
     <div class="container my-container">
         <h1 class="mt-5">Discover the Best Women in Chess</h1>
-        <p>Who determines who's best, you ask? It's not easy with this many strong contenders. Here, we look at who's tops in standard rating in a variety of categories. Click on a player to learn more.</p>
+        <p>Who determines who's best, you ask? It's not easy with this many strong contenders. Which countries have the most Grandmasters? Which titles are most commonly held by elite players? We also look at who's tops in standard rating in a variety of categories. Click on a player to learn more.</p>
+    </div>
 
-        <h3 class="mt-5">Which countries have the most Grandmasters?</h3>
+    <!-- player cards -->
+    <div class="container my-container">
+        <div class="row mt-5">
+            <h3>Top 3 Active Players</h3>
+        </div>
+        <div class="row mb-1 row-cols-1 row-cols-md-3 g-4">
+            <?php
+            for($i = 0; $i < 3; $i++) {
+                echo create_discover_card($activearr['players'][$i]);
+            }
+            ?>
+        </div>
+        <div class="row col-md-12 mt-2 mb-5">
+            <a class="my-light-link my-discover-link" href="players.php?statusswitch=status">Find more active players &raquo;</a>
+        </div>
+
+                <!-- bar chart -->
+                <h3 class="mt-5">Which countries have the most Grandmasters?</h3>
         <canvas id="numCountriesChart"></canvas>
 
         <!-- set arrays for charts -->
@@ -129,33 +123,12 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
         $labelarrtitles_json = json_encode($labelarrtitles);
         $dataarrtitles_json = json_encode($dataarrtitles);
         ?>
-    </div>
-
-    <!-- player cards -->
-    <div class="container my-container">
-        <div class="row mt-5">
-            <h3>Top 3 Active Players</h3>
-        </div>
-        <div class="row mb-1 row-cols-1 row-cols-md-3 g-4">
-            <?php
-            if (isset($dataactive)) {
-                foreach ($dataactive as $player) {
-                    echo create_discover_card($player);
-                }
-            }
-            ?>
-        </div>
-        <div class="row col-md-12 mt-2 mb-5">
-            <a class="my-light-link my-discover-link" href="players.php?statusswitch=status">Find more active players &raquo;</a>
-        </div>
 
         <h3>Top 3 Players in the <?= $featuredcountryname ?></h3>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <?php
-            if (isset($datacountry)) {
-                foreach ($datacountry as $player) {
-                    echo create_discover_card($player);
-                }
+            for($i = 0; $i < 3; $i++) {
+                echo create_discover_card($countryarr['players'][$i]);
             }
             ?>
         </div>
@@ -166,10 +139,8 @@ if (!$resulttopactive || !$resulttopcountry || !$resulttopage || !$resulttitlenu
         <h3>Top 3 Active Players Over Age 40</h3>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <?php
-            if (isset($dataage)) {
-                foreach ($dataage as $player) {
-                    echo create_discover_card($player);
-                }
+            for($i = 0; $i < 3; $i++) {
+                echo create_discover_card($agearr['players'][$i]);
             }
             ?>
         </div>
