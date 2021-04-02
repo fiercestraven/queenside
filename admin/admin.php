@@ -58,7 +58,7 @@ if ($page < 1) {
 
         <div class="row">
             <!-- button to create new player -->
-            <div class="col-md-3">
+            <div class="col-md-3 mb-3">
                 <a class="btn btn-secondary" href='playeredit.php' role="button" style="width: 216px;">Create New Player</a>
             </div>
             <!-- button to create api token -->

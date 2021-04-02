@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
 
     <?php if (isset($_POST['submit'])) { ?>
         <!-- link to try again -->
-        <div class='row mt-3 mb-5'>
+        <div class='row mt-3'>
             <a href='countryshowdown.php' class='my-light-link'>&laquo; Pick two more countries</a>
         </div>
     </div>
@@ -150,11 +150,12 @@ if (isset($_POST['submit'])) {
         <img class="img-responsive" id="my-map-image" src="img/mapDenmark.jpg" alt="brightly coloured map detail of part of Denmark">
     </div>
 
+<?php } ?>
+
     <!-- link to go back to the Outpost -->
-    <div class="mb-3 container">
+    <div class="container my-container mb-4">
         <a href="outpost.php" class="my-light-link">&laquo; Back to the Outpost</a>
     </div>
-<?php } ?>
 
 <script>
     var select1 = document.getElementById("country-select1");
