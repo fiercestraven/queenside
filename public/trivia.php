@@ -91,12 +91,12 @@ if (isset($_POST['submit'])) {
             <p>Take the grandmaster trivia quiz!</p>
         </div>
         <form class="my-outpost-background" action="" method="post">
-            <p class="question">Which Federation (country) is the top-ranking
-                female Grandmaster (GM) from?</p>
+            <p class="question">1) Which Federation (country) is the top standard rating
+                woman over 40 from?</p>
             <!-- ans a -->
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="one" id="q1r1" value="option1">
-                <label class="form-check-label" for="q1r1">Scotland</label>
+                <label class="form-check-label" for="q1r1">Sweden</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="one" id="q1r2" value="option2">
@@ -107,7 +107,7 @@ if (isset($_POST['submit'])) {
                 <label class="form-check-label" for="q1r3">Georgia</label>
             </div>
 
-            <p class="question">What is the average blitz rating score of all Woman
+            <p class="question">2) What is the average blitz rating score of all Woman
                 Grandmasters (WGM)?</p>
             <!-- ans c, 1925 -->
             <div class="form-check form-check-inline">
@@ -123,7 +123,7 @@ if (isset($_POST['submit'])) {
                 <label class="form-check-label" for="q2r3">1925</label>
             </div>
 
-            <p class="question">When was the oldest active Woman Grandmaster (WGM)
+            <p class="question">3) When was the oldest active Woman Grandmaster (WGM)
                 born?</p>
             <!-- ans b FIDE ID 14561 -->
             <div class="form-check form-check-inline">
@@ -139,7 +139,7 @@ if (isset($_POST['submit'])) {
                 <label class="form-check-label" for="q3r3">1961</label>
             </div>
 
-            <p class="question">How many Woman Grandmasters are there in India?</p>
+            <p class="question">4) How many Woman Grandmasters are there in India?</p>
             <!-- c -->
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="four" id="q4r1" value="option1">
@@ -154,7 +154,7 @@ if (isset($_POST['submit'])) {
                 <label class="form-check-label" for="q4r3">11</label>
             </div>
 
-            <p class="question">What year was the youngest Woman Grandmaster born?</p>
+            <p class="question">5) What year was the youngest Woman Grandmaster born?</p>
             <!-- c FIDE ID 34127035-->
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="five" id="q5r1" value="option1">

@@ -46,12 +46,12 @@ if ($page < 1) {
             </div>
 
             <!-- logout button -->
-            <div class="col-sm-3">
+            <div class="col-md-3">
                 <?php
                 echo "<p id='my-login-confirmation'>Logged in as {$_SESSION['admin_40275431']}</p>";
                 ?>
             </div>
-            <div class="col-sm-2">
+            <div class="col-md-2">
                 <a class="btn btn-secondary my-logout-button" role="button" href="../admin/logout.php">Log Out</a>
             </div>
         </div>
@@ -59,16 +59,16 @@ if ($page < 1) {
         <div class="row">
             <!-- button to create new player -->
             <div class="col-md-3 mb-3">
-                <a class="btn btn-secondary" href='playeredit.php' role="button" style="width: 216px;">Create New Player</a>
+                <a class="btn btn-secondary" href='playeredit.php' role="button" style="width: 100%;">Create New Player</a>
             </div>
             <!-- button to create api token -->
-            <div class="col-md-3">
+            <div class="col-md-3 mb-3">
                 <form id="ajaxform" method="POST" action="createtoken.php">
-                    <button type="submit" class="btn btn-secondary mb-4">Generate API Token</button>
+                    <button type="submit" class="btn btn-secondary">Generate API Key</button>
                 </form>
             </div>
             <!-- create place for ajax response -->
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <p id="response"></p>
             </div>
             <hr>
