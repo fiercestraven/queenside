@@ -251,7 +251,7 @@ if (isset($_GET['id']) && $_GET['id']) {
 
 <!-- link to return to player listing -->
 <div class="container my-card-return">
-    <a href="admin.php" class="my-light-link">&laquo; Return to players</a>
+    <a href="admin.php" class="my-light-link">&laquo; Return to player search</a>
 </div>
 
 <script>
