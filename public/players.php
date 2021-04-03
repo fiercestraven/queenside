@@ -63,7 +63,7 @@ if ($count == 1) {
                         <input type="text" class="form-control" name="playername" value="<?php echo $_GET['playername'] ?? '' ?>" placeholder="First and/or last name" id="name">
                     </div>
                     <!-- Status -->
-                    <legend class="col-sm-2 col-form-label" id="statusswitch">Exclude inactive players?</legend>
+                    <legend class="col-sm-2 col-form-label" id="statusswitch">Exclude withdrawn players?</legend>
                     <div class="col-sm-1" style="padding-top: 7px;">
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" name="statusswitch" value="status" <?php if ($_GET['statusswitch'] ?? false) {echo 'checked';} ?> id="statusswitch">

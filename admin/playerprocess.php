@@ -103,6 +103,11 @@
          <a href="playeredit.php?id=<?=$fideid?>" class="my-light-link">&laquo; Return to player profile</a>
      </div>
 
+     <!-- link to return to player listing -->
+     <div class="container my-card-return">
+        <a href="admin.php" class="my-light-link">&laquo; Return to player search</a>
+    </div>
+
      <!-- Footer -->
      <?php
         include("../_partials/footer.html");
