@@ -60,7 +60,7 @@ if ($count == 1) {
                     <!-- name -->
                     <label for="name" class="col-sm-1 col-form-label me-2">Name</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" name="playername" value="<?php echo $_GET['playername'] ?? '' ?>" placeholder="First and/or last name" id="name">
+                        <input type="text" class="form-control" name="playername" value="<?php echo $_GET['playername'] ?? '' ?>" placeholder="First or last name" id="name">
                     </div>
                     <!-- Status -->
                     <legend class="col-sm-2 col-form-label" id="statusswitch">Exclude withdrawn players?</legend>
